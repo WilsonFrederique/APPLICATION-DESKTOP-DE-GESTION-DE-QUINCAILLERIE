@@ -1,0 +1,1227 @@
+/* ============================================
+   CONTAINER & LAYOUT - DESIGN MODERNE
+============================================ */
+
+.container {
+  font-family: "Segoe UI", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  animation: fadeIn 0.8s ease-out;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   HEADER - DESIGN MODERNE
+============================================ */
+
+.header {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 20px;
+  padding: 1.75rem 2rem;
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(30px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.headerText {
+  flex: 1;
+  min-width: 300px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #64748b;
+  margin: 0;
+  font-weight: 500;
+  line-height: 1.6;
+  max-width: 500px;
+}
+
+.headerStats {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.statItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 180px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  animation: slideInUp 0.5s ease-out;
+  flex: 1;
+}
+
+.statItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  border-color: #e2e8f0;
+}
+
+.statIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.statIcon.primary {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(59, 130, 246, 0.08) 100%);
+  color: #2563eb;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);
+}
+
+.statIcon.success {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(16, 185, 129, 0.08) 100%);
+  color: #059669;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.12);
+}
+
+.statInfo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.statValue {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1e293b;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.statLabel {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 500;
+  margin-top: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================================
+   STATISTIQUES DÉTAILLÉES
+============================================ */
+
+.statsSection {
+  animation: fadeIn 0.7s ease-out 0.2s both;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.statCard {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: scaleIn 0.4s ease-out;
+}
+
+@keyframes scaleIn {
+  from { 
+    opacity: 0; 
+    transform: scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}
+
+.statCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  border-color: #cbd5e1;
+}
+
+.statCardIcon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  flex-shrink: 0;
+}
+
+.statCardIcon.blue {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.1) 100%);
+  color: #2563eb;
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.15);
+}
+
+.statCardIcon.green {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.1) 100%);
+  color: #059669;
+  box-shadow: 0 6px 20px rgba(5, 150, 105, 0.15);
+}
+
+.statCardIcon.orange {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(245, 158, 11, 0.1) 100%);
+  color: #d97706;
+  box-shadow: 0 6px 20px rgba(217, 119, 6, 0.15);
+}
+
+.statCardIcon.purple {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(139, 92, 246, 0.1) 100%);
+  color: #7c3aed;
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.15);
+}
+
+.statCardContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.statCardTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 0.4rem 0;
+}
+
+.statCardValue {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #1e293b;
+  line-height: 1;
+  margin: 0 0 0.2rem 0;
+}
+
+.statCardSubtitle {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* ============================================
+   BARRE DE CONTRÔLE - ULTRA RESPONSIVE
+============================================ */
+
+.controlsBar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #e2e8f0;
+  animation: slideInUp 0.5s ease-out 0.3s both;
+}
+
+.searchSection {
+  width: 100%;
+}
+
+.searchInput {
+  width: 100%;
+}
+
+.filtersSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filterGroup {
+  flex: 1;
+  min-width: 200px;
+}
+
+.dateInput {
+  width: 100%;
+}
+
+.viewControls {
+  display: flex;
+  gap: 0.5rem;
+  background: #f1f5f9;
+  padding: 0.25rem;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-bottom: 1em;
+}
+
+.viewBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+}
+
+.viewBtn:hover {
+  background: #e2e8f0;
+  color: #3b82f6;
+}
+
+.resetBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid #e2e8f0;
+  background: #ffffff;
+  color: #64748b;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+}
+
+.resetBtn:hover {
+  background: #f1f5f9;
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.actionsSection {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.exportBtn {
+  min-width: 120px;
+}
+
+.printBtn {
+  min-width: 120px;
+}
+
+/* ============================================
+   CONTENU PRINCIPAL
+============================================ */
+
+.content {
+  flex: 1;
+  animation: fadeIn 0.5s ease-out 0.4s both;
+}
+
+/* Vue Tableau */
+.tableContainer {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.03);
+}
+
+.dataTable {
+  width: 100%;
+}
+
+/* Badges et états */
+.commissionBadge {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(16, 185, 129, 0.08) 100%);
+  color: #059669;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: inline-block;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.statusBadge.payé {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.statusBadge.crédit {
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.actionButtons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.actionBtn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+/* Vue Cartes */
+.cardsContainer {
+  padding: 0.5rem;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.25rem;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.venteCard {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: scaleIn 0.3s ease-out;
+}
+
+.venteCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  border-color: #cbd5e1;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+  background: #f8fafc;
+}
+
+.cardTitle {
+  flex: 1;
+  min-width: 0;
+}
+
+.cardNumber {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 0.4rem 0;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+.cardClient {
+  font-size: 0.9rem;
+  color: #64748b;
+  font-weight: 500;
+  display: block;
+}
+
+.cardStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  margin-left: 0.5rem;
+}
+
+.cardStatus.payé {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.cardStatus.crédit {
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.cardContent {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.cardDetail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.detailLabel {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.detailValue {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1e293b;
+  text-align: right;
+  word-break: break-word;
+}
+
+.detailValueCommission {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #059669;
+  text-align: right;
+}
+
+.deliveryStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.deliveryStatus.livrée {
+  background: rgba(59, 130, 246, 0.12);
+  color: #3b82f6;
+}
+
+.deliveryStatus.en\ attente,
+.deliveryStatus.en\ cours {
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+}
+
+.cardActions {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid #f1f5f9;
+  background: #f8fafc;
+}
+
+.cardBtn {
+  flex: 1;
+}
+
+/* Aucun résultat */
+.noResults {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1.25rem;
+  text-align: center;
+  color: #94a3b8;
+  background: #f8fafc;
+  border-radius: 18px;
+  border: 2px dashed #e2e8f0;
+  margin-top: 2rem;
+  width: 100%;
+  grid-column: 1 / -1;
+}
+
+.noResultsIcon {
+  font-size: 4rem;
+  opacity: 0.1;
+  margin-bottom: 1.5rem;
+  color: #3b82f6;
+}
+
+.noResults h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #475569;
+  margin: 0 0 0.5rem 0;
+}
+
+.noResults p {
+  font-size: 1rem;
+  margin: 0 0 1.5rem 0;
+  max-width: 300px;
+  line-height: 1.5;
+}
+
+.resetFiltersBtn {
+  min-width: 200px;
+}
+
+/* Informations de sélection */
+.selectionInfo {
+  margin-top: 1.5rem;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+  border-radius: 14px;
+  border-left: 4px solid #3b82f6;
+  animation: slideInUp 0.3s ease-out;
+}
+
+.selectionContent {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.selectionIcon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #3b82f6;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.selectionText {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1e293b;
+  flex: 1;
+}
+
+.selectionAction {
+  min-width: 100px;
+}
+
+/* ============================================
+   FOOTER
+============================================ */
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  margin-top: auto;
+  animation: fadeIn 0.5s ease-out 0.5s both;
+}
+
+.footerInfo {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.footerText {
+  font-size: 0.9rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.footerText strong {
+  color: #3b82f6;
+  font-weight: 700;
+}
+
+.footerActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ============================================
+   DARK MODE SUPPORT
+============================================ */
+
+:global(body.dark) .container {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #f1f5f9;
+}
+
+:global(body.dark) .header,
+:global(body.dark) .statsSection .statCard,
+:global(body.dark) .controlsBar,
+:global(body.dark) .tableContainer,
+:global(body.dark) .venteCard,
+:global(body.dark) .footer,
+:global(body.dark) .noResults {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+:global(body.dark) .title {
+  color: #c3ccd7 !important;
+}
+
+:global(body.dark) .subtitle,
+:global(body.dark) .statLabel,
+:global(body.dark) .statCardTitle,
+:global(body.dark) .statCardSubtitle,
+:global(body.dark) .detailLabel,
+:global(body.dark) .footerText {
+  color: #94a3b8;
+}
+
+:global(body.dark) .statValue,
+:global(body.dark) .statCardValue,
+:global(body.dark) .cardNumber,
+:global(body.dark) .detailValue,
+:global(body.dark) .selectionText,
+:global(body.dark) .noResults h3 {
+  color: #f1f5f9;
+}
+
+:global(body.dark) .statItem,
+:global(body.dark) .viewControls {
+  background: #374151;
+  border-color: #475569;
+}
+
+:global(body.dark) .resetBtn {
+  background: #374151;
+  border-color: #475569;
+  color: #cbd5e1;
+}
+
+:global(body.dark) .resetBtn:hover {
+  background: #475569;
+  border-color: #f87171;
+  color: #f87171;
+}
+
+:global(body.dark) .cardHeader,
+:global(body.dark) .cardActions {
+  background: #374151;
+  border-color: #475569;
+}
+
+:global(body.dark) .selectionInfo {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.1) 100%);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+:global(body.dark) .noResultsIcon {
+  color: #60a5fa;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN - ULTRA RESPONSIVE
+============================================ */
+
+/* Desktop Large */
+@media (min-width: 1600px) {
+  .cardsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  }
+}
+
+/* Desktop */
+@media (max-width: 1400px) {
+  .title {
+    font-size: 1.85rem;
+  }
+  
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Large Tablet & Small Desktop */
+@media (max-width: 1200px) {
+  .container {
+    padding: 0.75rem;
+  }
+  
+  .header {
+    padding: 1.5rem;
+    border-radius: 18px;
+  }
+  
+  .controlsBar {
+    padding: 1.25rem;
+  }
+  
+  .cardsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+}
+
+/* Tablet Landscape */
+@media (max-width: 1024px) {
+  .headerContent {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+  }
+  
+  .headerStats {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .statItem {
+    min-width: calc(50% - 0.5rem);
+  }
+  
+  .filtersSection {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  
+  .filterGroup {
+    min-width: 100%;
+  }
+  
+  .viewControls {
+    margin-left: 0;
+    align-self: flex-start;
+  }
+  
+  .actionsSection {
+    justify-content: flex-start;
+  }
+  
+  .cardsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+/* Tablet Portrait */
+@media (max-width: 768px) {
+  .container {
+    padding: 0.5rem;
+    gap: 1rem;
+  }
+  
+  .header {
+    padding: 1.25rem;
+    border-radius: 16px;
+  }
+  
+  .title {
+    font-size: 1.65rem;
+  }
+  
+  .subtitle {
+    font-size: 0.95rem;
+  }
+  
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .statCard {
+    padding: 1.25rem;
+  }
+  
+  .controlsBar {
+    padding: 1rem;
+    border-radius: 16px;
+    gap: 1rem;
+  }
+  
+  .cardsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .venteCard {
+    max-width: 100%;
+  }
+  
+  .cardHeader {
+    padding: 1rem 1.25rem;
+  }
+  
+  .cardContent {
+    padding: 1.25rem;
+  }
+  
+  .cardActions {
+    padding: 1rem 1.25rem;
+    flex-wrap: wrap;
+  }
+  
+  .cardBtn {
+    min-width: calc(50% - 0.375rem);
+  }
+  
+  .footer {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+    padding: 1rem;
+  }
+  
+  .footerInfo {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .footerActions {
+    justify-content: center;
+  }
+}
+
+/* Mobile Large */
+@media (max-width: 576px) {
+  .header {
+    padding: 1rem;
+    border-radius: 14px;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+  }
+  
+  .statItem {
+    min-width: 100%;
+  }
+  
+  .statCardIcon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+  
+  .statCardValue {
+    font-size: 1.5rem;
+  }
+  
+  .viewControls {
+    align-self: stretch;
+    justify-content: center;
+  }
+  
+  .actionsSection {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .exportBtn,
+  .printBtn {
+    width: 100%;
+  }
+  
+  .cardsGrid {
+    gap: 0.75rem;
+  }
+  
+  .cardDetail {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  
+  .detailValue {
+    text-align: left;
+    width: 100%;
+  }
+  
+  .cardBtn {
+    min-width: 100%;
+  }
+  
+  .selectionContent {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  
+  .selectionAction {
+    width: 100%;
+  }
+}
+
+/* Mobile Small */
+@media (max-width: 400px) {
+  .title {
+    font-size: 1.35rem;
+  }
+  
+  .statCard {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .statCardContent {
+    text-align: center;
+  }
+  
+  .cardNumber {
+    font-size: 1.05rem;
+  }
+  
+  .cardClient {
+    font-size: 0.85rem;
+  }
+  
+  .cardStatus {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+  }
+  
+  /* Masquer le texte des badges sur très petits écrans */
+  .statusBadge span:last-child,
+  .cardStatus span:last-child {
+    display: none;
+  }
+  
+  .statusBadge,
+  .cardStatus {
+    padding: 0.4rem 0.5rem;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 320px) {
+  .container {
+    padding: 0.25rem;
+  }
+  
+  .header {
+    padding: 0.85rem;
+  }
+  
+  .title {
+    font-size: 1.25rem;
+    gap: 0.5rem;
+  }
+  
+  .title svg {
+    font-size: 1.5rem;
+  }
+  
+  .controlsBar {
+    padding: 0.85rem;
+  }
+  
+  .statValue,
+  .statCardValue {
+    font-size: 1.25rem;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+============================================ */
+
+@media print {
+  .container {
+    background: white !important;
+    color: black !important;
+    padding: 0;
+  }
+  
+  .header,
+  .statsSection,
+  .controlsBar,
+  .venteCard,
+  .footer,
+  .selectionInfo {
+    background: white !important;
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+    margin-bottom: 1rem;
+  }
+  
+  .title {
+    color: black !important;
+    -webkit-text-fill-color: black !important;
+  }
+  
+  .actionButtons,
+  .viewControls,
+  .footerActions,
+  .cardActions {
+    display: none !important;
+  }
+  
+  /* Assurer une bonne pagination */
+  .cardsGrid {
+    break-inside: avoid;
+  }
+  
+  .venteCard {
+    break-inside: avoid;
+  }
+}
+
+/* ============================================
+   ANIMATIONS SUPPLÉMENTAIRES
+============================================ */
+
+/* Animation de transition entre les vues */
+.tableContainer,
+.cardsContainer {
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Animation des cartes avec délai */
+.cardsGrid > * {
+  animation: slideInUp 0.3s ease-out forwards;
+}
+
+.cardsGrid > *:nth-child(1) { animation-delay: 0.1s; }
+.cardsGrid > *:nth-child(2) { animation-delay: 0.2s; }
+.cardsGrid > *:nth-child(3) { animation-delay: 0.3s; }
+.cardsGrid > *:nth-child(4) { animation-delay: 0.4s; }
+.cardsGrid > *:nth-child(5) { animation-delay: 0.5s; }
+.cardsGrid > *:nth-child(6) { animation-delay: 0.6s; }
+.cardsGrid > *:nth-child(7) { animation-delay: 0.7s; }
+.cardsGrid > *:nth-child(8) { animation-delay: 0.8s; }
+
+/* Animation pour les changements de données */
+@keyframes dataUpdate {
+  0% { background-color: rgba(59, 130, 246, 0.1); }
+  100% { background-color: transparent; }
+}
+
+.venteCard.updated {
+  animation: dataUpdate 1s ease-out;
+}
+
+/* ============================================
+   ACCESSIBILITY
+============================================ */
+
+/* Focus visible pour l'accessibilité */
+.viewBtn:focus-visible,
+.resetBtn:focus-visible,
+.exportBtn:focus-visible,
+.printBtn:focus-visible,
+.cardBtn:focus-visible,
+.selectionAction:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Hauteur de ligne pour une meilleure lisibilité */
+.subtitle,
+.statLabel,
+.footerText {
+  line-height: 1.5;
+}
+
+/* Contraste suffisant pour le texte */
+.cardNumber,
+.detailValue,
+.statCardValue {
+  font-weight: 600;
+}
+
+/* Support pour les préférences de réduction de mouvement */
+@media (prefers-reduced-motion: reduce) {
+  .container,
+  .header,
+  .statItem,
+  .statCard,
+  .controlsBar,
+  .venteCard,
+  .tableContainer,
+  .cardsContainer,
+  .footer,
+  .selectionInfo {
+    animation: none;
+    transition: none;
+  }
+  
+  .cardsGrid > * {
+    animation: none;
+  }
+  
+  .venteCard:hover {
+    transform: none;
+  }
+}

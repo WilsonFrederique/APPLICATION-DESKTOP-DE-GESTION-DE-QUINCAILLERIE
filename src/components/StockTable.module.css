@@ -1,0 +1,64 @@
+.container {
+  overflow-x: auto;
+}
+
+.title {
+  color: #495057;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.headerRow {
+  background-color: #3498db;
+}
+
+.headerCell {
+  padding: 12px 15px;
+  text-align: left;
+  color: white;
+  font-weight: 600;
+  border-bottom: 2px solid #2980b9;
+}
+
+.headerCell:first-child {
+  border-top-left-radius: 6px;
+}
+
+.headerCell:last-child {
+  border-top-right-radius: 6px;
+}
+
+.row {
+  transition: background-color 0.2s;
+}
+
+.row:hover {
+  background-color: #f8f9fa;
+}
+
+.cell {
+  padding: 12px 15px;
+  border-bottom: 1px solid #dee2e6;
+  color: #495057;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: #6c757d;
+  font-style: italic;
+}
+
+.emptyCell {
+  padding: 30px;
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+}

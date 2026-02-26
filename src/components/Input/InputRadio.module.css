@@ -1,0 +1,654 @@
+/* InputRadio.module.css - Version ultra-responsive avec animations */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+  position: relative;
+  width: fit-content;
+}
+
+.containerError {
+  margin-bottom: 24px;
+}
+
+.radioContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+  padding: 4px 0;
+  position: relative;
+}
+
+.radioContainer:hover:not(.disabled) .radioCircle {
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+}
+
+.radioInput {
+  position: absolute;
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
+
+.radioCircle {
+  position: relative;
+  display: inline-block;
+  border: 2px solid #cbd5e1;
+  border-radius: 50%;
+  background-color: white;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  animation: pulseOut 0.3s ease-out;
+}
+
+.radioInnerCircle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  border-radius: 50%;
+  background-color: currentColor;
+  transition: all 0.2s ease;
+  opacity: 0;
+}
+
+.radioInput:checked + .radioCircle {
+  border-color: currentColor;
+  animation: pulseIn 0.3s ease-out;
+}
+
+.radioInput:checked + .radioCircle .radioInnerCircle {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.radioInput:focus-visible + .radioCircle {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Tailles */
+.sizeSmall .radioCircle {
+  width: 16px;
+  height: 16px;
+}
+
+.sizeSmall .radioInnerCircle {
+  width: 8px;
+  height: 8px;
+}
+
+.sizeMedium .radioCircle {
+  width: 20px;
+  height: 20px;
+}
+
+.sizeMedium .radioInnerCircle {
+  width: 10px;
+  height: 10px;
+}
+
+.sizeLarge .radioCircle {
+  width: 24px;
+  height: 24px;
+}
+
+.sizeLarge .radioInnerCircle {
+  width: 12px;
+  height: 12px;
+}
+
+/* Couleurs */
+.colorBlue {
+  color: #3b82f6;
+}
+
+.colorRed {
+  color: #ef4444;
+}
+
+.colorGreen {
+  color: #10b981;
+}
+
+.colorPurple {
+  color: #8b5cf6;
+}
+
+.colorIndigo {
+  color: #6366f1;
+}
+
+.colorPink {
+  color: #ec4899;
+}
+
+.colorYellow {
+  color: #f59e0b;
+}
+
+/* Focus states pour chaque couleur */
+.colorBlue.radioInput:focus-visible + .radioCircle {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.colorRed.radioInput:focus-visible + .radioCircle {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.colorGreen.radioInput:focus-visible + .radioCircle {
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.colorPurple.radioInput:focus-visible + .radioCircle {
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.colorIndigo.radioInput:focus-visible + .radioCircle {
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.colorPink.radioInput:focus-visible + .radioCircle {
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+}
+
+.colorYellow.radioInput:focus-visible + .radioCircle {
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}
+
+.labelText {
+  font-size: 14px;
+  font-weight: 500;
+  color: #475569;
+  line-height: 1.4;
+}
+
+.required {
+  color: #dc2626;
+  margin-left: 2px;
+}
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.disabled .labelText {
+  color: #94a3b8;
+}
+
+.disabled .radioCircle {
+  background-color: #f1f5f9;
+  border-color: #e2e8f0;
+}
+
+.disabled .radioInput:checked + .radioCircle {
+  opacity: 0.7;
+}
+
+.errorMessage {
+  color: #dc2626;
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
+  position: absolute;
+  bottom: -20px;
+  left: 32px;
+}
+
+.helperText {
+  color: #64748b;
+  font-size: 12px;
+  margin-top: 4px;
+  font-style: italic;
+  position: absolute;
+  bottom: -20px;
+  left: 32px;
+}
+
+/* ============================================
+   DARK MODE
+============================================ */
+
+:global(body.dark) .radioCircle {
+  background-color: #1e293b;
+  border-color: #475569;
+}
+
+:global(body.dark) .labelText {
+  color: #cbd5e1;
+}
+
+:global(body.dark) .radioContainer:hover:not(.disabled) .radioCircle {
+  border-color: #64748b;
+}
+
+:global(body.dark) .disabled .labelText {
+  color: #64748b;
+}
+
+:global(body.dark) .disabled .radioCircle {
+  background-color: #374151;
+  border-color: #4b5563;
+}
+
+/* Couleurs dark mode */
+:global(body.dark) .colorBlue {
+  color: #60a5fa;
+}
+
+:global(body.dark) .colorRed {
+  color: #f87171;
+}
+
+:global(body.dark) .colorGreen {
+  color: #34d399;
+}
+
+:global(body.dark) .colorPurple {
+  color: #a78bfa;
+}
+
+:global(body.dark) .colorIndigo {
+  color: #818cf8;
+}
+
+:global(body.dark) .colorPink {
+  color: #f472b6;
+}
+
+:global(body.dark) .colorYellow {
+  color: #fbbf24;
+}
+
+/* Focus states dark mode pour chaque couleur */
+:global(body.dark) .colorBlue.radioInput:focus-visible + .radioCircle {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+:global(body.dark) .colorRed.radioInput:focus-visible + .radioCircle {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+:global(body.dark) .colorGreen.radioInput:focus-visible + .radioCircle {
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+:global(body.dark) .colorPurple.radioInput:focus-visible + .radioCircle {
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+}
+
+:global(body.dark) .colorIndigo.radioInput:focus-visible + .radioCircle {
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+:global(body.dark) .colorPink.radioInput:focus-visible + .radioCircle {
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.2);
+}
+
+:global(body.dark) .colorYellow.radioInput:focus-visible + .radioCircle {
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+}
+
+:global(body.dark) .helperText {
+  color: #94a3b8;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN ULTRA
+============================================ */
+
+/* Desktop Large */
+@media (min-width: 1400px) {
+  .sizeSmall .radioCircle {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .sizeSmall .radioInnerCircle {
+    width: 9px;
+    height: 9px;
+  }
+  
+  .sizeMedium .radioCircle {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .sizeMedium .radioInnerCircle {
+    width: 11px;
+    height: 11px;
+  }
+  
+  .sizeLarge .radioCircle {
+    width: 26px;
+    height: 26px;
+  }
+  
+  .sizeLarge .radioInnerCircle {
+    width: 13px;
+    height: 13px;
+  }
+  
+  .labelText {
+    font-size: 15px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    font-size: 13px;
+  }
+}
+
+/* Tablet Landscape */
+@media (max-width: 1200px) {
+  .radioContainer {
+    gap: 10px;
+  }
+  
+  .sizeSmall .radioCircle {
+    width: 15px;
+    height: 15px;
+  }
+  
+  .sizeSmall .radioInnerCircle {
+    width: 7px;
+    height: 7px;
+  }
+  
+  .sizeMedium .radioCircle {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .sizeMedium .radioInnerCircle {
+    width: 9px;
+    height: 9px;
+  }
+  
+  .sizeLarge .radioCircle {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .sizeLarge .radioInnerCircle {
+    width: 11px;
+    height: 11px;
+  }
+  
+  .labelText {
+    font-size: 13px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    left: 28px;
+  }
+}
+
+/* Tablet Portrait */
+@media (max-width: 768px) {
+  .container {
+    margin-bottom: 12px;
+  }
+  
+  .radioContainer {
+    gap: 9px;
+  }
+  
+  .sizeSmall .radioCircle {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .sizeSmall .radioInnerCircle {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .sizeMedium .radioCircle {
+    width: 17px;
+    height: 17px;
+  }
+  
+  .sizeMedium .radioInnerCircle {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .sizeLarge .radioCircle {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .sizeLarge .radioInnerCircle {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .labelText {
+    font-size: 12.5px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    font-size: 11px;
+    left: 26px;
+    bottom: -18px;
+  }
+}
+
+/* Mobile Large */
+@media (max-width: 576px) {
+  .container {
+    margin-bottom: 10px;
+  }
+  
+  .radioContainer {
+    gap: 8px;
+  }
+  
+  .sizeSmall .radioCircle {
+    width: 13px;
+    height: 13px;
+  }
+  
+  .sizeSmall .radioInnerCircle {
+    width: 5px;
+    height: 5px;
+  }
+  
+  .sizeMedium .radioCircle {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .sizeMedium .radioInnerCircle {
+    width: 7px;
+    height: 7px;
+  }
+  
+  .sizeLarge .radioCircle {
+    width: 19px;
+    height: 19px;
+  }
+  
+  .sizeLarge .radioInnerCircle {
+    width: 9px;
+    height: 9px;
+  }
+  
+  .labelText {
+    font-size: 12px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    font-size: 11px;
+    left: 24px;
+    bottom: -16px;
+  }
+}
+
+/* Mobile Small */
+@media (max-width: 400px) {
+  .radioContainer {
+    gap: 7px;
+  }
+  
+  .sizeSmall .radioCircle {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .sizeSmall .radioInnerCircle {
+    width: 4px;
+    height: 4px;
+  }
+  
+  .sizeMedium .radioCircle {
+    width: 15px;
+    height: 15px;
+  }
+  
+  .sizeMedium .radioInnerCircle {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .sizeLarge .radioCircle {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .sizeLarge .radioInnerCircle {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .labelText {
+    font-size: 11.5px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    font-size: 10px;
+    left: 22px;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 320px) {
+  .radioContainer {
+    gap: 6px;
+  }
+  
+  .sizeSmall .radioCircle {
+    width: 11px;
+    height: 11px;
+  }
+  
+  .sizeSmall .radioInnerCircle {
+    width: 3px;
+    height: 3px;
+  }
+  
+  .sizeMedium .radioCircle {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .sizeMedium .radioInnerCircle {
+    width: 5px;
+    height: 5px;
+  }
+  
+  .sizeLarge .radioCircle {
+    width: 17px;
+    height: 17px;
+  }
+  
+  .sizeLarge .radioInnerCircle {
+    width: 7px;
+    height: 7px;
+  }
+  
+  .labelText {
+    font-size: 11px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    font-size: 9px;
+    left: 20px;
+  }
+}
+
+/* ============================================
+   ANIMATIONS
+============================================ */
+
+@keyframes pulseIn {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 currentColor;
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 8px rgba(59, 130, 246, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 currentColor;
+  }
+}
+
+@keyframes pulseOut {
+  0% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.radioContainer {
+  animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY
+============================================ */
+
+.radioInput:disabled {
+  cursor: not-allowed;
+}
+
+/* Screen reader only */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
