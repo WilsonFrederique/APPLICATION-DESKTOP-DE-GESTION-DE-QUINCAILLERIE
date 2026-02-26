@@ -1,0 +1,889 @@
+/* InputTogglerIcons.module.css - Version ultra-responsive avec icônes */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+  position: relative;
+  width: fit-content;
+}
+
+.togglerContainer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+}
+
+.containerError {
+  margin-bottom: 24px;
+}
+
+.togglerLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1.4;
+}
+
+.required {
+  color: #dc2626;
+  margin-left: 2px;
+}
+
+.labelDisabled {
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.togglerWrapper {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.togglerWrapper:hover:not(.togglerDisabled *) .togglerTrack {
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+}
+
+.togglerInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.togglerTrack {
+  position: relative;
+  display: block;
+  border: 2px solid #cbd5e1;
+  border-radius: 20px;
+  background-color: white;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.togglerThumb {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  background-color: white;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.togglerInput:checked + .togglerTrack {
+  background-color: currentColor;
+  border-color: currentColor;
+}
+
+.togglerInput:checked + .togglerTrack .togglerThumb {
+  transform: translateX(100%);
+  background-color: white;
+}
+
+.togglerInput:focus-visible + .togglerTrack {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Icônes */
+.iconOn,
+.iconOff {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: currentColor;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+}
+
+.iconOn {
+  left: 6px;
+  stroke: white;
+}
+
+.iconOff {
+  right: 6px;
+  stroke: #64748b;
+}
+
+.togglerInput:checked + .togglerTrack .iconOn {
+  opacity: 1;
+}
+
+.togglerInput:not(:checked) + .togglerTrack .iconOff {
+  opacity: 1;
+}
+
+/* Tailles */
+.sizeSmall .togglerTrack {
+  width: 40px;
+  height: 24px;
+}
+
+.sizeSmall .togglerThumb {
+  width: 16px;
+  height: 16px;
+}
+
+.sizeSmall .iconOn {
+  left: 4px;
+  width: 10px;
+  height: 10px;
+}
+
+.sizeSmall .iconOff {
+  right: 4px;
+  width: 10px;
+  height: 10px;
+}
+
+.sizeMedium .togglerTrack {
+  width: 52px;
+  height: 28px;
+}
+
+.sizeMedium .togglerThumb {
+  width: 20px;
+  height: 20px;
+}
+
+.sizeMedium .iconOn {
+  left: 6px;
+  width: 12px;
+  height: 12px;
+}
+
+.sizeMedium .iconOff {
+  right: 6px;
+  width: 12px;
+  height: 12px;
+}
+
+.sizeLarge .togglerTrack {
+  width: 64px;
+  height: 32px;
+}
+
+.sizeLarge .togglerThumb {
+  width: 24px;
+  height: 24px;
+}
+
+.sizeLarge .iconOn {
+  left: 8px;
+  width: 14px;
+  height: 14px;
+}
+
+.sizeLarge .iconOff {
+  right: 8px;
+  width: 14px;
+  height: 14px;
+}
+
+/* Couleurs */
+.colorBlue {
+  color: #3b82f6;
+}
+
+.colorRed {
+  color: #ef4444;
+}
+
+.colorGreen {
+  color: #10b981;
+}
+
+.colorPurple {
+  color: #8b5cf6;
+}
+
+.colorIndigo {
+  color: #6366f1;
+}
+
+.colorPink {
+  color: #ec4899;
+}
+
+.colorYellow {
+  color: #f59e0b;
+}
+
+/* Focus states pour chaque couleur */
+.colorBlue.togglerInput:focus-visible + .togglerTrack {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.colorRed.togglerInput:focus-visible + .togglerTrack {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.colorGreen.togglerInput:focus-visible + .togglerTrack {
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.colorPurple.togglerInput:focus-visible + .togglerTrack {
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.colorIndigo.togglerInput:focus-visible + .togglerTrack {
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.colorPink.togglerInput:focus-visible + .togglerTrack {
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+}
+
+.colorYellow.togglerInput:focus-visible + .togglerTrack {
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}
+
+/* État désactivé */
+.togglerDisabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.togglerDisabled .togglerWrapper {
+  cursor: not-allowed;
+}
+
+.togglerDisabled .togglerTrack {
+  background-color: #f1f5f9;
+  border-color: #e2e8f0;
+}
+
+.togglerDisabled .togglerThumb {
+  background-color: #f8fafc;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.togglerDisabled .togglerInput:checked + .togglerTrack {
+  opacity: 0.7;
+}
+
+.togglerDisabled .togglerInput:checked + .togglerTrack .iconOn {
+  stroke: #94a3b8;
+}
+
+.togglerDisabled .togglerInput:not(:checked) + .togglerTrack .iconOff {
+  stroke: #cbd5e1;
+}
+
+.errorMessage {
+  color: #dc2626;
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+}
+
+.helperText {
+  color: #64748b;
+  font-size: 12px;
+  margin-top: 4px;
+  font-style: italic;
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+}
+
+/* ============================================
+   DARK MODE
+============================================ */
+
+:global(body.dark) .togglerLabel {
+  color: #cbd5e1;
+}
+
+:global(body.dark) .labelDisabled {
+  color: #64748b;
+}
+
+:global(body.dark) .togglerTrack {
+  background-color: #1e293b;
+  border-color: #475569;
+}
+
+:global(body.dark) .togglerWrapper:hover:not(.togglerDisabled *) .togglerTrack {
+  border-color: #64748b;
+}
+
+:global(body.dark) .togglerInput:not(:checked) + .togglerTrack .iconOff {
+  stroke: #94a3b8;
+}
+
+:global(body.dark) .togglerDisabled .togglerTrack {
+  background-color: #374151;
+  border-color: #4b5563;
+}
+
+:global(body.dark) .togglerDisabled .togglerThumb {
+  background-color: #4b5563;
+}
+
+/* Couleurs dark mode */
+:global(body.dark) .colorBlue {
+  color: #2563eb;
+}
+
+:global(body.dark) .colorRed {
+  color: #dc2626;
+}
+
+:global(body.dark) .colorGreen {
+  color: #059669;
+}
+
+:global(body.dark) .colorPurple {
+  color: #7c3aed;
+}
+
+:global(body.dark) .colorIndigo {
+  color: #4f46e5;
+}
+
+:global(body.dark) .colorPink {
+  color: #db2777;
+}
+
+:global(body.dark) .colorYellow {
+  color: #d97706;
+}
+
+/* Focus states dark mode pour chaque couleur */
+:global(body.dark) .colorBlue.togglerInput:focus-visible + .togglerTrack {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+:global(body.dark) .colorRed.togglerInput:focus-visible + .togglerTrack {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+:global(body.dark) .colorGreen.togglerInput:focus-visible + .togglerTrack {
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+:global(body.dark) .colorPurple.togglerInput:focus-visible + .togglerTrack {
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+}
+
+:global(body.dark) .colorIndigo.togglerInput:focus-visible + .togglerTrack {
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+:global(body.dark) .colorPink.togglerInput:focus-visible + .togglerTrack {
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.2);
+}
+
+:global(body.dark) .colorYellow.togglerInput:focus-visible + .togglerTrack {
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+}
+
+:global(body.dark) .helperText {
+  color: #94a3b8;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN ULTRA
+============================================ */
+
+/* Desktop Large */
+@media (min-width: 1400px) {
+  .togglerLabel {
+    font-size: 15px;
+  }
+  
+  .sizeSmall .togglerTrack {
+    width: 44px;
+    height: 26px;
+  }
+  
+  .sizeSmall .togglerThumb {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .sizeSmall .iconOn,
+  .sizeSmall .iconOff {
+    width: 11px;
+    height: 11px;
+  }
+  
+  .sizeMedium .togglerTrack {
+    width: 56px;
+    height: 30px;
+  }
+  
+  .sizeMedium .togglerThumb {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .sizeMedium .iconOn,
+  .sizeMedium .iconOff {
+    width: 13px;
+    height: 13px;
+  }
+  
+  .sizeLarge .togglerTrack {
+    width: 68px;
+    height: 34px;
+  }
+  
+  .sizeLarge .togglerThumb {
+    width: 26px;
+    height: 26px;
+  }
+  
+  .sizeLarge .iconOn,
+  .sizeLarge .iconOff {
+    width: 15px;
+    height: 15px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    font-size: 13px;
+  }
+}
+
+/* Tablet Landscape */
+@media (max-width: 1200px) {
+  .togglerContainer {
+    gap: 12px;
+  }
+  
+  .togglerLabel {
+    font-size: 13px;
+  }
+  
+  .sizeSmall .togglerTrack {
+    width: 36px;
+    height: 22px;
+  }
+  
+  .sizeSmall .togglerThumb {
+    width: 14px;
+    height: 14px;
+    top: 3px;
+    left: 3px;
+  }
+  
+  .sizeSmall .iconOn,
+  .sizeSmall .iconOff {
+    width: 9px;
+    height: 9px;
+  }
+  
+  .sizeMedium .togglerTrack {
+    width: 48px;
+    height: 26px;
+  }
+  
+  .sizeMedium .togglerThumb {
+    width: 18px;
+    height: 18px;
+    top: 3px;
+    left: 3px;
+  }
+  
+  .sizeMedium .iconOn {
+    left: 5px;
+  }
+  
+  .sizeMedium .iconOff {
+    right: 5px;
+  }
+  
+  .sizeMedium .iconOn,
+  .sizeMedium .iconOff {
+    width: 11px;
+    height: 11px;
+  }
+  
+  .sizeLarge .togglerTrack {
+    width: 60px;
+    height: 30px;
+  }
+  
+  .sizeLarge .togglerThumb {
+    width: 22px;
+    height: 22px;
+    top: 3px;
+    left: 3px;
+  }
+  
+  .sizeLarge .iconOn {
+    left: 7px;
+  }
+  
+  .sizeLarge .iconOff {
+    right: 7px;
+  }
+  
+  .sizeLarge .iconOn,
+  .sizeLarge .iconOff {
+    width: 13px;
+    height: 13px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    left: -4px;
+  }
+}
+
+/* Tablet Portrait */
+@media (max-width: 768px) {
+  .container {
+    margin-bottom: 12px;
+  }
+  
+  .togglerContainer {
+    gap: 10px;
+  }
+  
+  .togglerLabel {
+    font-size: 12.5px;
+  }
+  
+  .sizeSmall .togglerTrack {
+    width: 34px;
+    height: 20px;
+  }
+  
+  .sizeSmall .togglerThumb {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .sizeSmall .iconOn,
+  .sizeSmall .iconOff {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .sizeMedium .togglerTrack {
+    width: 46px;
+    height: 24px;
+  }
+  
+  .sizeMedium .togglerThumb {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .sizeMedium .iconOn,
+  .sizeMedium .iconOff {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .sizeLarge .togglerTrack {
+    width: 58px;
+    height: 28px;
+  }
+  
+  .sizeLarge .togglerThumb {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .sizeLarge .iconOn,
+  .sizeLarge .iconOff {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    font-size: 11px;
+    bottom: -18px;
+  }
+}
+
+/* Mobile Large */
+@media (max-width: 576px) {
+  .container {
+    margin-bottom: 10px;
+  }
+  
+  .togglerContainer {
+    gap: 8px;
+  }
+  
+  .togglerLabel {
+    font-size: 12px;
+  }
+  
+  .sizeSmall .togglerTrack {
+    width: 32px;
+    height: 18px;
+  }
+  
+  .sizeSmall .togglerThumb {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .sizeSmall .iconOn,
+  .sizeSmall .iconOff {
+    width: 7px;
+    height: 7px;
+  }
+  
+  .sizeMedium .togglerTrack {
+    width: 44px;
+    height: 22px;
+  }
+  
+  .sizeMedium .togglerThumb {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .sizeMedium .iconOn {
+    left: 5px;
+  }
+  
+  .sizeMedium .iconOff {
+    right: 5px;
+  }
+  
+  .sizeMedium .iconOn,
+  .sizeMedium .iconOff {
+    width: 9px;
+    height: 9px;
+  }
+  
+  .sizeLarge .togglerTrack {
+    width: 56px;
+    height: 26px;
+  }
+  
+  .sizeLarge .togglerThumb {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .sizeLarge .iconOn {
+    left: 6px;
+  }
+  
+  .sizeLarge .iconOff {
+    right: 6px;
+  }
+  
+  .sizeLarge .iconOn,
+  .sizeLarge .iconOff {
+    width: 11px;
+    height: 11px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    font-size: 11px;
+    bottom: -16px;
+  }
+}
+
+/* Mobile Small */
+@media (max-width: 400px) {
+  .togglerContainer {
+    gap: 6px;
+  }
+  
+  .togglerLabel {
+    font-size: 11.5px;
+  }
+  
+  .sizeSmall .togglerTrack {
+    width: 30px;
+    height: 16px;
+  }
+  
+  .sizeSmall .togglerThumb {
+    width: 8px;
+    height: 8px;
+    top: 3px;
+    left: 3px;
+  }
+  
+  .sizeSmall .iconOn,
+  .sizeSmall .iconOff {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .sizeMedium .togglerTrack {
+    width: 42px;
+    height: 20px;
+  }
+  
+  .sizeMedium .togglerThumb {
+    width: 12px;
+    height: 12px;
+    top: 3px;
+    left: 3px;
+  }
+  
+  .sizeMedium .iconOn,
+  .sizeMedium .iconOff {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .sizeLarge .togglerTrack {
+    width: 54px;
+    height: 24px;
+  }
+  
+  .sizeLarge .togglerThumb {
+    width: 16px;
+    height: 16px;
+    top: 3px;
+    left: 3px;
+  }
+  
+  .sizeLarge .iconOn,
+  .sizeLarge .iconOff {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    font-size: 10px;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 320px) {
+  .togglerContainer {
+    gap: 4px;
+  }
+  
+  .togglerLabel {
+    font-size: 11px;
+  }
+  
+  .sizeSmall .togglerTrack {
+    width: 28px;
+    height: 14px;
+  }
+  
+  .sizeSmall .togglerThumb {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .sizeSmall .iconOn,
+  .sizeSmall .iconOff {
+    width: 5px;
+    height: 5px;
+  }
+  
+  .sizeMedium .togglerTrack {
+    width: 40px;
+    height: 18px;
+  }
+  
+  .sizeMedium .togglerThumb {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .sizeMedium .iconOn,
+  .sizeMedium .iconOff {
+    width: 7px;
+    height: 7px;
+  }
+  
+  .sizeLarge .togglerTrack {
+    width: 52px;
+    height: 22px;
+  }
+  
+  .sizeLarge .togglerThumb {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .sizeLarge .iconOn,
+  .sizeLarge .iconOff {
+    width: 9px;
+    height: 9px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    font-size: 9px;
+  }
+}
+
+/* ============================================
+   ANIMATIONS
+============================================ */
+
+.togglerContainer {
+  animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.togglerThumb {
+  animation: thumbSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes thumbSlide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY
+============================================ */
+
+.togglerInput:disabled {
+  cursor: not-allowed;
+}
+
+/* Screen reader only */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

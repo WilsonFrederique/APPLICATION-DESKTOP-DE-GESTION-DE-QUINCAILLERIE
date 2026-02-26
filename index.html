@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Content Security Policy PERMISSIVE pour le développement -->
+    <meta 
+      http-equiv="Content-Security-Policy" 
+      content="
+        default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
+        script-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
+        style-src * 'unsafe-inline' data: blob:;
+        img-src * data: blob: file:;
+        font-src * data: blob:;
+        connect-src * 'self' http://localhost:* ws://localhost:* http://127.0.0.1:* ws://127.0.0.1:*;
+        frame-src *;
+        media-src * data: blob:;
+        object-src *;
+        worker-src * blob:;
+        manifest-src *;
+      "
+    />
+    
+    <title>Gestion de Stock</title>
+    
+    <!-- Script pour vérifier le chargement du logo -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('📄 Page chargée');
+        
+        // Vérifier l'icône
+        const icon = document.querySelector('link[rel="icon"]');
+        if (icon) {
+          console.log('🎯 Icône détectée:', icon.href);
+          
+          // Tester le chargement de l'image
+          const testImg = new Image();
+          testImg.onload = function() {
+            console.log('✅ Logo chargé avec succès');
+          };
+          testImg.onerror = function() {
+            console.warn('⚠️ Logo non trouvé, essai avec chemin relatif');
+            
+            // Essayer différents chemins
+            const possiblePaths = [
+              '/logo.png',
+              './logo.png',
+              'logo.png',
+              '/public/logo.png',
+              './public/logo.png'
+            ];
+            
+            let found = false;
+            for (let path of possiblePaths) {
+              const tempImg = new Image();
+              tempImg.onload = function() {
+                if (!found) {
+                  found = true;
+                  console.log('✅ Logo trouvé à:', path);
+                  icon.href = path;
+                  // Forcer le rafraîchissement de l'icône
+                  document.head.removeChild(icon);
+                  document.head.appendChild(icon.cloneNode(true));
+                }
+              };
+              tempImg.src = path;
+            }
+          };
+          testImg.src = icon.href;
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

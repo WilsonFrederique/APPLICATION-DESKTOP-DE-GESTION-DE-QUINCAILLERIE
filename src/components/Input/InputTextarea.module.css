@@ -1,0 +1,796 @@
+/* InputTextarea.module.css - Design moderne ultra-responsive */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+  position: relative;
+  width: 100%;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.container.fullWidth {
+  width: 100%;
+}
+
+.containerDisabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Label */
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+  transition: color 0.3s ease;
+}
+
+.labelIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #64748b;
+  opacity: 0.8;
+}
+
+.labelDisabled {
+  color: #94a3b8;
+}
+
+.required {
+  color: #ef4444;
+  margin-left: 2px;
+  font-weight: 700;
+}
+
+/* Textarea Wrapper */
+.textareaWrapper {
+  position: relative;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 16px;
+  top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #64748b;
+  z-index: 1;
+  pointer-events: none;
+  transition: color 0.3s ease;
+}
+
+/* Textarea Base Styles */
+.textarea {
+  width: 100%;
+  padding: 3px 10px !important;
+  padding-left: 44px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #ffffff;
+  color: #1e293b;
+  font-family: "Segoe UI", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.textarea:not(:disabled):not(:read-only) {
+  cursor: text;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 
+    0 0 0 3px rgba(59, 130, 246, 0.1),
+    0 4px 12px rgba(59, 130, 246, 0.15);
+  transform: translateY(-1px);
+}
+
+.textarea:hover:not(:disabled):not(:focus):not(:read-only) {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* States */
+.textareaError {
+  border-color: #ef4444 !important;
+  background: linear-gradient(0deg, rgba(239, 68, 68, 0.02), rgba(239, 68, 68, 0.02)), #ffffff;
+}
+
+.textareaError:focus {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+.textareaSuccess {
+  border-color: #10b981 !important;
+  background: linear-gradient(0deg, rgba(16, 185, 129, 0.02), rgba(16, 185, 129, 0.02)), #ffffff;
+}
+
+.textareaSuccess:focus {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+}
+
+.textareaDisabled {
+  background: #f8fafc;
+  color: #94a3b8;
+  cursor: not-allowed;
+  border-color: #e2e8f0;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.textareaReadOnly {
+  background: #f8fafc;
+  color: #64748b;
+  cursor: default;
+}
+
+.textareaFocused .inputIcon {
+  color: #3b82f6;
+}
+
+/* Success Indicator */
+.successIndicator {
+  position: absolute;
+  right: 16px;
+  top: 14px;
+  color: #10b981;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: scaleIn 0.3s ease;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Character Counter */
+.charCounter {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.charCountCurrent {
+  color: #475569;
+}
+
+.charCountSeparator {
+  color: #94a3b8;
+}
+
+.charCountTotal {
+  color: #64748b;
+}
+
+.charCountWarning .charCountCurrent {
+  color: #f59e0b;
+}
+
+.charCountError .charCountCurrent {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 20px;
+  margin-top: 2px;
+}
+
+/* Error Message */
+.errorMessage {
+  color: #ef4444;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  animation: slideInUp 0.3s ease;
+}
+
+.errorIcon {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Helper Text */
+.helperText {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: italic;
+  flex: 1;
+  line-height: 1.4;
+}
+
+/* Inline Character Counter */
+.charCounterInline {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #f1f5f9;
+  margin-left: auto;
+}
+
+.charCounterInline.charCountWarning {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.charCounterInline.charCountError {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* ============================================
+   DARK MODE SUPPORT
+============================================ */
+
+:global(body.dark) .container {
+  color: #f1f5f9;
+}
+
+:global(body.dark) .label {
+  color: #cbd5e1;
+}
+
+:global(body.dark) .labelIcon {
+  color: #94a3b8;
+}
+
+:global(body.dark) .labelDisabled {
+  color: #6b7280;
+}
+
+:global(body.dark) .textarea {
+  background: #1e293b;
+  border-color: #475569;
+  color: #f1f5f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+:global(body.dark) .textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 
+    0 0 0 3px rgba(59, 130, 246, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.2);
+  background: #1e293b;
+}
+
+:global(body.dark) .textarea:hover:not(:disabled):not(:focus):not(:read-only) {
+  border-color: #4b5563;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+:global(body.dark) .textareaError {
+  border-color: #ef4444 !important;
+  background: linear-gradient(0deg, rgba(239, 68, 68, 0.05), rgba(239, 68, 68, 0.05)), #1e293b !important;
+}
+
+:global(body.dark) .textareaSuccess {
+  border-color: #10b981 !important;
+  background: linear-gradient(0deg, rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.05)), #1e293b !important;
+}
+
+:global(body.dark) .textareaDisabled {
+  background: #374151;
+  color: #6b7280;
+  border-color: #4b5563;
+}
+
+:global(body.dark) .textareaReadOnly {
+  background: #374151;
+  color: #94a3b8;
+}
+
+:global(body.dark) .charCounter {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(71, 85, 105, 0.8);
+  color: #cbd5e1;
+}
+
+:global(body.dark) .charCountCurrent {
+  color: #e2e8f0;
+}
+
+:global(body.dark) .charCountSeparator {
+  color: #94a3b8;
+}
+
+:global(body.dark) .charCountTotal {
+  color: #94a3b8;
+}
+
+:global(body.dark) .helperText {
+  color: #94a3b8;
+}
+
+:global(body.dark) .charCounterInline {
+  color: #94a3b8;
+  background: #374151;
+}
+
+:global(body.dark) .charCounterInline.charCountWarning {
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.15);
+}
+
+:global(body.dark) .charCounterInline.charCountError {
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.15);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN - ULTRA RESPONSIVE
+============================================ */
+
+/* Desktop Large */
+@media (min-width: 1600px) {
+  .textarea {
+    font-size: 15px;
+    padding: 16px 18px;
+    padding-left: 48px;
+    min-height: 130px;
+  }
+  
+  .label {
+    font-size: 15px;
+  }
+  
+  .inputIcon {
+    font-size: 20px;
+    left: 18px;
+    top: 16px;
+  }
+  
+  .successIndicator {
+    font-size: 20px;
+    right: 18px;
+    top: 16px;
+  }
+}
+
+/* Desktop */
+@media (max-width: 1400px) {
+  .textarea {
+    font-size: 14px;
+    padding: 13px 15px;
+    padding-left: 42px;
+    min-height: 110px;
+  }
+  
+  .inputIcon {
+    font-size: 17px;
+    left: 15px;
+    top: 13px;
+  }
+  
+  .successIndicator {
+    font-size: 17px;
+    right: 15px;
+    top: 13px;
+  }
+}
+
+/* Large Tablet & Small Desktop */
+@media (max-width: 1200px) {
+  .container {
+    margin-bottom: 16px;
+  }
+  
+  .textarea {
+    padding: 12px 14px;
+    padding-left: 40px;
+    border-radius: 11px;
+    min-height: 100px;
+  }
+  
+  .label {
+    font-size: 13.5px;
+  }
+  
+  .inputIcon {
+    font-size: 16px;
+    left: 14px;
+    top: 12px;
+  }
+  
+  .successIndicator {
+    font-size: 16px;
+    right: 14px;
+    top: 12px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    font-size: 11.5px;
+  }
+}
+
+/* Tablet Landscape */
+@media (max-width: 1024px) {
+  .textarea {
+    padding: 11px 13px;
+    padding-left: 38px;
+    font-size: 13.5px;
+    border-radius: 10px;
+  }
+  
+  .inputIcon {
+    font-size: 15px;
+    left: 13px;
+    top: 11px;
+  }
+  
+  .successIndicator {
+    font-size: 15px;
+    right: 13px;
+    top: 11px;
+  }
+  
+  .charCounter {
+    font-size: 11px;
+    padding: 3px 6px;
+    bottom: 10px;
+    right: 10px;
+  }
+}
+
+/* Tablet Portrait */
+@media (max-width: 768px) {
+  .container {
+    margin-bottom: 14px;
+    gap: 6px;
+  }
+  
+  .textarea {
+    padding: 10px 12px;
+    padding-left: 36px;
+    font-size: 13px;
+    border-radius: 9px;
+    min-height: 90px;
+  }
+  
+  .label {
+    font-size: 13px;
+  }
+  
+  .inputIcon {
+    font-size: 14px;
+    left: 12px;
+    top: 10px;
+  }
+  
+  .successIndicator {
+    font-size: 14px;
+    right: 12px;
+    top: 10px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    font-size: 11px;
+  }
+  
+  .charCounter {
+    font-size: 10px;
+    padding: 2px 5px;
+    bottom: 9px;
+    right: 9px;
+  }
+}
+
+/* Mobile Large */
+@media (max-width: 576px) {
+  .container {
+    margin-bottom: 12px;
+    gap: 5px;
+  }
+  
+  .textarea {
+    padding: 9px 11px;
+    padding-left: 34px;
+    font-size: 12.5px;
+    border-radius: 8px;
+    min-height: 85px;
+  }
+  
+  .label {
+    font-size: 12.5px;
+    gap: 6px;
+  }
+  
+  .labelIcon {
+    font-size: 14px;
+  }
+  
+  .inputIcon {
+    font-size: 13px;
+    left: 11px;
+    top: 9px;
+  }
+  
+  .successIndicator {
+    font-size: 13px;
+    right: 11px;
+    top: 9px;
+  }
+  
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+  }
+  
+  .charCounterInline {
+    margin-left: 0;
+    align-self: flex-end;
+  }
+}
+
+/* Mobile Small */
+@media (max-width: 400px) {
+  .container {
+    margin-bottom: 10px;
+  }
+  
+  .textarea {
+    padding: 8px 10px;
+    padding-left: 32px;
+    font-size: 12px;
+    border-radius: 7px;
+    min-height: 80px;
+  }
+  
+  .label {
+    font-size: 12px;
+  }
+  
+  .inputIcon {
+    font-size: 12px;
+    left: 10px;
+    top: 8px;
+  }
+  
+  .successIndicator {
+    font-size: 12px;
+    right: 10px;
+    top: 8px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    font-size: 10.5px;
+  }
+  
+  .charCounter {
+    font-size: 9px;
+    padding: 2px 4px;
+    bottom: 8px;
+    right: 8px;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 320px) {
+  .textarea {
+    padding: 7px 9px;
+    padding-left: 30px;
+    font-size: 11.5px;
+    border-radius: 6px;
+  }
+  
+  .inputIcon {
+    font-size: 11px;
+    left: 9px;
+    top: 7px;
+  }
+  
+  .successIndicator {
+    font-size: 11px;
+    right: 9px;
+    top: 7px;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY ENHANCEMENTS
+============================================ */
+
+.textarea:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.textarea:disabled {
+  cursor: not-allowed;
+  user-select: none;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .textarea {
+    border-width: 2px;
+  }
+  
+  .textarea:focus {
+    border-width: 3px;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .textarea,
+  .container,
+  .successIndicator,
+  .errorMessage {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .textarea {
+    border: 1px solid #000;
+    background: #fff !important;
+    color: #000 !important;
+    box-shadow: none !important;
+  }
+  
+  .charCounter {
+    background: #fff !important;
+    border: 1px solid #000 !important;
+    color: #000 !important;
+  }
+}
+
+/* ============================================
+   SPECIAL EFFECTS
+============================================ */
+
+/* Glow effect on focus for modern browsers */
+.textarea:focus {
+  animation: glowPulse 2s infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 0 3px rgba(59, 130, 246, 0.1),
+      0 4px 12px rgba(59, 130, 246, 0.15);
+  }
+  50% {
+    box-shadow: 
+      0 0 0 3px rgba(59, 130, 246, 0.15),
+      0 4px 20px rgba(59, 130, 246, 0.2);
+  }
+}
+
+/* Smooth placeholder transition */
+.textarea::placeholder {
+  color: #94a3b8;
+  transition: color 0.3s ease;
+  font-weight: 400;
+}
+
+.textarea:focus::placeholder {
+  color: #cbd5e1;
+}
+
+:global(body.dark) .textarea::placeholder {
+  color: #6b7280;
+}
+
+:global(body.dark) .textarea:focus::placeholder {
+  color: #94a3b8;
+}
+
+/* Loading state (if needed) */
+.textareaLoading {
+  position: relative;
+  overflow: hidden;
+}
+
+.textareaLoading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: loadingShimmer 1.5s infinite;
+}
+
+@keyframes loadingShimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+:global(body.dark) .textareaLoading::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+}

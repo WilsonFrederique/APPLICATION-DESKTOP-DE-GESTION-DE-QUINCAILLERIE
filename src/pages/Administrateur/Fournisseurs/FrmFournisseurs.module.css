@@ -1,0 +1,1499 @@
+/* FrmFournisseurs.module.css */
+.formContainer {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.formWrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+/* Header */
+.formHeader {
+  padding: 30px 40px 20px;
+  border-bottom: 1px solid #e2e8f0;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.headerContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.formTitle {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.formSubtitle {
+  font-size: 1.125rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.headerBadges {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.unsavedBadge,
+.editBadge,
+.stepBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.unsavedBadge {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fbbf24;
+}
+
+.editBadge {
+  background: #dbeafe;
+  color: #1e40af;
+  border: 1px solid #3b82f6;
+}
+
+.stepBadge {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+
+.stepBadge.valid {
+  background: #d1fae5;
+  color: #065f46;
+  border-color: #10b981;
+}
+
+.stepBadge.invalid {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #ef4444;
+}
+
+.headerBreadcrumbs {
+  margin-top: 10px;
+}
+
+/* Indicateur d'étapes */
+.stepIndicator {
+  padding: 30px 40px 20px;
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.stepProgressBar {
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  margin-bottom: 40px;
+  overflow: hidden;
+  position: relative;
+}
+
+.stepProgressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.stepDots {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.stepDot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.stepDot:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.stepDotNumber {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 1rem;
+  border: 2px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.stepDot.active .stepDotNumber {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+  transform: scale(1.1);
+}
+
+.stepDot.completed .stepDotNumber {
+  background: #10b981;
+  color: white;
+  border-color: #10b981;
+}
+
+.stepDotLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #64748b;
+  text-align: center;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.stepDot.active .stepDotLabel {
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.stepDot.completed .stepDotLabel {
+  color: #10b981;
+}
+
+.stepDotCheck {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #10b981;
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+/* Contenu principal */
+.mainForm {
+  padding: 40px;
+}
+
+.stepContent {
+  animation: fadeInStep 0.3s ease-out;
+}
+
+@keyframes fadeInStep {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stepHeader {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.stepTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+}
+
+.stepDescription {
+  font-size: 1.125rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Grille de formulaire */
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 30px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroupFull {
+  grid-column: 1 / -1;
+}
+
+/* Logo upload */
+.logoUploadSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.formLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #475569;
+  font-size: 0.875rem;
+}
+
+.logoUploadContainer {
+  border: 2px dashed #e2e8f0;
+  border-radius: 12px;
+  padding: 30px;
+  transition: all 0.3s ease;
+}
+
+.logoUploadContainer:hover {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+
+.logoPreview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.previewLogo {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+.uploadArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.uploadIcon {
+  font-size: 48px;
+  color: #cbd5e1;
+}
+
+.uploadText {
+  font-size: 1rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Input avec bouton */
+.inputWithButton {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.generateBtn {
+  margin-top: 31px;
+  white-space: nowrap;
+}
+
+.charCount {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  text-align: right;
+  margin-top: 4px;
+}
+
+.inputHint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* Contrôles de nombre */
+.numberInputWithControls {
+  display: flex;
+  gap: 10px;
+}
+
+.numberControls {
+  display: flex;
+  gap: 4px;
+  margin-top: 31px;
+}
+
+.numberBtn {
+  min-width: 36px;
+  height: 36px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Étoiles de notation */
+.ratingSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ratingControls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.starsContainer {
+  display: flex;
+  gap: 4px;
+}
+
+.starButton {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 2rem;
+  transition: transform 0.2s ease;
+}
+
+.starButton:hover {
+  transform: scale(1.1);
+}
+
+.starFilled {
+  color: #f59e0b;
+}
+
+.starEmpty {
+  color: #e2e8f0;
+}
+
+.ratingValue {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.ratingNumber {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.ratingMax {
+  font-size: 1.5rem;
+  color: #94a3b8;
+}
+
+.ratingInput {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ratingSlider {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: #e2e8f0;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.ratingSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ratingSlider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ratingLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+/* Sections spéciales */
+.legalInfo,
+.creditInfo,
+.performanceStats {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+}
+
+.sectionSubtitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #475569;
+  margin: 0 0 16px 0;
+}
+
+.creditStats,
+.statsGrid {
+  display: grid;
+  gap: 16px;
+}
+
+.creditStats {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.statsGrid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.statItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.statLabel {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.statValue {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.statValue.warning {
+  color: #f59e0b;
+}
+
+.statCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.statCard:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+}
+
+.statIcon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  color: #3b82f6;
+  border-radius: 8px;
+  font-size: 1.25rem;
+}
+
+.statContent {
+  flex: 1;
+}
+
+.statCard .statValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1;
+}
+
+.statCard .statLabel {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* Validation */
+.validationHelp {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #fef3c7;
+  border: 1px solid #fbbf24;
+  border-radius: 8px;
+  color: #92400e;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-top: 20px;
+}
+
+/* Récapitulatif */
+.summaryContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.summaryCard {
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 30px;
+  border: 1px solid #e2e8f0;
+}
+
+.summarySection {
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.summarySection:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.summarySectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 20px 0;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.summaryItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.summaryLabel {
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.summaryValue {
+  font-size: 1rem;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+/* Étoiles dans le récapitulatif */
+.summaryRating {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.starsSummary {
+  display: flex;
+  gap: 2px;
+}
+
+.starsSummary span {
+  font-size: 1.25rem;
+}
+
+.ratingNumberSummary {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* Statuts */
+.statusActive,
+.statusPending,
+.statusInactive,
+.statusSuspended,
+.statusBlacklisted {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.statusActive {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.statusPending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.statusInactive {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.statusSuspended {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.statusBlacklisted {
+  background: #1e293b;
+  color: #f1f5f9;
+}
+
+/* Actions de récapitulatif */
+.summaryActions {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.previewBtn {
+  min-width: 160px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px;
+}
+
+.summaryStats {
+  display: flex;
+  gap: 20px;
+}
+
+.statCardSummary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 24px;
+  background: #f1f5f9;
+  border-radius: 12px;
+  min-width: 140px;
+}
+
+.statCardSummary .statLabel {
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.statCardSummary .statValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.performanceHigh {
+  color: #10b981 !important;
+}
+
+.performanceMedium {
+  color: #f59e0b !important;
+}
+
+.performanceLow {
+  color: #ef4444 !important;
+}
+
+.edit {
+  color: #3b82f6 !important;
+}
+
+.new {
+  color: #8b5cf6 !important;
+}
+
+/* Validation finale */
+.finalValidation {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: #d1fae5;
+  border: 1px solid #10b981;
+  border-radius: 12px;
+  color: #065f46;
+  font-weight: 500;
+  margin-top: 20px;
+}
+
+.finalValidation svg {
+  font-size: 1.25rem;
+}
+
+/* Actions du formulaire */
+.formActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 0;
+  border-top: 1px solid #e2e8f0;
+  margin-top: 40px;
+}
+
+.actionsLeft,
+.actionsRight {
+  display: flex;
+  gap: 12px;
+}
+
+.btnSecondary,
+.btnReset,
+.btnPrimary,
+.btnSuccess {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 140px;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.btnSecondary {
+  background: #f1f5f9;
+  color: #475569;
+  border-color: #e2e8f0;
+}
+
+.btnSecondary:hover:not(:disabled) {
+  background: #e2e8f0;
+  transform: translateX(-3px);
+}
+
+.btnReset {
+  background: white;
+  color: #64748b;
+  border-color: #e2e8f0;
+}
+
+.btnReset:hover:not(:disabled) {
+  background: #fef2f2;
+  color: #dc2626;
+  border-color: #fca5a5;
+}
+
+.btnPrimary {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.btnPrimary:hover:not(:disabled) {
+  background: #2563eb;
+  transform: translateX(3px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+}
+
+.btnPrimary:disabled,
+.btnSecondary:disabled,
+.btnReset:disabled,
+.btnSuccess:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btnSuccess {
+  background: #10b981;
+  color: white;
+  border-color: #10b981;
+}
+
+.btnSuccess:hover:not(:disabled) {
+  background: #059669;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(16, 185, 129, 0.3);
+}
+
+.btnSuccess.loading {
+  position: relative;
+  color: transparent;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Indicateur de progression */
+.progressIndicator {
+  margin-top: 20px;
+}
+
+.progressInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.progressStatus {
+  font-weight: 500;
+}
+
+.progressBar {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+/* Actions rapides */
+.quickActions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.quickAction {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  color: #64748b;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.quickAction:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #475569;
+}
+
+/* Pied de page */
+.formFooter {
+  padding: 20px 40px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footerInfo {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.infoItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.footerActions {
+  display: flex;
+  gap: 12px;
+}
+
+.footerBtn {
+  padding: 8px 16px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  color: #64748b;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footerBtn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #475569;
+}
+
+/* Loading */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+  gap: 20px;
+  min-height: 300px;
+}
+
+.loadingContainer .spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loadingContainer p {
+  font-size: 1rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .summaryGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .creditStats {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .formContainer {
+    padding: 10px;
+  }
+  
+  .formWrapper {
+    border-radius: 16px;
+  }
+  
+  .formHeader,
+  .stepIndicator,
+  .mainForm,
+  .formFooter {
+    padding: 20px;
+  }
+  
+  .formTitle {
+    font-size: 1.75rem;
+  }
+  
+  .formSubtitle {
+    font-size: 1rem;
+  }
+  
+  .stepDots {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  
+  .stepDot {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .stepProgressBar {
+    display: none;
+  }
+  
+  .formActions {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .actionsLeft,
+  .actionsRight {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .summaryActions {
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+  }
+  
+  .previewBtn {
+    width: 100%;
+  }
+  
+  .summaryStats {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .statCardSummary {
+    min-width: auto;
+  }
+  
+  .formFooter {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  
+  .footerInfo {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .formHeader,
+  .stepIndicator,
+  .mainForm,
+  .formFooter {
+    padding: 16px;
+  }
+  
+  .formTitle {
+    font-size: 1.5rem;
+  }
+  
+  .stepTitle {
+    font-size: 1.5rem;
+  }
+  
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .quickActions {
+    flex-wrap: wrap;
+  }
+  
+  .headerBadges {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Dark mode support */
+:global(body.dark) .formContainer {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+:global(body.dark) .formWrapper {
+  background: #1e293b;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+:global(body.dark) .formHeader {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-bottom-color: #334155;
+}
+
+:global(body.dark) .formTitle {
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+:global(body.dark) .formSubtitle {
+  color: #94a3b8;
+}
+
+:global(body.dark) .unsavedBadge {
+  background: #451a03;
+  color: #fed7aa;
+  border-color: #f59e0b;
+}
+
+:global(body.dark) .editBadge {
+  background: #1e3a8a;
+  color: #bfdbfe;
+  border-color: #3b82f6;
+}
+
+:global(body.dark) .stepBadge {
+  background: #334155;
+  color: #cbd5e1;
+  border-color: #475569;
+}
+
+:global(body.dark) .stepBadge.valid {
+  background: #064e3b;
+  color: #a7f3d0;
+  border-color: #10b981;
+}
+
+:global(body.dark) .stepBadge.invalid {
+  background: #7f1d1d;
+  color: #fecaca;
+  border-color: #ef4444;
+}
+
+:global(body.dark) .stepIndicator {
+  background: #1e293b;
+  border-bottom-color: #334155;
+}
+
+:global(body.dark) .stepProgressBar {
+  background: #334155;
+}
+
+:global(body.dark) .stepDotNumber {
+  background: #334155;
+  color: #94a3b8;
+  border-color: #475569;
+}
+
+:global(body.dark) .stepDotLabel {
+  color: #94a3b8;
+}
+
+:global(body.dark) .stepDot.active .stepDotLabel {
+  color: #60a5fa;
+}
+
+:global(body.dark) .stepDot.completed .stepDotLabel {
+  color: #34d399;
+}
+
+:global(body.dark) .mainForm {
+  background: #1e293b;
+}
+
+:global(body.dark) .stepTitle {
+  color: #f1f5f9;
+}
+
+:global(body.dark) .stepDescription {
+  color: #94a3b8;
+}
+
+:global(body.dark) .formLabel {
+  color: #cbd5e1;
+}
+
+:global(body.dark) .logoUploadContainer {
+  border-color: #475569;
+  background: #0f172a;
+}
+
+:global(body.dark) .logoUploadContainer:hover {
+  border-color: #64748b;
+  background: #1e293b;
+}
+
+:global(body.dark) .uploadIcon {
+  color: #475569;
+}
+
+:global(body.dark) .uploadText {
+  color: #94a3b8;
+}
+
+:global(body.dark) .legalInfo,
+:global(body.dark) .creditInfo,
+:global(body.dark) .performanceStats {
+  background: #0f172a;
+  border-color: #334155;
+}
+
+:global(body.dark) .sectionSubtitle {
+  color: #cbd5e1;
+}
+
+:global(body.dark) .statItem {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+:global(body.dark) .statLabel {
+  color: #94a3b8;
+}
+
+:global(body.dark) .statValue {
+  color: #f1f5f9;
+}
+
+:global(body.dark) .statCard {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+:global(body.dark) .statCard:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+:global(body.dark) .statIcon {
+  background: #334155;
+  color: #60a5fa;
+}
+
+:global(body.dark) .charCount {
+  color: #64748b;
+}
+
+:global(body.dark) .inputHint {
+  color: #94a3b8;
+}
+
+:global(body.dark) .ratingSlider {
+  background: #334155;
+}
+
+:global(body.dark) .ratingLabels {
+  color: #64748b;
+}
+
+:global(body.dark) .validationHelp {
+  background: #451a03;
+  border-color: #f59e0b;
+  color: #fed7aa;
+}
+
+:global(body.dark) .summaryCard {
+  background: #0f172a;
+  border-color: #334155;
+}
+
+:global(body.dark) .summarySectionTitle {
+  color: #f1f5f9;
+}
+
+:global(body.dark) .summaryLabel {
+  color: #94a3b8;
+}
+
+:global(body.dark) .summaryValue {
+  color: #f1f5f9;
+}
+
+:global(body.dark) .ratingNumberSummary {
+  color: #f1f5f9;
+}
+
+:global(body.dark) .formActions,
+:global(body.dark) .quickActions,
+:global(body.dark) .formFooter {
+  border-top-color: #334155;
+}
+
+:global(body.dark) .formFooter {
+  background: #0f172a;
+}
+
+:global(body.dark) .infoItem {
+  color: #94a3b8;
+}
+
+:global(body.dark) .loadingContainer p {
+  color: #94a3b8;
+}
+
+:global(body.dark) .btnSecondary {
+  background: #334155;
+  color: #cbd5e1;
+  border-color: #475569;
+}
+
+:global(body.dark) .btnSecondary:hover:not(:disabled) {
+  background: #475569;
+}
+
+:global(body.dark) .btnReset {
+  background: #1e293b;
+  color: #94a3b8;
+  border-color: #475569;
+}
+
+:global(body.dark) .btnReset:hover:not(:disabled) {
+  background: #7f1d1d;
+  color: #fecaca;
+  border-color: #ef4444;
+}
+
+:global(body.dark) .quickAction {
+  background: #1e293b;
+  color: #94a3b8;
+  border-color: #475569;
+}
+
+:global(body.dark) .quickAction:hover {
+  background: #334155;
+  color: #cbd5e1;
+}
+
+:global(body.dark) .footerBtn {
+  background: #1e293b;
+  color: #94a3b8;
+  border-color: #475569;
+}
+
+:global(body.dark) .footerBtn:hover {
+  background: #334155;
+  color: #cbd5e1;
+}
+
+/* Styles d'impression */
+@media print {
+  .formContainer {
+    background: white !important;
+    padding: 0 !important;
+  }
+  
+  .formWrapper {
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+    border-radius: 0 !important;
+  }
+  
+  .btnSecondary,
+  .btnReset,
+  .btnPrimary,
+  .btnSuccess,
+  .formActions,
+  .quickActions,
+  .formFooter,
+  .headerBadges,
+  .stepIndicator {
+    display: none !important;
+  }
+  
+  .formHeader,
+  .mainForm {
+    padding: 1rem !important;
+  }
+  
+  .stepContent {
+    break-inside: avoid;
+  }
+  
+  .summaryCard {
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+  }
+}

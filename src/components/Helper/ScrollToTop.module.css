@@ -1,0 +1,116 @@
+/* Variables locales */
+:root {
+  --primary-color: #0858f7;
+  --primary-dark: #0645c7;
+  --transition-speed: 0.3s;
+}
+
+.scrollToTopContainer {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 1000;
+}
+
+.scrollButton {
+  background: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  box-shadow: 0 4px 12px rgba(8, 88, 247, 0.3);
+  animation: pulse 2s infinite;
+}
+
+.scrollButton:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(8, 88, 247, 0.4);
+}
+
+.scrollButton:active {
+  transform: translateY(0);
+}
+
+.scrollButton:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.arrowIcon {
+  font-size: 1.25rem;
+  transition: transform var(--transition-speed);
+}
+
+.scrollButton:hover .arrowIcon {
+  transform: translateY(-2px);
+}
+
+/* Animation pulse */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 4px 12px rgba(8, 88, 247, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(8, 88, 247, 0.4);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 12px rgba(8, 88, 247, 0.3);
+  }
+}
+
+/* Dark mode support */
+body.dark .scrollButton {
+  background: var(--primary-color);
+}
+
+body.dark .scrollButton:hover {
+  background: var(--primary-dark);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .scrollToTopContainer {
+    bottom: 0.75rem;
+    right: 0.75rem;
+  }
+  
+  .scrollButton {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  
+  .arrowIcon {
+    font-size: 1rem;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .scrollButton {
+    animation: none;
+    transition: none;
+  }
+  
+  .scrollButton:hover {
+    transform: none;
+  }
+  
+  .scrollButton:hover .arrowIcon {
+    transform: none;
+  }
+  
+  .scrollButton:active {
+    transform: none;
+  }
+}

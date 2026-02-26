@@ -1,0 +1,432 @@
+/* InputCheckbox.module.css - Version ultra-responsive */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+  position: relative;
+  width: fit-content;
+}
+
+.containerError {
+  margin-bottom: 24px;
+}
+
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+  padding: 4px 0;
+  position: relative;
+}
+
+.checkboxContainer:hover:not(.checkboxDisabled) .checkboxCustom {
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+}
+
+.checkboxInput {
+  position: absolute;
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
+
+.checkboxCustom {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #cbd5e1;
+  border-radius: 6px;
+  background-color: white;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.checkboxIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 12px;
+  height: 10px;
+  opacity: 0;
+  transition: all 0.2s ease;
+  stroke: white;
+}
+
+.checkboxInput:checked + .checkboxCustom {
+  border-color: transparent;
+}
+
+.checkboxInput:checked + .checkboxCustom .checkboxIcon {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.checkboxInput:focus-visible + .checkboxCustom {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Couleurs */
+.checkboxBlue.checkboxInput:checked + .checkboxCustom {
+  background-color: #3b82f6;
+}
+
+.checkboxRed.checkboxInput:checked + .checkboxCustom {
+  background-color: #ef4444;
+}
+
+.checkboxGreen.checkboxInput:checked + .checkboxCustom {
+  background-color: #10b981;
+}
+
+.checkboxPurple.checkboxInput:checked + .checkboxCustom {
+  background-color: #8b5cf6;
+}
+
+/* Focus states pour chaque couleur */
+.checkboxBlue.checkboxInput:focus-visible + .checkboxCustom {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.checkboxRed.checkboxInput:focus-visible + .checkboxCustom {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.checkboxGreen.checkboxInput:focus-visible + .checkboxCustom {
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.checkboxPurple.checkboxInput:focus-visible + .checkboxCustom {
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.checkboxLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: #475569;
+  line-height: 1.4;
+}
+
+.required {
+  color: #dc2626;
+  margin-left: 2px;
+}
+
+.checkboxDisabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.checkboxDisabled .checkboxLabel {
+  color: #94a3b8;
+}
+
+.checkboxDisabled .checkboxCustom {
+  background-color: #f1f5f9;
+  border-color: #e2e8f0;
+}
+
+.checkboxDisabled .checkboxInput:checked + .checkboxCustom {
+  opacity: 0.7;
+}
+
+.errorMessage {
+  color: #dc2626;
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
+  position: absolute;
+  bottom: -20px;
+  left: 32px;
+}
+
+.helperText {
+  color: #64748b;
+  font-size: 12px;
+  margin-top: 4px;
+  font-style: italic;
+  position: absolute;
+  bottom: -20px;
+  left: 32px;
+}
+
+/* ============================================
+   DARK MODE
+============================================ */
+
+:global(body.dark) .checkboxCustom {
+  background-color: #1e293b;
+  border-color: #475569;
+}
+
+:global(body.dark) .checkboxLabel {
+  color: #cbd5e1;
+}
+
+:global(body.dark) .checkboxContainer:hover:not(.checkboxDisabled) .checkboxCustom {
+  border-color: #64748b;
+}
+
+:global(body.dark) .checkboxDisabled .checkboxLabel {
+  color: #64748b;
+}
+
+:global(body.dark) .checkboxDisabled .checkboxCustom {
+  background-color: #374151;
+  border-color: #4b5563;
+}
+
+:global(body.dark) .checkboxBlue.checkboxInput:checked + .checkboxCustom {
+  background-color: #2563eb;
+}
+
+:global(body.dark) .checkboxRed.checkboxInput:checked + .checkboxCustom {
+  background-color: #dc2626;
+}
+
+:global(body.dark) .checkboxGreen.checkboxInput:checked + .checkboxCustom {
+  background-color: #059669;
+}
+
+:global(body.dark) .checkboxPurple.checkboxInput:checked + .checkboxCustom {
+  background-color: #7c3aed;
+}
+
+:global(body.dark) .checkboxBlue.checkboxInput:focus-visible + .checkboxCustom {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+:global(body.dark) .checkboxRed.checkboxInput:focus-visible + .checkboxCustom {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+:global(body.dark) .checkboxGreen.checkboxInput:focus-visible + .checkboxCustom {
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+:global(body.dark) .checkboxPurple.checkboxInput:focus-visible + .checkboxCustom {
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+}
+
+:global(body.dark) .helperText {
+  color: #94a3b8;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN ULTRA
+============================================ */
+
+/* Desktop Large */
+@media (min-width: 1400px) {
+  .checkboxCustom {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .checkboxIcon {
+    width: 13px;
+    height: 11px;
+  }
+  
+  .checkboxLabel {
+    font-size: 15px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    font-size: 13px;
+  }
+}
+
+/* Tablet Landscape */
+@media (max-width: 1200px) {
+  .checkboxContainer {
+    gap: 10px;
+  }
+  
+  .checkboxCustom {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .checkboxIcon {
+    width: 11px;
+    height: 9px;
+  }
+  
+  .checkboxLabel {
+    font-size: 13px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    left: 28px;
+  }
+}
+
+/* Tablet Portrait */
+@media (max-width: 768px) {
+  .container {
+    margin-bottom: 12px;
+  }
+  
+  .checkboxContainer {
+    gap: 9px;
+  }
+  
+  .checkboxCustom {
+    width: 17px;
+    height: 17px;
+    border-radius: 5px;
+  }
+  
+  .checkboxIcon {
+    width: 10px;
+    height: 8px;
+  }
+  
+  .checkboxLabel {
+    font-size: 12.5px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    font-size: 11px;
+    left: 26px;
+    bottom: -18px;
+  }
+}
+
+/* Mobile Large */
+@media (max-width: 576px) {
+  .container {
+    margin-bottom: 10px;
+  }
+  
+  .checkboxContainer {
+    gap: 8px;
+  }
+  
+  .checkboxCustom {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+  }
+  
+  .checkboxIcon {
+    width: 9px;
+    height: 7px;
+  }
+  
+  .checkboxLabel {
+    font-size: 12px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    font-size: 11px;
+    left: 24px;
+    bottom: -16px;
+  }
+}
+
+/* Mobile Small */
+@media (max-width: 400px) {
+  .checkboxContainer {
+    gap: 7px;
+  }
+  
+  .checkboxCustom {
+    width: 15px;
+    height: 15px;
+  }
+  
+  .checkboxIcon {
+    width: 8px;
+    height: 6px;
+  }
+  
+  .checkboxLabel {
+    font-size: 11.5px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    font-size: 10px;
+    left: 22px;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 320px) {
+  .checkboxContainer {
+    gap: 6px;
+  }
+  
+  .checkboxCustom {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .checkboxIcon {
+    width: 7px;
+    height: 5px;
+  }
+  
+  .checkboxLabel {
+    font-size: 11px;
+  }
+  
+  .errorMessage,
+  .helperText {
+    font-size: 9px;
+    left: 20px;
+  }
+}
+
+/* ============================================
+   ANIMATIONS
+============================================ */
+
+.checkboxContainer {
+  animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY
+============================================ */
+
+.checkboxInput:disabled {
+  cursor: not-allowed;
+}
+
+/* Screen reader only */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
