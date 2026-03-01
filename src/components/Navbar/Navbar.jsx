@@ -1,588 +1,194 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
-  Menu,
-  X,
-  ShoppingBag,
-  User,
-  Search,
-  Sun,
-  Moon,
-  ChevronDown,
-  UserCircle,
-  LogOut,
-  Settings,
-  ChevronLeft
+  Menu, X, User, ChevronDown,
+  UserCircle, LogOut, Settings, Eye, EyeOff,
 } from 'lucide-react';
 import styles from './Navbar.module.css';
-import { MdShoppingCart } from "react-icons/md";
+
+const NAV_ITEMS = [
+  { key: 'dashboard', label: 'Accueil',  route: '/dashboardVendeur' },
+  { key: 'vente',     label: 'Vente',    route: '/nouvelleVentesVendeur' },
+  { key: 'produits',  label: 'Produits', route: '/produitVendeur' },
+  { key: 'stock',     label: 'Stock',    route: '/stockVendeur' },
+  { key: 'clients',   label: 'Clients',  route: '/clients' },
+];
 
 const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [isDarkMode] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [currentSection, setCurrentSection] = useState(activeSection);
-  const [cartCount, setCartCount] = useState(0);
-  const profileRef = useRef(null);
-  const searchRef = useRef(null);
 
-  // Déterminer la section active en fonction de l'URL
+  const [isMenuOpen,     setIsMenuOpen]     = useState(false);
+  const [isScrolled,     setIsScrolled]     = useState(false);
+  const [isProfileOpen,  setIsProfileOpen]  = useState(false);
+  const [isNavVisible,   setIsNavVisible]   = useState(true);
+  const [currentSection, setCurrentSection] = useState(activeSection);
+
+  const profileRef = useRef(null);
+
   const getSectionFromPath = (pathname) => {
-    if (pathname.includes('/dashboardVendeur')) return 'dashboard';
+    if (pathname.includes('/dashboardVendeur'))      return 'dashboard';
     if (pathname.includes('/nouvelleVentesVendeur')) return 'vente';
-    if (pathname.includes('/produitVendeur')) return 'produits';
-    if (pathname.includes('/stockVendeur')) return 'stock';
-    if (pathname.includes('/clients')) return 'clients';
+    if (pathname.includes('/produitVendeur'))        return 'produits';
+    if (pathname.includes('/stockVendeur'))          return 'stock';
+    if (pathname.includes('/clients'))               return 'clients';
     if (pathname.includes('/ventes') || pathname.includes('/venteHistorique') || pathname.includes('/venteFactures')) return 'ventes';
-    if (pathname.includes('/paniersVendeurs')) return 'paniers';
-    return 'dashboard'; // Par défaut
+    return 'dashboard';
   };
 
-  // Mettre à jour la section active quand l'URL change
-  useEffect(() => {
-    const sectionFromUrl = getSectionFromPath(location.pathname);
-    setCurrentSection(sectionFromUrl);
-  }, [location.pathname]);
+  useEffect(() => { setCurrentSection(getSectionFromPath(location.pathname)); }, [location.pathname]);
+  useEffect(() => { setCurrentSection(activeSection); }, [activeSection]);
 
-  // Mettre à jour la section active quand la prop change (pour les cas où on navigue programmatiquement)
   useEffect(() => {
-    setCurrentSection(activeSection);
-  }, [activeSection]);
-
-  // Fonction pour calculer le nombre total d'articles dans tous les paniers en cours
-  const calculateTotalCartItems = useCallback(() => {
-    try {
-      const savedCarts = JSON.parse(localStorage.getItem('vendeurCarts') || '[]');
-      const totalItems = savedCarts
-        .filter(cart => cart.status === 'en_cours')
-        .reduce((total, cart) => total + cart.items.length, 0);
-      return totalItems;
-    } catch (error) {
-      console.error('Erreur lors du calcul des articles du panier:', error);
-      return 0;
-    }
+    const onScroll = () => setIsScrolled(window.scrollY > 10);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Mettre à jour le compteur du panier
-  const updateCartCount = useCallback(() => {
-    const count = calculateTotalCartItems();
-    setCartCount(count);
-  }, [calculateTotalCartItems]);
-
-  // Écouter les changements du localStorage
   useEffect(() => {
-    // Initialiser le compteur
-    updateCartCount();
-
-    // Écouter l'événement personnalisé 'cartUpdated'
-    const handleCartUpdate = () => {
-      updateCartCount();
+    const handler = (e) => {
+      if (profileRef.current && !profileRef.current.contains(e.target)) setIsProfileOpen(false);
     };
-
-    // Écouter les changements du localStorage (si modifié dans un autre onglet)
-    const handleStorageChange = (e) => {
-      if (e.key === 'vendeurCarts') {
-        updateCartCount();
-      }
-    };
-
-    window.addEventListener('cartUpdated', handleCartUpdate);
-    window.addEventListener('storage', handleStorageChange);
-
-    return () => {
-      window.removeEventListener('cartUpdated', handleCartUpdate);
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, [updateCartCount]); // Ajout de updateCartCount dans les dépendances
-
-  // Gestion du scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  // Fermer les menus quand on clique à l'extérieur
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (profileRef.current && !profileRef.current.contains(event.target)) {
-        setIsProfileOpen(false);
-      }
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
-        setIsSearchOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  // Appliquer le dark mode
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark-mode');
-    } else {
-      document.documentElement.classList.remove('dark-mode');
-    }
-  }, [isDarkMode]);
-
-  // Fonction de navigation
   const handleNavigation = (section, route) => {
     setCurrentSection(section);
-    if (route) {
-      navigate(route);
-    }
-    if (onNavigate) {
-      onNavigate(section);
-    }
+    if (route) navigate(route);
+    if (onNavigate) onNavigate(section);
     setIsMenuOpen(false);
-    setIsSearchOpen(false);
   };
 
-  // Fonction pour aller à la page des paniers
-  const goToCarts = () => {
-    handleNavigation('paniers', '/paniersVendeurs');
-  };
-
-  // Fonction de recherche
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-
-      // Mapper les mots-clés aux sections et routes
-      const searchMap = {
-        'dashboard': { section: 'dashboard', route: '/dashboardVendeur' },
-        'accueil': { section: 'dashboard', route: '/dashboardVendeur' },
-        'nouvelle vente': { section: 'vente', route: '/nouvelleVentesVendeur' },
-        'vente': { section: 'vente', route: '/nouvelleVentesVendeur' },
-        'produits': { section: 'produits', route: '/produitVendeur' },
-        'produit': { section: 'produits', route: '/produitVendeur' },
-        'stock': { section: 'stock', route: '/stockVendeur' },
-        'stocks': { section: 'stock', route: '/stockVendeur' },
-        'ventes': { section: 'ventes', route: '/ventes' },
-        'historique': { section: 'ventes', route: '/venteHistoriqueVendeur' },
-        'factures': { section: 'ventes', route: '/venteFacturesVendeur' },
-        'clients': { section: 'clients', route: '/clients' },
-        'client': { section: 'clients', route: '/clients' },
-        'paniers': { section: 'paniers', route: '/paniersVendeurs' },
-        'panier': { section: 'paniers', route: '/paniersVendeurs' },
-        'cart': { section: 'paniers', route: '/paniersVendeurs' }
-      };
-
-      // Recherche par mot-clé
-      let found = null;
-
-      for (const [keyword, data] of Object.entries(searchMap)) {
-        if (query.includes(keyword)) {
-          found = data;
-          break;
-        }
-      }
-
-      if (found) {
-        handleNavigation(found.section, found.route);
-        setSearchQuery('');
-        setIsSearchOpen(false);
-      } else {
-        console.log('Recherche:', searchQuery);
-        // Optionnel: Afficher un toast ou message d'erreur
-        alert('Aucune page trouvée pour cette recherche');
-      }
-    }
-  };
-
-  // Vérifier si une section est active
-  const isActive = (section) => {
-    return currentSection === section;
-  };
+  const isActive = (section) => currentSection === section;
 
   return (
     <nav className={`${styles.navbar} ${isScrolled ? styles.scrolled : ''}`}>
       <div className={styles.container}>
 
         {/* Logo */}
-        <div className={styles.logo}>
-          <button
-            onClick={() => handleNavigation('dashboard', '/dashboardVendeur')}
-            className={styles.logoLink}
-          >
-            <span className={styles.logoText}>QUINCAILLERIE</span>
-            <span className={styles.logoDot}>.</span>
-          </button>
-        </div>
+        <button onClick={() => handleNavigation('dashboard', '/dashboardVendeur')} className={styles.logoLink}>
+          <span className={styles.logoText}>QUINCAILLERIE</span>
+          <span className={styles.logoDot}>.</span>
+        </button>
 
-        {/* Menu Desktop */}
-        <div className={styles.menuDesktop}>
+        {/* Desktop Nav */}
+        <div className={`${styles.menuDesktop} ${isNavVisible ? styles.navVisible : styles.navHidden}`}>
           <ul className={styles.navLinks}>
-            <li>
-              <button
-                onClick={() => handleNavigation('dashboard', '/dashboardVendeur')}
-                className={`${styles.navLink} ${isActive('dashboard') ? styles.active : ''}`}
-              >
-                Accueil
-                {isActive('dashboard') && <div className={styles.activeIndicator} />}
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => handleNavigation('vente', '/nouvelleVentesVendeur')}
-                className={`${styles.navLink} ${isActive('vente') ? styles.active : ''}`}
-              >
-                Vente
-                {isActive('vente') && <div className={styles.activeIndicator} />}
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => handleNavigation('produits', '/produitVendeur')}
-                className={`${styles.navLink} ${isActive('produits') ? styles.active : ''}`}
-              >
-                Produits
-                {isActive('produits') && <div className={styles.activeIndicator} />}
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => handleNavigation('stock', '/stockVendeur')}
-                className={`${styles.navLink} ${isActive('stock') ? styles.active : ''}`}
-              >
-                Stock
-                {isActive('stock') && <div className={styles.activeIndicator} />}
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => handleNavigation('clients', '/clients')}
-                className={`${styles.navLink} ${isActive('clients') ? styles.active : ''}`}
-              >
-                Clients
-                {isActive('clients') && <div className={styles.activeIndicator} />}
-              </button>
-            </li>
+            {NAV_ITEMS.map(({ key, label, route }) => (
+              <li key={key}>
+                <button
+                  onClick={() => handleNavigation(key, route)}
+                  className={`${styles.navLink} ${isActive(key) ? styles.active : ''}`}
+                >
+                  {label}
+                  {isActive(key) && <span className={styles.activeBar} />}
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
 
         {/* Actions */}
         <div className={styles.actions}>
-          {/* Search */}
-          <div className={styles.searchWrapper} ref={searchRef}>
-            <button
-              className={styles.searchBtn}
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-              aria-label="Search"
-            >
-              <Search size={20} />
-            </button>
 
-            {/* Search Modal */}
-            {isSearchOpen && (
-              <div className={styles.searchModal}>
-                <form onSubmit={handleSearch} className={styles.searchForm}>
-                  <div className={styles.searchInputGroup}>
-                    <Search size={20} className={styles.searchIcon} />
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Rechercher une page..."
-                      className={styles.searchInput}
-                      autoFocus
-                    />
-                    {searchQuery && (
-                      <button
-                        type="button"
-                        onClick={() => setSearchQuery('')}
-                        className={styles.clearSearch}
-                      >
-                        <X size={16} />
-                      </button>
-                    )}
-                  </div>
-                  <button type="submit" className={styles.searchSubmit}>
-                    Rechercher
-                  </button>
-                </form>
-
-                {/* Suggestions */}
-                <div className={styles.searchSuggestions}>
-                  <p className={styles.suggestionsTitle}>Suggestions:</p>
-                  <button
-                    className={styles.suggestionItem}
-                    onClick={() => {
-                      setSearchQuery('Dashboard');
-                      setTimeout(() => {
-                        const form = document.querySelector(`.${styles.searchForm}`);
-                        if (form) form.requestSubmit();
-                      }, 100);
-                    }}
-                  >
-                    Dashboard / Accueil
-                  </button>
-                  <button
-                    className={styles.suggestionItem}
-                    onClick={() => {
-                      setSearchQuery('Nouvelle vente');
-                      setTimeout(() => {
-                        const form = document.querySelector(`.${styles.searchForm}`);
-                        if (form) form.requestSubmit();
-                      }, 100);
-                    }}
-                  >
-                    Nouvelle vente
-                  </button>
-                  <button
-                    className={styles.suggestionItem}
-                    onClick={() => {
-                      setSearchQuery('Produits');
-                      setTimeout(() => {
-                        const form = document.querySelector(`.${styles.searchForm}`);
-                        if (form) form.requestSubmit();
-                      }, 100);
-                    }}
-                  >
-                    Produits
-                  </button>
-                  <button
-                    className={styles.suggestionItem}
-                    onClick={() => {
-                      setSearchQuery('Clients');
-                      setTimeout(() => {
-                        const form = document.querySelector(`.${styles.searchForm}`);
-                        if (form) form.requestSubmit();
-                      }, 100);
-                    }}
-                  >
-                    Clients
-                  </button>
-                  <button
-                    className={styles.suggestionItem}
-                    onClick={() => {
-                      setSearchQuery('Paniers');
-                      setTimeout(() => {
-                        const form = document.querySelector(`.${styles.searchForm}`);
-                        if (form) form.requestSubmit();
-                      }, 100);
-                    }}
-                  >
-                    Paniers
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Cart - Redirige vers Paniers.jsx */}
+          {/* Toggle nav */}
           <button
-            className={`${styles.cartBtn} ${isActive('paniers') ? styles.active : ''}`}
-            onClick={goToCarts}
-            aria-label="Shopping cart"
+            className={styles.iconBtn}
+            onClick={() => setIsNavVisible(v => !v)}
+            title={isNavVisible ? 'Cacher le menu' : 'Afficher le menu'}
           >
-            <MdShoppingCart size={20} />
-            {cartCount > 0 && (
-              <span className={styles.cartCount}>{cartCount}</span>
-            )}
+            {isNavVisible ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>
 
           {/* Profile */}
           <div className={styles.profileWrapper} ref={profileRef}>
             <button
-              className={styles.profileBtn}
-              onClick={() => setIsProfileOpen(!isProfileOpen)}
-              aria-label="Profile menu"
+              className={`${styles.profileBtn} ${isProfileOpen ? styles.profileBtnOpen : ''}`}
+              onClick={() => setIsProfileOpen(o => !o)}
             >
-              <div className={styles.profileAvatar}>
-                <User size={20} />
-              </div>
-              <ChevronDown size={16} className={styles.profileArrow} />
+              <div className={styles.avatar}><User size={16} /></div>
+              <ChevronDown size={14} className={`${styles.chevron} ${isProfileOpen ? styles.chevronOpen : ''}`} />
             </button>
 
-            {/* Profile Dropdown */}
             {isProfileOpen && (
-              <div className={styles.profileDropdown}>
+              <div className={styles.dropdown}>
                 <div className={styles.profileHeader}>
-                  <div className={styles.profileImage}>
-                    <UserCircle size={40} />
-                  </div>
-                  <div className={styles.profileInfo}>
-                    <p className={styles.profileName}>Walle Fred</p>
-                    <p className={styles.profileEmail}>wallefred@example.com</p>
+                  <div className={styles.profileAvatar}><UserCircle size={32} /></div>
+                  <div>
+                    <p className={styles.profileName}>Admin</p>
+                    <p className={styles.profileEmail}>admin</p>
                   </div>
                 </div>
-
-                <div className={styles.profileMenu}>
-                  <button
-                    className={styles.profileMenuItem}
-                    onClick={() => {
-                      navigate('/profile');
-                      setIsProfileOpen(false);
-                    }}
-                  >
-                    <UserCircle size={18} />
-                    <span>Mon Compte</span>
-                  </button>
-                  <button
-                    className={styles.profileMenuItem}
-                    onClick={() => {
-                      navigate('/settings');
-                      setIsProfileOpen(false);
-                    }}
-                  >
-                    <Settings size={18} />
-                    <span>Paramètres</span>
-                  </button>
-                  <div className={styles.profileDivider}></div>
-                  <button
-                    className={styles.profileMenuItemLogout}
-                    onClick={() => {
-                      console.log('Déconnexion');
-                      setIsProfileOpen(false);
-                      // Ajoutez votre logique de déconnexion ici
-                    }}
-                  >
-                    <LogOut size={18} />
-                    <span>Déconnexion</span>
+                <div className={styles.divider} />
+                <ul className={styles.menuList}>
+                  <li>
+                    <button className={styles.menuItem} onClick={() => { navigate('/profile'); setIsProfileOpen(false); }}>
+                      <UserCircle size={16} /><span>Mon Compte</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button className={styles.menuItem} onClick={() => { navigate('/settings'); setIsProfileOpen(false); }}>
+                      <Settings size={16} /><span>Paramètres</span>
+                    </button>
+                  </li>
+                </ul>
+                <div className={styles.divider} />
+                <div className={styles.menuListPadded}>
+                  <button className={`${styles.menuItem} ${styles.menuItemDanger}`} onClick={() => setIsProfileOpen(false)}>
+                    <LogOut size={16} /><span>Déconnexion</span>
                   </button>
                 </div>
               </div>
             )}
           </div>
 
-          {/* Menu Toggle Mobile */}
-          <button
-            className={styles.menuToggle}
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {/* Mobile hamburger */}
+          <button className={`${styles.iconBtn} ${styles.mobileOnly}`} onClick={() => setIsMenuOpen(o => !o)}>
+            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile drawer */}
+      <div className={`${styles.drawer} ${isMenuOpen ? styles.drawerOpen : ''}`}>
+        <div className={styles.drawerHeader}>
+          <div className={styles.drawerProfile}>
+            <UserCircle size={36} />
+            <div>
+              <p className={styles.profileName}>Admin</p>
+            </div>
+          </div>
+          <button className={styles.drawerCloseBtn} onClick={() => setIsMenuOpen(false)}>
+            <X size={18} />
           </button>
         </div>
 
-        {/* Menu Mobile */}
-        <div className={`${styles.menuMobile} ${isMenuOpen ? styles.active : ''}`}>
-          {/* Header avec bouton retour */}
-          <div className={styles.mobileHeader}>
-            <button
-              className={styles.mobileBackBtn}
-              onClick={() => setIsMenuOpen(false)}
-              aria-label="Fermer le menu"
-            >
-              <ChevronLeft size={24} />
-              <span>Retour</span>
-            </button>
+        <div className={styles.divider} />
 
-            <div className={styles.mobileProfile}>
-              <div>
-                <UserCircle size={40} />
-              </div>
-              <div>
-                <p className={styles.mobileProfileName}>Walle Fred</p>
-                <p className={styles.mobileProfileStatus}>En ligne</p>
-              </div>
-            </div>
-          </div>
+        <ul className={styles.drawerLinks}>
+          {[...NAV_ITEMS, { key: 'ventes', label: 'Ventes', route: '/ventes' }].map(({ key, label, route }) => (
+            <li key={key}>
+              <button
+                onClick={() => handleNavigation(key, route)}
+                className={`${styles.drawerLink} ${isActive(key) ? styles.drawerLinkActive : ''}`}
+              >
+                {isActive(key) && <span className={styles.drawerActiveDot} />}
+                {label}
+              </button>
+            </li>
+          ))}
+        </ul>
 
-          <ul className={styles.navLinksMobile}>
-            <li>
-              <button
-                onClick={() => handleNavigation('dashboard', '/dashboardVendeur')}
-                className={`${styles.navLinkMobile} ${isActive('dashboard') ? styles.active : ''}`}
-              >
-                Dashboard Vendeur
-                {isActive('dashboard') && <div className={styles.mobileActiveIndicator} />}
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => handleNavigation('vente', '/nouvelleVentesVendeur')}
-                className={`${styles.navLinkMobile} ${isActive('vente') ? styles.active : ''}`}
-              >
-                Nouvelle vente
-                {isActive('vente') && <div className={styles.mobileActiveIndicator} />}
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => handleNavigation('produits', '/produitVendeur')}
-                className={`${styles.navLinkMobile} ${isActive('produits') ? styles.active : ''}`}
-              >
-                Produits
-                {isActive('produits') && <div className={styles.mobileActiveIndicator} />}
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => handleNavigation('stock', '/stockVendeur')}
-                className={`${styles.navLinkMobile} ${isActive('stock') ? styles.active : ''}`}
-              >
-                Stock
-                {isActive('stock') && <div className={styles.mobileActiveIndicator} />}
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => handleNavigation('ventes', '/ventes')}
-                className={`${styles.navLinkMobile} ${isActive('ventes') ? styles.active : ''}`}
-              >
-                Ventes
-                {isActive('ventes') && <div className={styles.mobileActiveIndicator} />}
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => handleNavigation('clients', '/clients')}
-                className={`${styles.navLinkMobile} ${isActive('clients') ? styles.active : ''}`}
-              >
-                Clients
-                {isActive('clients') && <div className={styles.mobileActiveIndicator} />}
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => handleNavigation('paniers', '/paniersVendeurs')}
-                className={`${styles.navLinkMobile} ${isActive('paniers') ? styles.active : ''}`}
-              >
-                Paniers
-                {cartCount > 0 && (
-                  <span className={styles.mobileCartBadge}>{cartCount}</span>
-                )}
-                {isActive('paniers') && <div className={styles.mobileActiveIndicator} />}
-              </button>
-            </li>
-          </ul>
-
-          {/* Mobile Actions */}
-          <div className={styles.mobileActions}>
-            <button
-              className={styles.mobileActionBtnLogout}
-              onClick={() => {
-                console.log('Déconnexion mobile');
-                setIsMenuOpen(false);
-                // Ajoutez votre logique de déconnexion ici
-              }}
-            >
-              <LogOut size={20} />
-              <span>Déconnexion</span>
-            </button>
-          </div>
+        <div className={styles.divider} style={{ marginTop: 'auto' }} />
+        <div className={styles.drawerFooter}>
+          <button className={`${styles.menuItem} ${styles.menuItemDanger} ${styles.drawerLogout}`} onClick={() => setIsMenuOpen(false)}>
+            <LogOut size={16} /><span>Déconnexion</span>
+          </button>
         </div>
-
-        {/* Overlay */}
-        {isMenuOpen && (
-          <div
-            className={styles.overlay}
-            onClick={() => setIsMenuOpen(false)}
-          />
-        )}
       </div>
+
+      {isMenuOpen && <div className={styles.overlay} onClick={() => setIsMenuOpen(false)} />}
     </nav>
   );
 };

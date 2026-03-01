@@ -363,7 +363,7 @@ const Stocks = () => {
                                 onClick={handleAddStock}
                                 className={styles.addBtn}
                             >
-                                Ajouter
+                                Nouveau stock
                             </Button>
                         </div>
                     </div>
