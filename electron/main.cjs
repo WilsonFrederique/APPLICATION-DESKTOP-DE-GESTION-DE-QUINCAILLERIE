@@ -35,7 +35,7 @@ function createWindow() {
     fullscreenable: true,
     frame: true,
     titleBarStyle: 'default',
-    autoHideMenuBar: false,
+    autoHideMenuBar: true,
     transparent: false,
     hasShadow: true,
     thickFrame: true,
@@ -50,7 +50,7 @@ function createWindow() {
       webSecurity: false,
       allowRunningInsecureContent: true,
       enableRemoteModule: false,
-      devTools: false,
+      devTools: true,
       scrollBounce: false,
       preload: preloadPath
     }

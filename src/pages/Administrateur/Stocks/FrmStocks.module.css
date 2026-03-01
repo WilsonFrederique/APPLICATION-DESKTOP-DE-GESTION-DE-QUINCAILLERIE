@@ -356,7 +356,6 @@
   resize: vertical;
   min-height: 100px;
   line-height: 1.5;
-  font-family: inherit;
 }
 
 /* Input Variants */

@@ -31,7 +31,6 @@
    STRUCTURE PRINCIPALE
 ============================================ */
 .paniersContainer {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   height: calc(100vh - var(--navbar-height));
   max-height: calc(100vh - var(--navbar-height));
   margin-top: 3em;

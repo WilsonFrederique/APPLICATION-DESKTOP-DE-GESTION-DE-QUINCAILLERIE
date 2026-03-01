@@ -2,11 +2,9 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 20px;
+  gap: 4px;
   position: relative;
   width: 100%;
-  animation: fadeIn 0.3s ease-out;
 }
 
 .container.fullWidth {
@@ -38,7 +36,6 @@
   align-items: center;
   gap: 8px;
   margin-bottom: 2px;
-  transition: color 0.3s ease;
 }
 
 .labelIcon {
@@ -64,7 +61,6 @@
 .textareaWrapper {
   position: relative;
   width: 100%;
-  transition: all 0.3s ease;
 }
 
 .inputIcon {
@@ -76,9 +72,7 @@
   justify-content: center;
   font-size: 18px;
   color: #64748b;
-  z-index: 1;
   pointer-events: none;
-  transition: color 0.3s ease;
 }
 
 /* Textarea Base Styles */
@@ -90,10 +84,8 @@
   border-radius: 12px;
   font-size: 14px;
   font-weight: 500;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background: #ffffff;
   color: #1e293b;
-  font-family: "Segoe UI", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   resize: vertical;
   min-height: 120px;
   line-height: 1.6;
@@ -169,18 +161,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: scaleIn 0.3s ease;
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
 }
 
 /* Character Counter */
@@ -199,7 +179,6 @@
   align-items: center;
   gap: 4px;
   pointer-events: none;
-  transition: all 0.3s ease;
 }
 
 .charCountCurrent {
@@ -241,7 +220,6 @@
   align-items: center;
   gap: 6px;
   flex: 1;
-  animation: slideInUp 0.3s ease;
 }
 
 .errorIcon {
@@ -687,17 +665,6 @@
   }
 }
 
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .textarea,
-  .container,
-  .successIndicator,
-  .errorMessage {
-    animation: none;
-    transition: none;
-  }
-}
-
 /* Print styles */
 @media print {
   .textarea {
@@ -713,33 +680,8 @@
     color: #000 !important;
   }
 }
-
-/* ============================================
-   SPECIAL EFFECTS
-============================================ */
-
-/* Glow effect on focus for modern browsers */
-.textarea:focus {
-  animation: glowPulse 2s infinite;
-}
-
-@keyframes glowPulse {
-  0%, 100% {
-    box-shadow: 
-      0 0 0 3px rgba(59, 130, 246, 0.1),
-      0 4px 12px rgba(59, 130, 246, 0.15);
-  }
-  50% {
-    box-shadow: 
-      0 0 0 3px rgba(59, 130, 246, 0.15),
-      0 4px 20px rgba(59, 130, 246, 0.2);
-  }
-}
-
-/* Smooth placeholder transition */
 .textarea::placeholder {
   color: #94a3b8;
-  transition: color 0.3s ease;
   font-weight: 400;
 }
 
@@ -774,16 +716,6 @@
     rgba(255, 255, 255, 0.2),
     transparent
   );
-  animation: loadingShimmer 1.5s infinite;
-}
-
-@keyframes loadingShimmer {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 100%;
-  }
 }
 
 :global(body.dark) .textareaLoading::after {

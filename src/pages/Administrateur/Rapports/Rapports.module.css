@@ -1,5 +1,4 @@
 .dashboardModern {
-  font-family: "Segoe UI", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   min-height: 100vh;
   padding: 0;
   animation: fadeIn 0.8s ease-out;
@@ -2428,7 +2427,6 @@
   font-size: 0.9rem;
   width: 100%;
   transition: all 0.3s ease;
-  font-family: inherit;
 }
 
 .dateInput:focus {

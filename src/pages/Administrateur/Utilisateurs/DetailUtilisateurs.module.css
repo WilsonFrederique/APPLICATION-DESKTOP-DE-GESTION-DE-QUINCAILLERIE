@@ -31,7 +31,6 @@
 
 /* Container principal */
 .detailContainer {
-  font-family: "Segoe UI", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   min-height: 100vh;
   background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
   position: relative;
@@ -586,7 +585,6 @@
 
 .signatureContent pre {
   margin: 0;
-  font-family: 'Courier New', Courier, monospace;
   font-size: 1rem;
   color: #475569;
   line-height: 1.6;

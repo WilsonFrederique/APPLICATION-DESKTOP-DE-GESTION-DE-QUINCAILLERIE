@@ -67,7 +67,6 @@
 .detailContainer {
   min-height: 100vh;
   background: var(--bg-secondary);
-  font-family: "Segoe UI", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   color: var(--text-primary);
   animation: fadeIn 0.5s ease-out;
 }

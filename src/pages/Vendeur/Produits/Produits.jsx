@@ -14,14 +14,10 @@ import {
   IoPencilOutline,
   IoTrashOutline,
   IoCartOutline,
-  IoAddOutline,
-  IoDownloadOutline,
-  IoRefreshOutline,
   IoFilterOutline,
   IoGridOutline,
   IoListOutline,
   IoCloseOutline,
-  IoCheckmarkCircleOutline
 } from "react-icons/io5";
 import { 
   FaBox, 
@@ -29,7 +25,6 @@ import {
   FaWarehouse,
   FaTags,
   FaTruck,
-  FaExclamationTriangle,
   FaCheckCircle
 } from "react-icons/fa";
 import { 

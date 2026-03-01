@@ -1,88 +1,3 @@
-/* Variables CSS - Thème clair uniquement */
-:root {
-  /* Couleurs principales */
-  --primary: #6366f1;
-  --primary-light: #818cf8;
-  --primary-dark: #4f46e5;
-  --secondary: #ec4899;
-  --success: #22c55e;
-  --error: #ef4444;
-  --warning: #f59e0b;
-  
-  /* Couleurs de fond */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f9fafb;
-  --bg-tertiary: #f3f4f6;
-  
-  /* Couleurs de texte */
-  --text-primary: #111827;
-  --text-secondary: #374151;
-  --text-tertiary: #6b7280;
-  
-  /* Couleurs neutres - raccourcis */
-  --dark: #111827;
-  --light: #f9fafb;
-  --lighter: #f3f4f6;
-  
-  /* Couleurs neutres détaillées */
-  --gray-50: #f9fafb;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-300: #d1d5db;
-  --gray-400: #9ca3af;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
-  --gray-700: #374151;
-  --gray-800: #1f2937;
-  --gray-900: #111827;
-  
-  /* Glass effect */
-  --glass-bg: rgba(255, 255, 255, 0.95);
-  --glass-border: rgba(0, 0, 0, 0.1);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  
-  /* Shadows */
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  
-  /* Border radius */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-2xl: 1rem;
-  --radius-full: 9999px;
-  
-  /* Transitions */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  
-  /* Spacing */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 0.75rem;
-  --spacing-lg: 1rem;
-  --spacing-xl: 1.25rem;
-  --spacing-2xl: 1.5rem;
-  
-  /* Safe areas pour mobiles modernes */
-  --safe-area-top: env(safe-area-inset-top, 0px);
-  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
-  --safe-area-left: env(safe-area-inset-left, 0px);
-  --safe-area-right: env(safe-area-inset-right, 0px);
-}
-
-/* Reset et optimisations pour mobile */
-* {
-  -webkit-tap-highlight-color: transparent;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 /* Navbar principale avec support pour les mobiles modernes */
 .navbar {
   position: fixed;
@@ -90,15 +5,14 @@
   left: 0;
   right: 0;
   z-index: 9999;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgb(30, 58, 138);
+  color: white;
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border-bottom: 1px solid rgba(229, 231, 235, 0.8);
-  padding: 0.875rem 0em;
+  padding: 0em;
   transition: all var(--transition-normal);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  /* Support pour les mobiles modernes (notch) */
-  padding-top: max(0.875rem, var(--safe-area-top));
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
 
 .navbar.scrolled {
@@ -137,16 +51,11 @@
   transition: all var(--transition-fast);
   background: none;
   border: none;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.logoLink:hover {
-  transform: translateY(-2px);
+  cursor: pointer;  
 }
 
 .logoText {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: linear-gradient(135deg, var(--primary), white);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -154,7 +63,6 @@
 
 .logoDot {
   color: var(--primary);
-  animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
@@ -180,15 +88,14 @@
 .navLink {
   background: none;
   border: none;
-  color: var(--text-secondary);
+  color: rgb(229, 231, 235);
   text-decoration: none;
   font-weight: 500;
-  font-size: clamp(0.875rem, 1vw, 0.95rem);
-  padding: 0.5rem 0;
+  font-size: large;
+  padding: 0.2rem 0;
   position: relative;
   transition: all var(--transition-fast);
   cursor: pointer;
-  font-family: inherit;
   display: flex;
   align-items: center;
   gap: 0.375rem;
@@ -207,18 +114,9 @@
   border-radius: 2px;
 }
 
-.navLink:hover {
-  color: var(--primary);
-  transform: translateY(-1px);
-}
-
-.navLink:hover::after {
-  width: 100%;
-}
-
 /* Styles pour l'état actif */
 .navLink.active {
-  color: var(--primary) !important;
+  color: white !important;
   font-weight: 600;
 }
 
@@ -235,7 +133,6 @@
   height: 3px;
   background: linear-gradient(90deg, var(--primary), var(--secondary));
   border-radius: 2px;
-  animation: indicatorAppear 0.3s ease-out;
 }
 
 @keyframes indicatorAppear {
@@ -304,7 +201,6 @@
   border: 1px solid var(--gray-200);
   padding: 1.25rem;
   z-index: 10000;
-  animation: slideDown 0.2s ease-out;
 }
 
 @keyframes slideDown {
@@ -365,7 +261,6 @@
   transition: all var(--transition-fast);
   background: var(--bg-primary);
   color: var(--text-primary);
-  font-family: inherit;
 }
 
 .searchInput:focus {
@@ -405,7 +300,6 @@
   font-size: 1rem;
   cursor: pointer;
   transition: all var(--transition-fast);
-  font-family: inherit;
 }
 
 .searchSubmit:hover {
@@ -439,7 +333,6 @@
   transition: all var(--transition-fast);
   font-size: 1rem;
   margin-bottom: 0.25rem;
-  font-family: inherit;
 }
 
 .suggestionItem:hover {
@@ -517,7 +410,6 @@
   box-shadow: var(--shadow-2xl);
   border: 1px solid var(--gray-200);
   z-index: 10000;
-  animation: slideDown 0.2s ease-out;
   overflow: hidden;
 }
 
@@ -582,7 +474,6 @@
   transition: all var(--transition-fast);
   text-align: left;
   font-size: 0.95rem;
-  font-family: inherit;
 }
 
 .profileMenuItem:hover {
@@ -610,7 +501,6 @@
   transition: all var(--transition-fast);
   text-align: left;
   font-size: 0.95rem;
-  font-family: inherit;
 }
 
 .profileMenuItemLogout:hover {
@@ -676,7 +566,6 @@
   margin-bottom: 0.5rem;
   transition: all var(--transition-fast);
   font-weight: 500;
-  font-family: inherit;
   width: 100%;
   text-align: left;
 }
@@ -740,7 +629,6 @@
   display: flex;
   align-items: center;
   position: relative;
-  font-family: inherit;
 }
 
 .navLinkMobile:hover,
@@ -762,7 +650,6 @@
   height: 6px;
   background: var(--primary);
   border-radius: 50%;
-  animation: pulseActive 2s infinite;
 }
 
 @keyframes pulseActive {
@@ -797,7 +684,6 @@
   cursor: pointer;
   transition: all var(--transition-fast);
   font-weight: 500;
-  font-family: inherit;
 }
 
 .mobileActionBtnLogout:hover {
@@ -1075,8 +961,6 @@
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }

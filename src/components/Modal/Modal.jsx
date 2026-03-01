@@ -13,7 +13,6 @@ const Modal = ({
   closeOnOverlayClick = true,
   closeOnEsc = true,
   showCloseButton = true,
-  animation = "slide-up", // fade, slide-up, slide-down, scale, slide-right
   overlayBlur = true,
   preventScroll = true,
   maxHeight = "90vh",

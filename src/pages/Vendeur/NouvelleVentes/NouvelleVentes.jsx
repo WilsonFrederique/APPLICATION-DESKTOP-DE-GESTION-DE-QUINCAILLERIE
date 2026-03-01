@@ -4,43 +4,28 @@ import styles from './NouvelleVentes.module.css';
 import Button from '../../../components/Button/Button';
 import Input from '../../../components/Input/Input';
 import InputSelect from '../../../components/Input/InputSelect';
-import InputTextarea from '../../../components/Input/InputTextarea';
-import { 
+import {
   IoFilterOutline,
   IoAlertCircleOutline,
   IoCheckmarkCircleOutline,
-  IoCartOutline,
-  IoReceiptOutline,
   IoTimeOutline,
   IoCalendarOutline,
-  IoPersonOutline,
   IoBarcodeOutline,
   IoWarningOutline,
-  IoInformationCircleOutline,
   IoWalletOutline,
-  IoLocationOutline,
-  IoCallOutline
 } from "react-icons/io5";
 import { IoSearchOutline } from "react-icons/io5";
-import { 
-  FaBox, 
-  FaTruck, 
-  FaPercentage,
-  FaChartLine,
+import {
+  FaBox,
+  FaTruck,
   FaWarehouse
 } from "react-icons/fa";
-import { 
-  TbBuildingWarehouse, 
-  TbCategory, 
+import {
+  TbBuildingWarehouse,
+  TbCategory,
   TbCurrencyDollar,
-  TbTruckDelivery,
-  TbListDetails
 } from "react-icons/tb";
-import { 
-  MdPayment,
-  MdPointOfSale,
-  MdOutlineSell,
-  MdOutlineStorefront,
+import {
   MdOutlineShoppingCart
 } from "react-icons/md";
 import { GiShoppingCart } from "react-icons/gi";
@@ -348,106 +333,47 @@ const ProductCard = ({ product, onAddToCart }) => {
           {product.categorie.split(' ')[0]}
         </div>
       </div>
-      
+
       <div className={styles.productCardContentCompact}>
         <div className={styles.cardHeaderCompact}>
           <h4 className={styles.productCardNameCompact}>{product.nom}</h4>
-          <div className={styles.productCardRefCompact}>
-            <IoBarcodeOutline /> {product.reference}
-          </div>
         </div>
-        
-        <div className={styles.cardDetailsCompact}>
-          <div className={styles.cardStockCompact}>
-            <FaWarehouse />
-            <span>{product.stock} {product.unite}</span>
-          </div>
-          
-          <div className={styles.cardLocationCompact}>
-            <TbBuildingWarehouse />
-            <span>{product.emplacement}</span>
-          </div>
-        </div>
-        
-        <div className={styles.cardPricesCompact}>
-          <div className={styles.priceItemCompact}>
-            <span className={styles.priceLabelCompact}>Gros:</span>
-            <span className={styles.priceValueCompact}>
-              {formatCurrency(product.prixVente)}/{product.unite}
-            </span>
-          </div>
-          {product.peutEtreVenduEnDetail && (
-            <div className={styles.priceItemCompact}>
-              <span className={styles.priceLabelCompact}>Détail:</span>
-              <span className={styles.priceValueCompact}>
-                {formatCurrency(product.prixDetail)}/{product.uniteDetail}
-              </span>
+
+        {product.peutEtreVenduEnDetail ? (
+          <div className={styles.unitSelectorCompactContainer}>
+            <div className={styles.unitSelectorCompact}>
+              <select
+                value={unit}
+                onChange={(e) => setUnit(e.target.value)}
+                className={styles.unitSelectCompact}
+                aria-label="Sélectionner l'unité"
+              >
+                <option value={product.unite}>{product.unite} ({formatCurrency(product.prixVente)})</option>
+                <option value={product.uniteDetail}>{product.uniteDetail} ({formatCurrency(product.prixDetail)})</option>
+              </select>
             </div>
-          )}
-        </div>
-        
-        {product.peutEtreVenduEnDetail && (
-          <div className={styles.unitSelectorCompact}>
-            <select 
-              value={unit}
-              onChange={(e) => setUnit(e.target.value)}
-              className={styles.unitSelectCompact}
-              aria-label="Sélectionner l'unité"
-            >
-              <option value={product.unite}>{product.unite}</option>
-              <option value={product.uniteDetail}>{product.uniteDetail}</option>
-            </select>
-          </div>
-        )}
-        
-        <div className={styles.cardControlsCompact}>
-          <div className={styles.quantitySelectorCompact}>
-            <Button 
-              variant="ghost"
-              size="small"
-              icon="minus"
-              onClick={decrementQuantity}
-              disabled={quantity <= 1}
-              aria-label="Diminuer la quantité"
-              className={styles.qtyButtonCompact}
-            />
-            <input
-              type="number"
-              min="1"
-              max={product.stock}
-              value={quantity}
-              onChange={handleQuantityChange}
-              className={styles.qtyInputCompact}
-              aria-label="Quantité"
-            />
-            <Button 
-              variant="ghost"
+            <Button
+              variant="primary"
               size="small"
               icon="plus"
-              onClick={incrementQuantity}
-              disabled={quantity >= product.stock}
-              aria-label="Augmenter la quantité"
-              className={styles.qtyButtonCompact}
+              onClick={handleAddToCart}
+              disabled={product.stock <= 0}
+              aria-label={`Ajouter ${product.nom} au panier`}
             />
           </div>
-          
-          <div className={styles.cardTotalCompact}>
-            <span className={styles.totalValueCompact}>{formatCurrency(calculatePrice())}</span>
+        ) : (
+          <div className={styles.unitSelectorCompactContainer}>
+            <div className={styles.unitSelectorCompact}></div>
+            <Button
+              variant="primary"
+              size="small"
+              icon="plus"
+              onClick={handleAddToCart}
+              disabled={product.stock <= 0}
+              aria-label={`Ajouter ${product.nom} au panier`}
+            />
           </div>
-        </div>
-        
-        <Button 
-          variant="primary"
-          size="small"
-          icon="cart"
-          onClick={handleAddToCart}
-          disabled={product.stock <= 0}
-          aria-label={`Ajouter ${product.nom} au panier`}
-          className={styles.addToCartCompact}
-          fullWidth
-        >
-          Ajouter
-        </Button>
+        )}
       </div>
     </div>
   );
@@ -493,30 +419,28 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }) => {
           {item.quantity}
         </div>
       </div>
-      
+
+      <Button
+        variant="ghost"
+        size="small"
+        icon="trash"
+        onClick={() => onRemove(item.id)}
+        aria-label="Supprimer du panier"
+        className={styles.removeButton}
+      />
+
       <div className={styles.cartItemContent}>
         <div className={styles.cartItemHeader}>
           <div className={styles.cartItemInfo}>
             <h5 className={styles.cartItemTitle}>{item.nom}</h5>
-            <div className={styles.cartItemMeta}>
-              <span className={styles.cartItemRef}>{item.reference}</span>
-              <span className={styles.cartItemUnit}>{item.unit}</span>
-            </div>
+            <span className={styles.cartItemUnit}>{item.unit}</span>
           </div>
-          <Button 
-            variant="ghost"
-            size="small"
-            icon="trash"
-            onClick={() => onRemove(item.id)}
-            aria-label="Supprimer du panier"
-            className={styles.removeButton}
-          />
         </div>
-        
+
         <div className={styles.cartItemDetails}>
           <div className={styles.quantityControls}>
             <div className={styles.quantityButtons}>
-              <Button 
+              <Button
                 variant="ghost"
                 size="small"
                 icon="minus"
@@ -534,7 +458,7 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }) => {
                 className={styles.quantityInput}
                 aria-label="Quantité"
               />
-              <Button 
+              <Button
                 variant="ghost"
                 size="small"
                 icon="plus"
@@ -548,7 +472,7 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }) => {
               Stock: {item.stock} {item.unit}
             </div>
           </div>
-          
+
           <div className={styles.priceInfo}>
             <div className={styles.unitPrice}>
               {formatCurrency(item.price)}/{item.unit}
@@ -592,7 +516,7 @@ const VenteHistoryItem = ({ vente }) => {
           <div className={styles.historyNumber}>{vente.numero}</div>
           <div className={styles.historyClient}>{vente.client}</div>
         </div>
-        
+
         <div className={styles.historyStatusInfo}>
           <span className={`${styles.statusBadge} ${styles[vente.statut]}`}>
             {vente.statut === 'paye' && <IoCheckmarkCircleOutline />}
@@ -606,7 +530,7 @@ const VenteHistoryItem = ({ vente }) => {
           </span>
         </div>
       </div>
-      
+
       <div className={styles.historyItemDetails}>
         <div className={styles.detailGrid}>
           <div className={styles.detailItem}>
@@ -626,14 +550,14 @@ const VenteHistoryItem = ({ vente }) => {
             <div className={styles.detailValue}>{vente.vendeur}</div>
           </div>
         </div>
-        
+
         <div className={styles.historyMeta}>
           <div className={styles.historyDate}>
             <IoCalendarOutline />
             <span>{formatDate(vente.date)}</span>
           </div>
           <div className={styles.historyActions}>
-            <Button 
+            <Button
               variant="outline"
               size="small"
               icon="eye"
@@ -641,7 +565,7 @@ const VenteHistoryItem = ({ vente }) => {
             >
               <span className={styles.actionText}>Voir</span>
             </Button>
-            <Button 
+            <Button
               variant="outline"
               size="small"
               icon="print"
@@ -650,7 +574,7 @@ const VenteHistoryItem = ({ vente }) => {
               <span className={styles.actionText}>Imprimer</span>
             </Button>
             {vente.statut === 'credit' && (
-              <Button 
+              <Button
                 variant="outline"
                 size="small"
                 icon="wallet"
@@ -670,34 +594,34 @@ const NouvelleVentes = () => {
   // États principaux
   const [products] = useState(mockProducts);
   const [historiqueVentes, setHistoriqueVentes] = useState(initialHistoriqueVentes);
-  
+
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('nom');
   const [sortOrder, setSortOrder] = useState('asc');
   const [viewMode, setViewMode] = useState('vente'); // Initialiser avec 'vente'
-  
+
   // États pour le panier
   const [cart, setCart] = useState([]);
-  
+
   // États pour les modals
   const [showInvoice, setShowInvoice] = useState(false);
-  
+
   // Récupérer les paramètres d'URL
   const [searchParams] = useSearchParams();
-  
+
   // Utiliser une fonction pour déterminer la vue initiale basée sur l'URL
   // sans appeler setState dans un effet
   const initialViewMode = useMemo(() => {
     const viewParam = searchParams.get('view');
     return viewParam === 'history' ? 'history' : 'vente';
   }, [searchParams]);
-  
+
   // Initialiser viewMode avec la valeur calculée
   useState(() => {
     setViewMode(initialViewMode);
   }, [initialViewMode]);
-  
+
   // Fonction de formatage de devise
   const formatCurrency = useCallback((amount) => {
     return new Intl.NumberFormat('fr-FR', {
@@ -707,7 +631,7 @@ const NouvelleVentes = () => {
       maximumFractionDigits: 0
     }).format(amount);
   }, []);
-  
+
   // Gestionnaire de changement de vue avec navigation
   const handleViewChange = (newView) => {
     setViewMode(newView);
@@ -720,11 +644,11 @@ const NouvelleVentes = () => {
     }
     window.history.replaceState({}, '', url);
   };
-  
+
   // Filtrage et tri des produits
   const filteredProducts = useMemo(() => {
     let filtered = [...products];
-    
+
     if (searchTerm) {
       filtered = filtered.filter(product =>
         product.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -732,48 +656,48 @@ const NouvelleVentes = () => {
         product.categorie.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-    
+
     if (selectedCategory !== 'all') {
       filtered = filtered.filter(product => product.categorie === selectedCategory);
     }
-    
+
     // Tri
     filtered.sort((a, b) => {
       let aValue = a[sortBy];
       let bValue = b[sortBy];
-      
+
       if (sortBy === 'nom' || sortBy === 'categorie' || sortBy === 'reference') {
         aValue = aValue.toLowerCase();
         bValue = bValue.toLowerCase();
       }
-      
+
       if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
       if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
       return 0;
     });
-    
+
     return filtered;
   }, [products, searchTerm, selectedCategory, sortBy, sortOrder]);
-  
+
   // Calcul des statistiques
   const cartStats = useMemo(() => {
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     const totalProducts = cart.length;
-    
+
     return { subtotal, totalItems, totalProducts };
   }, [cart]);
-  
+
   const salesStats = useMemo(() => {
     const today = new Date().toLocaleDateString('fr-FR');
-    const todaySales = historiqueVentes.filter(v => 
+    const todaySales = historiqueVentes.filter(v =>
       new Date(v.date).toLocaleDateString('fr-FR') === today
     );
-    
+
     const totalToday = todaySales.reduce((sum, v) => sum + v.montant, 0);
     const creditSales = historiqueVentes.filter(v => v.statut === 'credit');
     const totalCredit = creditSales.reduce((sum, v) => sum + v.montant, 0);
-    
+
     return {
       todaySales: todaySales.length,
       totalToday,
@@ -781,20 +705,20 @@ const NouvelleVentes = () => {
       totalCredit
     };
   }, [historiqueVentes]);
-  
+
   // Gestion du panier
   const handleAddToCart = (product) => {
-    const existingItem = cart.find(item => 
+    const existingItem = cart.find(item =>
       item.id === product.id && item.unit === product.unit
     );
-    
+
     if (existingItem) {
       const newQuantity = existingItem.quantity + product.quantity;
       if (newQuantity > product.stock) {
         alert(`Stock insuffisant! Il reste ${product.stock - existingItem.quantity} ${product.unit} disponibles.`);
         return;
       }
-      
+
       setCart(cart.map(item =>
         item.id === product.id && item.unit === product.unit
           ? { ...item, quantity: newQuantity }
@@ -805,40 +729,40 @@ const NouvelleVentes = () => {
         alert(`Stock insuffisant! Il reste ${product.stock} ${product.unit} disponibles.`);
         return;
       }
-      
+
       setCart([...cart, product]);
     }
   };
-  
+
   const handleUpdateQuantity = (productId, newQuantity) => {
     const product = cart.find(item => item.id === productId);
-    
+
     if (newQuantity > product.stock) {
       alert(`Stock insuffisant! Maximum ${product.stock} ${product.unit} disponibles.`);
       return;
     }
-    
+
     setCart(cart.map(item =>
       item.id === productId
         ? { ...item, quantity: newQuantity }
         : item
     ));
   };
-  
+
   const handleRemoveFromCart = (productId) => {
     setCart(cart.filter(item => item.id !== productId));
   };
-  
+
   const handleClearCart = () => {
     if (cart.length > 0 && window.confirm('Vider tout le panier ?')) {
       setCart([]);
     }
   };
-  
+
   // Gestion des ventes
   const handleCompleteSale = useCallback((invoiceData) => {
     console.log('Vente complétée:', invoiceData);
-    
+
     // Créer la nouvelle vente pour l'historique
     const newVente = {
       id: Date.now(),
@@ -847,7 +771,7 @@ const NouvelleVentes = () => {
       montant: invoiceData.grandTotal,
       date: new Date().toLocaleString('fr-FR'),
       statut: invoiceData.paymentMethod === 'credit' ? 'credit' : 'paye',
-      livraison: invoiceData.deliveryStatus,
+      livraison: 'non_livre', // Valeur par défaut
       items: invoiceData.items.length,
       vendeur: 'Admin',
       paiement: invoiceData.paymentMethod,
@@ -856,10 +780,10 @@ const NouvelleVentes = () => {
         adresse: invoiceData.client.adresse
       }
     };
-    
+
     // Ajouter à l'historique
     setHistoriqueVentes(prev => [newVente, ...prev]);
-    
+
     // Mettre à jour le stock des produits (note: ceci est une simulation, en production ce serait via API)
     invoiceData.items.forEach(cartItem => {
       const productIndex = mockProducts.findIndex(p => p.id === cartItem.id);
@@ -867,31 +791,39 @@ const NouvelleVentes = () => {
         mockProducts[productIndex].stock = Math.max(0, mockProducts[productIndex].stock - cartItem.quantity);
       }
     });
-    
+
     // Afficher notification
+    const paymentLabels = {
+      'espèces': 'Espèces',
+      'virement': 'Virement',
+      'mvola': 'MVola',
+      'airtelmoney': 'AirtelMoney',
+      'orangemoney': 'OrangeMoney',
+      'credit': 'Crédit'
+    };
+
     const successMessage = `✅ Vente enregistrée avec succès !
     
 Numéro facture: ${invoiceData.numero}
 Client: ${invoiceData.client.nom}
 Montant total: ${formatCurrency(invoiceData.grandTotal)}
-Mode de paiement: ${invoiceData.paymentMethod}
-${invoiceData.deliveryStatus === 'livre' ? 'Livraison prévue' : 'Retrait en magasin'}`;
-    
+Mode de paiement: ${paymentLabels[invoiceData.paymentMethod] || invoiceData.paymentMethod}`;
+
     alert(successMessage);
-    
+
     // Vider le panier et fermer le modal
     setCart([]);
     setShowInvoice(false);
     handleViewChange('history');
-    
+
   }, [formatCurrency]);
-  
+
   // Catégories uniques
   const categories = useMemo(() => {
     const uniqueCats = [...new Set(products.map(p => p.categorie))];
     return ['all', ...uniqueCats];
   }, [products]);
-  
+
   // Réinitialiser les filtres
   const handleResetFilters = () => {
     setSearchTerm('');
@@ -908,7 +840,7 @@ ${invoiceData.deliveryStatus === 'livre' ? 'Livraison prévue' : 'Retrait en mag
           <div className={styles.productsListHeader}>
             {/* Navigation tabs dans l'en-tête */}
             <div className={styles.navigationTabsInline}>
-              <Button 
+              <Button
                 variant={viewMode === 'vente' ? 'primary' : 'ghost'}
                 size="medium"
                 icon="pointOfSale"
@@ -917,7 +849,7 @@ ${invoiceData.deliveryStatus === 'livre' ? 'Livraison prévue' : 'Retrait en mag
               >
                 Point de Vente
               </Button>
-              <Button 
+              <Button
                 variant={viewMode === 'history' ? 'primary' : 'ghost'}
                 size="medium"
                 icon="receipt"
@@ -926,7 +858,7 @@ ${invoiceData.deliveryStatus === 'livre' ? 'Livraison prévue' : 'Retrait en mag
               >
                 Historique
               </Button>
-              <Button 
+              <Button
                 variant={viewMode === 'stats' ? 'primary' : 'ghost'}
                 size="medium"
                 icon="chart"
@@ -936,82 +868,76 @@ ${invoiceData.deliveryStatus === 'livre' ? 'Livraison prévue' : 'Retrait en mag
                 Statistiques
               </Button>
             </div>
-            
+
             {/* Filtres selon la vue */}
-            <div className={styles.productsListFilters}>
-              <div className={styles.flex}>
-                {viewMode === 'vente' && (
-                  <>
-                    <Input
-                      type="text"
-                      placeholder="Rechercher produit, référence, catégorie..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      name="productSearch"
-                      className={styles.searchInput}
-                      icon={<IoSearchOutline />}
-                    />
-                    <InputSelect
-                      value={selectedCategory}
-                      onChange={setSelectedCategory}
-                      options={[
-                        { value: 'all', label: 'Toutes catégories' },
-                        ...categories.filter(cat => cat !== 'all').map(cat => ({
-                          value: cat,
-                          label: cat
-                        }))
-                      ]}
-                      placeholder="Catégorie"
-                      size="small"
-                      variant="outline"
-                      icon={<TbCategory />}
-                      fullWidth
-                    />
-                    <InputSelect
-                      value={sortBy}
-                      onChange={setSortBy}
-                      options={[
-                        { value: 'nom', label: 'Nom' },
-                        { value: 'prixVente', label: 'Prix' },
-                        { value: 'categorie', label: 'Catégorie' },
-                        { value: 'stock', label: 'Stock' }
-                      ]}
-                      placeholder="Trier par"
-                      size="small"
-                      variant="outline"
-                      fullWidth
-                    />
-                    <Button 
-                      variant="outline"
-                      size="medium"
-                      icon="refresh"
-                      onClick={handleResetFilters}
-                      className={styles.resetBtn}
-                    />
-                  </>
-                )}
-                
-                {viewMode === 'history' && (
-                  <>
-                    <Input
-                      type="text"
-                      placeholder="Filtrer par client, numéro..."
-                      className={styles.searchInput}
-                      name="historyFilter"
-                      icon={<IoFilterOutline />}
-                    />
-                    <Input
-                      type="date"
-                      className={styles.searchInput}
-                      name="historyDate"
-                      icon={<IoCalendarOutline />}
-                    />
-                  </>
-                )}
+            {viewMode === 'vente' && (
+              <div className={styles.venteFilters}>
+                <Input
+                  type="text"
+                  placeholder="Rechercher produit, référence, catégorie..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  name="productSearch"
+                  className={styles.searchInput}
+                  icon={<IoSearchOutline />}
+                />
+                <InputSelect
+                  value={selectedCategory}
+                  onChange={setSelectedCategory}
+                  options={[
+                    { value: 'all', label: 'Toutes catégories' },
+                    ...categories.filter(cat => cat !== 'all').map(cat => ({
+                      value: cat,
+                      label: cat
+                    }))
+                  ]}
+                  placeholder="Catégorie"
+                  variant="outline"
+                  icon={<TbCategory />}
+                  fullWidth
+                />
+                <InputSelect
+                  value={sortBy}
+                  onChange={setSortBy}
+                  options={[
+                    { value: 'nom', label: 'Nom' },
+                    { value: 'prixVente', label: 'Prix' },
+                    { value: 'categorie', label: 'Catégorie' },
+                    { value: 'stock', label: 'Stock' }
+                  ]}
+                  placeholder="Trier par"
+                  variant="outline"
+                  fullWidth
+                />
+                <Button
+                  variant="outline"
+                  size="medium"
+                  icon="refresh"
+                  onClick={handleResetFilters}
+                  className={styles.resetBtn}
+                />
               </div>
-            </div>
+            )}
+
+            {viewMode === 'history' && (
+              <div className={styles.venteFilters}>
+                <Input
+                  type="text"
+                  placeholder="Filtrer par client, numéro..."
+                  className={styles.searchInput}
+                  name="historyFilter"
+                  icon={<IoFilterOutline />}
+                />
+                <Input
+                  type="date"
+                  className={styles.searchInput}
+                  name="historyDate"
+                  icon={<IoCalendarOutline />}
+                />
+              </div>
+            )}
           </div>
-          
+
           {/* Contenu selon la vue */}
           <div className={styles.productsListContainer}>
             <div className={styles.productsListScroll}>
@@ -1027,12 +953,12 @@ ${invoiceData.deliveryStatus === 'livre' ? 'Livraison prévue' : 'Retrait en mag
                       />
                     ))}
                   </div>
-                  
+
                   {filteredProducts.length === 0 && (
                     <div className={styles.noProducts}>
                       <FaBox className={styles.noProductsIcon} />
                       <h3>Aucun produit trouvé</h3>
-                      <Button 
+                      <Button
                         variant="outline"
                         size="medium"
                         icon="refresh"
@@ -1045,7 +971,7 @@ ${invoiceData.deliveryStatus === 'livre' ? 'Livraison prévue' : 'Retrait en mag
                   )}
                 </>
               )}
-              
+
               {/* Vue Historique */}
               {viewMode === 'history' && (
                 <div className={styles.historyViewContainer}>
@@ -1059,7 +985,7 @@ ${invoiceData.deliveryStatus === 'livre' ? 'Livraison prévue' : 'Retrait en mag
                   </div>
                 </div>
               )}
-              
+
               {/* Vue Statistiques */}
               {viewMode === 'stats' && (
                 <div className={styles.statsViewContainer}>
@@ -1073,7 +999,7 @@ ${invoiceData.deliveryStatus === 'livre' ? 'Livraison prévue' : 'Retrait en mag
                         <span className={styles.statLabel}>Chiffre d'affaires aujourd'hui</span>
                       </div>
                     </div>
-                    
+
                     <div className={styles.statCard}>
                       <div className={`${styles.statIconWrapper} ${styles.success}`}>
                         <IoCheckmarkCircleOutline />
@@ -1083,7 +1009,7 @@ ${invoiceData.deliveryStatus === 'livre' ? 'Livraison prévue' : 'Retrait en mag
                         <span className={styles.statLabel}>Ventes du jour</span>
                       </div>
                     </div>
-                    
+
                     <div className={styles.statCard}>
                       <div className={`${styles.statIconWrapper} ${styles.warning}`}>
                         <IoWalletOutline />
@@ -1093,7 +1019,7 @@ ${invoiceData.deliveryStatus === 'livre' ? 'Livraison prévue' : 'Retrait en mag
                         <span className={styles.statLabel}>Ventes à crédit</span>
                       </div>
                     </div>
-                    
+
                     <div className={styles.statCard}>
                       <div className={`${styles.statIconWrapper} ${styles.danger}`}>
                         <IoAlertCircleOutline />
@@ -1104,9 +1030,9 @@ ${invoiceData.deliveryStatus === 'livre' ? 'Livraison prévue' : 'Retrait en mag
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className={styles.statsFooter}>
-                    <Button 
+                    <Button
                       variant="outline"
                       size="medium"
                       icon="download"
@@ -1120,7 +1046,7 @@ ${invoiceData.deliveryStatus === 'livre' ? 'Livraison prévue' : 'Retrait en mag
             </div>
           </div>
         </div>
-        
+
         {/* Colonne droite - Panier (toujours visible) */}
         <div className={styles.cartColumn}>
           <div className={styles.cartHeader}>
@@ -1128,17 +1054,17 @@ ${invoiceData.deliveryStatus === 'livre' ? 'Livraison prévue' : 'Retrait en mag
               <div>
                 <h2><GiShoppingCart /> Panier</h2>
                 <p className={styles.cartSubtitle}>
-                  {cartStats.totalProducts} articles • {cartStats.totalItems} unités
+                  {cartStats.totalProducts} produits • {cartStats.totalItems} unités
                 </p>
               </div>
             </div>
-            
+
             <div className={styles.cartTotal}>
               <span className={styles.totalLabel}>Total:</span>
               <span className={styles.totalAmount}>{formatCurrency(cartStats.subtotal)}</span>
             </div>
           </div>
-          
+
           <div className={styles.cartContainer}>
             <div className={styles.cartScroll}>
               {cart.length > 0 ? (
@@ -1153,21 +1079,6 @@ ${invoiceData.deliveryStatus === 'livre' ? 'Livraison prévue' : 'Retrait en mag
                       />
                     ))}
                   </div>
-                  
-                  <div className={styles.cartSummary}>
-                    <div className={styles.summaryRow}>
-                      <span>Articles:</span>
-                      <span className={styles.summaryValue}>{cartStats.totalItems}</span>
-                    </div>
-                    <div className={styles.summaryRow}>
-                      <span>Produits:</span>
-                      <span className={styles.summaryValue}>{cartStats.totalProducts}</span>
-                    </div>
-                    <div className={styles.summaryRowTotal}>
-                      <span>Total:</span>
-                      <span className={styles.summaryTotalValue}>{formatCurrency(cartStats.subtotal)}</span>
-                    </div>
-                  </div>
                 </>
               ) : (
                 <div className={styles.emptyCart}>
@@ -1177,10 +1088,10 @@ ${invoiceData.deliveryStatus === 'livre' ? 'Livraison prévue' : 'Retrait en mag
                 </div>
               )}
             </div>
-            
+
             {/* Actions fixes en bas du panier */}
             <div className={styles.cartActions}>
-              <Button 
+              <Button
                 variant="outline"
                 size="medium"
                 icon="trash"
@@ -1191,7 +1102,7 @@ ${invoiceData.deliveryStatus === 'livre' ? 'Livraison prévue' : 'Retrait en mag
               >
                 Vider panier
               </Button>
-              <Button 
+              <Button
                 variant="primary"
                 size="medium"
                 icon="check"

@@ -1,5 +1,4 @@
 .dashboardModern {
-  font-family: "Segoe UI", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   min-height: 100vh;
   max-height: 100vh;
   padding: 0;
@@ -3762,7 +3761,6 @@
   color: #1e293b;
   background: #ffffff;
   transition: all 0.3s ease;
-  font-family: inherit;
 }
 
 .formInput:focus {
@@ -4011,7 +4009,6 @@
   color: #1e293b;
   background: #ffffff;
   transition: all 0.3s ease;
-  font-family: inherit;
 }
 
 .discountInput:focus {
@@ -4045,7 +4042,6 @@
   background: #ffffff;
   transition: all 0.3s ease;
   resize: vertical;
-  font-family: inherit;
   min-height: 80px;
   line-height: 1.5;
 }
@@ -4152,7 +4148,6 @@
   transition: all 0.3s ease;
   white-space: nowrap;
   min-height: 44px;
-  font-family: inherit;
 }
 
 .btn.primary {

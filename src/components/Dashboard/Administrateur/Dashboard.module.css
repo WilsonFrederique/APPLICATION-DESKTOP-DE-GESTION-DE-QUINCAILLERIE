@@ -1,10 +1,8 @@
 /* ===== STYLES MODERNES POUR TABLEAU DE BORD VENDEUR ===== */
 
 .dashboardModern {
-  font-family: "Segoe UI", "Open Sans", sans-serif;
   min-height: 100vh;
   padding: 0;
-  animation: fadeIn 0.8s ease-out;
   background: transparent;
 }
 
@@ -58,7 +56,6 @@
     0 0 0 1px rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.9);
-  animation: slideInUp 0.6s ease-out;
 }
 
 :global(body.dark) .vendeurHeader {
@@ -165,7 +162,6 @@
   gap: 1.5rem;
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
-  animation: slideInUp 0.7s ease-out 0.1s both;
 }
 
 .searchSection {
@@ -343,7 +339,6 @@
   gap: 0.75rem;
   margin-bottom: 2rem;
   flex-wrap: wrap;
-  animation: slideInUp 0.7s ease-out 0.2s both;
 }
 
 .filterBtn {
@@ -375,7 +370,6 @@
 /* Sections du dashboard */
 .dashboardSection {
   margin-bottom: 2.5rem;
-  animation: slideInUp 0.7s ease-out 0.3s both;
 }
 
 .sectionHeader {
@@ -475,7 +469,6 @@
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
-  animation: scaleIn 0.6s ease-out both;
   flex: 1;
 }
 
@@ -606,7 +599,6 @@
   grid-template-columns: 2fr 1fr;
   gap: 2rem;
   margin-bottom: 2.5rem;
-  animation: slideInUp 0.7s ease-out 0.4s both;
 }
 
 .contentColumn {
@@ -632,7 +624,6 @@
     0 0 0 1px rgba(255, 255, 255, 0.8);
   border: 1px solid #e2e8f0;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  animation: scaleIn 0.6s ease-out both;
   height: 100%;
 }
 
@@ -755,7 +746,6 @@
   padding: 1.5rem;
   border: 1.5px solid #e2e8f0;
   transition: all 0.3s ease;
-  animation: slideInUp 0.5s ease-out both;
 }
 
 .venteRecentCard:hover {
@@ -906,7 +896,6 @@
   padding: 1.25rem;
   border: 1.5px solid #fee2e2;
   transition: all 0.3s ease;
-  animation: slideInUp 0.5s ease-out both;
 }
 
 .produitCritiqueCard:hover {
@@ -1017,7 +1006,6 @@
   align-items: center;
   gap: 1rem;
   transition: all 0.3s ease;
-  animation: slideInUp 0.5s ease-out both;
 }
 
 .topProduitCard:hover {
@@ -1604,10 +1592,6 @@
   50% { transform: translateY(-5px); }
 }
 
-.actionBtn.primary:active {
-  animation: bounce 0.3s ease;
-}
-
 /* État de chargement */
 .loadingState {
   display: flex;
@@ -1624,7 +1608,6 @@
   border: 3px solid #f1f5f9;
   border-top: 3px solid #3b82f6;
   border-radius: 50%;
-  animation: spin 1s linear infinite;
 }
 
 /* Tooltips */

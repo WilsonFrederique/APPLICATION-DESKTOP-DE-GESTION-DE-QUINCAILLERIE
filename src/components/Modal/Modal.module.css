@@ -13,7 +13,6 @@
   justify-content: center;
   z-index: 9999;
   padding: 1rem;
-  animation: overlayFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: none;
   transition: backdrop-filter 0.3s ease;
 }
@@ -82,26 +81,6 @@
     opacity: 1;
     transform: scale(1) rotate(0);
   }
-}
-
-.animation_fade .modalContainer {
-  animation: fadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.animation_slideUp .modalContainer {
-  animation: slideUpIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.animation_slideDown .modalContainer {
-  animation: slideDownIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.animation_slideRight .modalContainer {
-  animation: slideRightIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.animation_scale .modalContainer {
-  animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 /* Container principal */
@@ -496,7 +475,6 @@
     max-height: 85vh;
     max-width: 100vw;
     margin: 0;
-    animation: slideUpIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
   
   .modalSize_small,
@@ -578,15 +556,6 @@
   .confirmButton {
     width: 100%;
     min-width: unset;
-  }
-  
-  /* Animation spécifique pour mobile */
-  .animation_fade .modalContainer,
-  .animation_slideUp .modalContainer,
-  .animation_slideDown .modalContainer,
-  .animation_slideRight .modalContainer,
-  .animation_scale .modalContainer {
-    animation: slideUpIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 }
 
@@ -699,8 +668,6 @@
   .cancelButton,
   .confirmButton,
   .mobileCloseButton {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
   

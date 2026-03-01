@@ -459,7 +459,6 @@
   font-weight: 500;
   transition: var(--transition);
   width: 100%;
-  font-family: inherit;
 }
 
 .formInput:focus, .formSelect:focus, .formTextarea:focus {

@@ -1,58 +1,15 @@
 /* ============================================
-   VARIABLES GLOBALES
-============================================ */
-:root {
-  --navbar-height: 70px;
-  --padding-main: 1.5rem;
-  --primary-color: #3b82f6;
-  --primary-dark: #2563eb;
-  --success-color: #10b981;
-  --warning-color: #f59e0b;
-  --danger-color: #ef4444;
-  --gray-50: #f8fafc;
-  --gray-100: #f1f5f9;
-  --gray-200: #e2e8f0;
-  --gray-300: #cbd5e1;
-  --gray-400: #94a3b8;
-  --gray-500: #64748b;
-  --gray-600: #475569;
-  --gray-700: #334155;
-  --gray-800: #1e293b;
-  --gray-900: #0f172a;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-  --transition-base: all 0.2s ease;
-  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* ============================================
    STRUCTURE PRINCIPALE
 ============================================ */
 .dashboardModern {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-  height: calc(100vh - var(--navbar-height));
-  max-height: calc(100vh - var(--navbar-height));
   margin-top: 3em;
-  padding: 0 var(--padding-main);
-  animation: fadeIn 0.5s ease-out;
+  padding: 1rem;
   background: var(--gray-50);
   color: var(--gray-900);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   position: relative;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ============================================
@@ -62,8 +19,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 2.5em 0 1rem 0;
-  padding: 0.5rem 0;
   flex-shrink: 0;
 }
 
@@ -264,7 +219,6 @@
   border: 1px solid var(--gray-200);
   padding: 1.25rem;
   margin-top: 0.75rem;
-  animation: slideDown 0.3s ease;
   box-shadow: var(--shadow-md);
 }
 
@@ -336,7 +290,6 @@
   background: var(--primary-color);
   border-radius: 14px;
   margin-bottom: 1rem;
-  animation: slideDown 0.3s ease;
   color: white;
   flex-shrink: 0;
 }
@@ -420,7 +373,6 @@
   border: 1px solid var(--gray-300);
   overflow: hidden;
   transition: var(--transition-smooth);
-  animation: slideIn 0.3s ease;
   position: relative;
   display: flex;
   flex-direction: column;

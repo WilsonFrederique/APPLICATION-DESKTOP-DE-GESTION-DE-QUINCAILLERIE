@@ -1,7 +1,7 @@
 /* Variables CSS */
 :root {
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
+  --primary: #1E3A8A;
+  --primary-hover: #1e3b8a98;
   --secondary: #4b5563;
   --secondary-hover: #374151;
   --success: #10b981;
@@ -35,7 +35,6 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  font-family: inherit;
   line-height: 1.5;
   text-align: center;
   vertical-align: middle;

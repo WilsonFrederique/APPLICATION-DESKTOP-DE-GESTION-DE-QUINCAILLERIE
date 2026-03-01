@@ -2,7 +2,6 @@
    CONTAINER & LAYOUT
 ============================================ */
 .dashboardContainer {
-  font-family: "Segoe UI", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   min-height: 100vh;
   background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
   animation: fadeIn 0.8s ease-out;

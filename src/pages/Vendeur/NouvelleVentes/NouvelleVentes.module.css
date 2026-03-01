@@ -2,7 +2,7 @@
    VARIABLES GLOBALES - OPTIMISÉ POUR DESKTOP
 ============================================ */
 :root {
-  --navbar-height: 70px;
+  --navbar-height: 60px;
   --padding-main: 1rem;
 }
 
@@ -10,45 +10,16 @@
    STRUCTURE PRINCIPALE - OPTIMISÉE POUR DESKTOP
 ============================================ */
 .dashboardModern {
-  font-family: "Segoe UI", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   height: calc(100vh - var(--navbar-height));
   max-height: calc(100vh - var(--navbar-height));
   margin-top: 3em !important;
   padding: 0;
-  animation: fadeIn 0.8s ease-out;
   background: transparent;
   color: #1a1d23;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   position: relative;
-}
-
-/* Animations optimisées pour desktop */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideInFromLeft {
-  from { transform: translateX(-20px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes slideInFromRight {
-  from { transform: translateX(20px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes scaleIn {
-  from { 
-    opacity: 0; 
-    transform: scale(0.95); 
-  }
-  to { 
-    opacity: 1; 
-    transform: scale(1); 
-  }
 }
 
 /* ============================================
@@ -58,9 +29,8 @@
   display: grid;
   grid-template-columns: 1fr 420px;
   gap: 1rem;
-  animation: fadeIn 0.5s ease-out;
   height: calc(100vh - var(--navbar-height) - 2rem);
-  margin: 0 var(--padding-main) 0em;
+  padding: 1.5rem 1rem 0;
   overflow: hidden;
   flex: 1;
 }
@@ -70,21 +40,21 @@
 ============================================ */
 .productsListColumn {
   background: #ffffff;
-  border-radius: 16px;
+  border-radius: 10px;
   border: 1px solid #e2e8f0;
-  margin: 3em 1em 0rem 0em;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
-  animation: slideInFromLeft 0.6s ease-out;
 }
 
 .productsListHeader {
-  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 1rem;
   border-bottom: 1px solid #e2e8f0;
   background: #f8fafc;
-  flex-shrink: 0;
 }
 
 .productsListFilters {
@@ -93,7 +63,7 @@
   gap: 1rem;
 }
 
-.flex {
+.venteFilters {
   display: flex;
   align-items: center;
   gap: 0.7em;
@@ -117,7 +87,6 @@
   transition: all 0.3s ease;
   font-size: 1.1rem;
   flex-shrink: 0;
-  margin-bottom: 0.8em;
 }
 
 .resetBtn:hover {
@@ -139,7 +108,6 @@
   right: 0;
   bottom: 0;
   overflow-y: auto;
-  padding: 1rem;
 }
 
 /* Scrollbar minimal pour desktop */
@@ -168,9 +136,8 @@
 .navigationTabsInline {
   display: flex;
   gap: 0.5rem;
-  margin-bottom: 1.25rem;
-  padding-bottom: 1rem;
   border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.5rem;
   align-items: center;
 }
 
@@ -210,9 +177,8 @@
 .productsGridCompact {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 0.75rem;
-  padding: 0.25rem;
-  animation: fadeIn 0.5s ease-out;
+  gap: 1rem;
+  padding: 0.8rem;
 }
 
 .productCardCompact {
@@ -221,14 +187,12 @@
   border: 1px solid #e2e8f0;
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: scaleIn 0.4s ease-out;
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
 .productCardCompact:hover {
-  transform: translateY(-3px);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
   border-color: #cbd5e1;
 }
@@ -280,11 +244,11 @@
 }
 
 .productCardContentCompact {
-  padding: 0.75rem;
+  padding: 0.8rem;
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .cardHeaderCompact {
@@ -294,7 +258,7 @@
 }
 
 .productCardNameCompact {
-  font-size: 0.85rem;
+  font-size: large;
   font-weight: 700;
   color: #1e293b;
   margin: 0;
@@ -304,9 +268,7 @@
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
-  box-orient: vertical;
   overflow: hidden;
-  height: 2.4em;
 }
 
 .productCardRefCompact {
@@ -315,7 +277,6 @@
   gap: 0.25rem;
   font-size: 0.7rem;
   color: #64748b;
-  background: #f1f5f9;
   padding: 0.15rem 0.4rem;
   border-radius: 4px;
   align-self: flex-start;
@@ -354,24 +315,32 @@
 }
 
 .priceLabelCompact {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: #64748b;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .priceValueCompact {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #059669;
+  color: #055239;
 }
 
 .priceItemCompact:last-child .priceValueCompact {
-  color: #3b82f6;
+  color: #1E3A8A;
   font-size: 0.7rem;
 }
 
+.unitSelectorCompactContainer {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 1rem;
+}
+
 .unitSelectorCompact {
-  margin: 0.25rem 0;
+  flex: 1; /* prend tout l'espace disponible */
+  margin: 0;
 }
 
 .unitSelectCompact {
@@ -381,8 +350,8 @@
   border-radius: 5px;
   background: #ffffff;
   color: #475569;
-  font-size: 0.7rem;
-  font-weight: 500;
+  font-size: 0.9rem;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -495,14 +464,12 @@
 ============================================ */
 .cartColumn {
   background: #ffffff;
-  border-radius: 16px;
+  border-radius: 10px;
   border: 1px solid #e2e8f0;
-  margin: 3em 0em 0rem 0em;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
-  animation: slideInFromRight 0.6s ease-out;
 }
 
 .cartHeader {
@@ -510,16 +477,21 @@
   border-bottom: 1px solid #e2e8f0;
   background: #f8fafc;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .cartTitle {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 1rem;
 }
 
 .cartTitle h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
   font-size: 1.25rem;
   font-weight: 700;
   color: #059669;
@@ -529,14 +501,13 @@
 .cartSubtitle {
   font-size: 0.8rem;
   color: #64748b;
-  margin: 0.2rem 0 0 0;
 }
 
 .cartTotal {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem;
+  padding: 0.32rem 0.5rem;
   background: #ffffff;
   border-radius: 8px;
   border: 2px solid #e2e8f0;
@@ -563,13 +534,10 @@
 }
 
 .cartScroll {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
   bottom: 70px;
   overflow-y: auto;
-  padding: 1rem;
+  padding: 0.7rem;
+  margin-bottom: 70px;
 }
 
 .cartScroll::-webkit-scrollbar {
@@ -585,13 +553,19 @@
    ITEM PANIER - OPTIMISÉ DESKTOP
 ============================================ */
 .cartItem {
+  position: relative;
   display: flex;
   gap: 0.75rem;
-  padding: 0.75rem;
+  padding: 0.5rem;
   background: #ffffff;
   border-radius: 10px;
   border: 1px solid #e2e8f0;
-  margin-bottom: 0.5rem;
+}
+
+.cartItems {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
 .cartItemImage {
@@ -630,7 +604,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.2rem;
   min-width: 0;
 }
 
@@ -643,14 +617,18 @@
 
 .cartItemInfo {
   flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   min-width: 0;
 }
 
 .cartItemTitle {
-  font-size: 0.8rem;
+  display: flex;
+  gap: .5rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #1e293b;
-  margin: 0 0 0.3rem 0;
 }
 
 .cartItemMeta {
@@ -668,21 +646,25 @@
 
 .cartItemUnit {
   background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
-  padding: 0.1rem 0.3rem;
+  color: #0163ff;
+  padding: 0.1rem 0.25rem;
   border-radius: 8px;
   font-weight: 600;
+  font-size: smaller;
 }
 
 .removeButton {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: 20px;
+  height: 20px;
   border: none;
   background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
+  color: #653232;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -698,13 +680,13 @@
 .cartItemDetails {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.2rem;
 }
 
 .quantityControls {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: end;
   gap: 0.75rem;
 }
 
@@ -780,40 +762,6 @@
   color: #059669;
 }
 
-/* Résumé panier */
-.cartSummary {
-  padding: 0.75rem;
-  background: #f8fafc;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
-  margin: 0.5rem 0;
-}
-
-.summaryRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.3rem 0;
-  color: #475569;
-  font-size: 0.8rem;
-}
-
-.summaryRowTotal {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 0;
-  border-top: 2px solid #e2e8f0;
-  margin-top: 0.3rem;
-  font-size: 0.85rem;
-  font-weight: 700;
-}
-
-.summaryTotalValue {
-  font-size: 1rem;
-  font-weight: 800;
-  color: #059669;
-}
 
 /* Actions panier */
 .cartActions {
@@ -904,7 +852,6 @@
 ============================================ */
 .historyViewContainer,
 .statsViewContainer {
-  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   height: 100%;
 }
 
@@ -912,7 +859,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  padding: 0.25rem;
+  padding: 0.8rem;
 }
 
 .historyItem {
@@ -1084,7 +1031,7 @@
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 0.75rem;
   margin-bottom: 1.5rem;
-  padding: 0.25rem;
+  padding: 0.8rem;
 }
 
 .statsViewContainer .statCard {
@@ -1138,6 +1085,12 @@
   flex: 1;
 }
 
+.statContent {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
 .statsViewContainer .statValue {
   font-size: 1.1rem;
   font-weight: 800;
@@ -1158,6 +1111,10 @@
   margin-top: 1.5rem;
   padding-top: 1rem;
   border-top: 1px solid #e2e8f0;
+}
+
+.statsFooter {
+  padding: 0.8rem;
 }
 
 .exportBtn {
@@ -1208,7 +1165,6 @@
   display: flex;
   flex-direction: column;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  animation: modalSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 @keyframes modalSlideIn {

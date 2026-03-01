@@ -212,7 +212,7 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
             onClick={() => handleNavigation('dashboard', '/dashboardVendeur')}
             className={styles.logoLink}
           >
-            <span className={styles.logoText}>LOGO</span>
+            <span className={styles.logoText}>QUINCAILLERIE</span>
             <span className={styles.logoDot}>.</span>
           </button>
         </div>
@@ -234,7 +234,7 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
                 onClick={() => handleNavigation('vente', '/nouvelleVentesVendeur')} 
                 className={`${styles.navLink} ${isActive('vente') ? styles.active : ''}`}
               >
-                Nouvelle vente
+                Vente
                 {isActive('vente') && <div className={styles.activeIndicator} />}
               </button>
             </li>

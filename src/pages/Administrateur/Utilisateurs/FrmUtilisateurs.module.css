@@ -31,7 +31,6 @@
 
 /* Container principal */
 .formContainer {
-  font-family: "Segoe UI", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   min-height: 100vh;
   position: relative;
   animation: fadeIn 0.8s ease-out;
@@ -638,7 +637,6 @@
   background: white;
   color: #1e293b;
   font-size: 1rem;
-  font-family: inherit;
   resize: vertical;
   transition: all 0.3s ease;
   line-height: 1.5;
