@@ -61,6 +61,7 @@ import VenteFacturesVendeur from "./pages/Vendeur/Ventes/VenteFactures";
 import Clients from "./pages/Vendeur/Clients/Clients";
 import FrmClients from "./pages/Vendeur/Clients/FrmClients";
 import DetailClients from "./pages/Vendeur/Clients/DetailClients";
+import StocksVendeur from "./pages/Vendeur/Stocks/Stocks";
 
 const MyContext = createContext();
 
@@ -77,7 +78,7 @@ const getUserFromStorage = () => {
 const getDashboardPathByRole = (role) => {
   // Normaliser le rôle
   const normalizedRole = role === 'administrateur' ? 'admin' : role;
-  
+
   switch (normalizedRole) {
     case 'admin':
       return "/dashboardAdmin";
@@ -99,7 +100,7 @@ const ProtectedRoute = ({ children, requiredRole }) => {
 
   // Normaliser les rôles
   const userRole = user.role === 'administrateur' ? 'admin' : user.role;
-  
+
   if (requiredRole && userRole !== requiredRole) {
     const dashboardPath = getDashboardPathByRole(userRole);
     return <Navigate to={dashboardPath} replace />;
@@ -112,11 +113,11 @@ const ProtectedRoute = ({ children, requiredRole }) => {
 const DashboardRedirect = () => {
   const user = getUserFromStorage();
   const token = localStorage.getItem('token');
-  
+
   if (!token || !user) {
     return <Navigate to="/" replace />;
   }
-  
+
   const dashboardPath = getDashboardPathByRole(user.role);
   return <Navigate to={dashboardPath} replace />;
 };
@@ -125,18 +126,18 @@ const MainLayout = ({ children }) => {
   const context = React.useContext(MyContext);
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(false);
-  
+
   const user = getUserFromStorage();
-  
+
   // Vérifier si nous sommes sur une page sans sidebar/header
   const hideLayout = location.pathname === "/" || location.pathname === "/login";
-  
+
   // Détection de l'appareil mobile
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
@@ -150,25 +151,25 @@ const MainLayout = ({ children }) => {
           context?.closeNav?.();
         }
       };
-      
+
       document.addEventListener('click', handleClickOutside);
       return () => document.removeEventListener('click', handleClickOutside);
     }
-    return () => {};
+    return () => { };
   }, [isMobile, context]);
 
   // Rendre le Sidebar approprié selon le rôle
   const renderSidebar = () => {
     if (!user) return null;
-    
+
     // Normaliser le rôle
     const userRole = user.role === 'administrateur' ? 'admin' : user.role;
-    
+
     switch (userRole) {
       case 'admin':
-        return null; 
+        return null;
       case 'vendeur':
-        return null;        
+        return null;
     }
   };
 
@@ -186,17 +187,16 @@ const MainLayout = ({ children }) => {
       <div className="main d-flex">
         {/* Overlay pour mobile */}
         {isMobile && context.isOpenNav && (
-          <div 
-            className="sidebarOverlay show" 
+          <div
+            className="sidebarOverlay show"
             onClick={context.closeNav}
           />
         )}
-        
+
         {/* Sidebar dynamique selon le rôle */}
-        <div 
-          className={`sidebarWrapper ${context.isToggleSidebar ? "toggle" : ""} ${
-            context.isOpenNav ? 'open' : ''
-          }`}
+        <div
+          className={`sidebarWrapper ${context.isToggleSidebar ? "toggle" : ""} ${context.isOpenNav ? 'open' : ''
+            }`}
         >
           {renderSidebar()}
         </div>
@@ -229,7 +229,7 @@ export default function App() {
   useEffect(() => {
     const themeClass = themeMode ? 'light' : 'dark';
     const oppositeClass = themeMode ? 'dark' : 'light';
-    
+
     document.body.classList.remove(oppositeClass);
     document.body.classList.add(themeClass);
     localStorage.setItem('themeMode', themeClass);
@@ -245,7 +245,7 @@ export default function App() {
         localStorage.setItem('isOpenNav', "false");
       }
     };
-    
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [isOpenNav]);
@@ -255,12 +255,12 @@ export default function App() {
     setIsOpenNav(false);
     localStorage.setItem('isOpenNav', "false");
   }, []);
-  
+
   const openNav = useCallback(() => {
     setIsOpenNav(true);
     localStorage.setItem('isOpenNav', "true");
   }, []);
-  
+
   const toggleNav = useCallback(() => {
     setIsOpenNav(prev => {
       const newState = !prev;
@@ -303,7 +303,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <MyContext.Provider value={values}>
-        
+
         <Routes>
           {/* Route publique - Page de login */}
           <Route path="/" element={
@@ -320,7 +320,7 @@ export default function App() {
                 <Routes>
                   {/* Route qui redirige vers le dashboard approprié */}
                   <Route path="/dashboard" element={<DashboardRedirect />} />
-                  
+
                   {/* Routes Admin */}
                   <Route path="/dashboardAdmin" element={
                     <ProtectedRoute requiredRole="admin">
@@ -477,7 +477,7 @@ export default function App() {
                       <ParametresAdmin />
                     </ProtectedRoute>
                   } />
-                  
+
 
 
                   {/* Routes Vendeur */}
@@ -529,6 +529,11 @@ export default function App() {
                   <Route path="/venteFacturesVendeur" element={
                     <ProtectedRoute requiredRole="vendeur">
                       <VenteFacturesVendeur />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/stockVendeur" element={
+                    <ProtectedRoute requiredRole="vendeur">
+                      <StocksVendeur />
                     </ProtectedRoute>
                   } />
                   <Route path="/clients" element={

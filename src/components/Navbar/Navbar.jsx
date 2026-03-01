@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { 
-  Menu, 
-  X, 
-  ShoppingBag, 
-  User, 
-  Search, 
-  Sun, 
-  Moon, 
+import {
+  Menu,
+  X,
+  ShoppingBag,
+  User,
+  Search,
+  Sun,
+  Moon,
   ChevronDown,
   UserCircle,
   LogOut,
@@ -36,6 +36,7 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
     if (pathname.includes('/dashboardVendeur')) return 'dashboard';
     if (pathname.includes('/nouvelleVentesVendeur')) return 'vente';
     if (pathname.includes('/produitVendeur')) return 'produits';
+    if (pathname.includes('/stockVendeur')) return 'stock';
     if (pathname.includes('/clients')) return 'clients';
     if (pathname.includes('/ventes') || pathname.includes('/venteHistorique') || pathname.includes('/venteFactures')) return 'ventes';
     if (pathname.includes('/paniersVendeurs')) return 'paniers';
@@ -156,7 +157,7 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      
+
       // Mapper les mots-clés aux sections et routes
       const searchMap = {
         'dashboard': { section: 'dashboard', route: '/dashboardVendeur' },
@@ -165,6 +166,8 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
         'vente': { section: 'vente', route: '/nouvelleVentesVendeur' },
         'produits': { section: 'produits', route: '/produitVendeur' },
         'produit': { section: 'produits', route: '/produitVendeur' },
+        'stock': { section: 'stock', route: '/stockVendeur' },
+        'stocks': { section: 'stock', route: '/stockVendeur' },
         'ventes': { section: 'ventes', route: '/ventes' },
         'historique': { section: 'ventes', route: '/venteHistoriqueVendeur' },
         'factures': { section: 'ventes', route: '/venteFacturesVendeur' },
@@ -177,7 +180,7 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
 
       // Recherche par mot-clé
       let found = null;
-      
+
       for (const [keyword, data] of Object.entries(searchMap)) {
         if (query.includes(keyword)) {
           found = data;
@@ -205,10 +208,10 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
   return (
     <nav className={`${styles.navbar} ${isScrolled ? styles.scrolled : ''}`}>
       <div className={styles.container}>
-        
+
         {/* Logo */}
         <div className={styles.logo}>
-          <button 
+          <button
             onClick={() => handleNavigation('dashboard', '/dashboardVendeur')}
             className={styles.logoLink}
           >
@@ -221,8 +224,8 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
         <div className={styles.menuDesktop}>
           <ul className={styles.navLinks}>
             <li>
-              <button 
-                onClick={() => handleNavigation('dashboard', '/dashboardVendeur')} 
+              <button
+                onClick={() => handleNavigation('dashboard', '/dashboardVendeur')}
                 className={`${styles.navLink} ${isActive('dashboard') ? styles.active : ''}`}
               >
                 Accueil
@@ -230,8 +233,8 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
               </button>
             </li>
             <li>
-              <button 
-                onClick={() => handleNavigation('vente', '/nouvelleVentesVendeur')} 
+              <button
+                onClick={() => handleNavigation('vente', '/nouvelleVentesVendeur')}
                 className={`${styles.navLink} ${isActive('vente') ? styles.active : ''}`}
               >
                 Vente
@@ -239,8 +242,8 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
               </button>
             </li>
             <li>
-              <button 
-                onClick={() => handleNavigation('produits', '/produitVendeur')} 
+              <button
+                onClick={() => handleNavigation('produits', '/produitVendeur')}
                 className={`${styles.navLink} ${isActive('produits') ? styles.active : ''}`}
               >
                 Produits
@@ -248,8 +251,17 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
               </button>
             </li>
             <li>
-              <button 
-                onClick={() => handleNavigation('clients', '/clients')} 
+              <button
+                onClick={() => handleNavigation('stock', '/stockVendeur')}
+                className={`${styles.navLink} ${isActive('stock') ? styles.active : ''}`}
+              >
+                Stock
+                {isActive('stock') && <div className={styles.activeIndicator} />}
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => handleNavigation('clients', '/clients')}
                 className={`${styles.navLink} ${isActive('clients') ? styles.active : ''}`}
               >
                 Clients
@@ -263,14 +275,14 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
         <div className={styles.actions}>
           {/* Search */}
           <div className={styles.searchWrapper} ref={searchRef}>
-            <button 
-              className={styles.searchBtn} 
+            <button
+              className={styles.searchBtn}
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               aria-label="Search"
             >
               <Search size={20} />
             </button>
-            
+
             {/* Search Modal */}
             {isSearchOpen && (
               <div className={styles.searchModal}>
@@ -286,8 +298,8 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
                       autoFocus
                     />
                     {searchQuery && (
-                      <button 
-                        type="button" 
+                      <button
+                        type="button"
                         onClick={() => setSearchQuery('')}
                         className={styles.clearSearch}
                       >
@@ -299,11 +311,11 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
                     Rechercher
                   </button>
                 </form>
-                
+
                 {/* Suggestions */}
                 <div className={styles.searchSuggestions}>
                   <p className={styles.suggestionsTitle}>Suggestions:</p>
-                  <button 
+                  <button
                     className={styles.suggestionItem}
                     onClick={() => {
                       setSearchQuery('Dashboard');
@@ -315,7 +327,7 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
                   >
                     Dashboard / Accueil
                   </button>
-                  <button 
+                  <button
                     className={styles.suggestionItem}
                     onClick={() => {
                       setSearchQuery('Nouvelle vente');
@@ -327,7 +339,7 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
                   >
                     Nouvelle vente
                   </button>
-                  <button 
+                  <button
                     className={styles.suggestionItem}
                     onClick={() => {
                       setSearchQuery('Produits');
@@ -339,7 +351,7 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
                   >
                     Produits
                   </button>
-                  <button 
+                  <button
                     className={styles.suggestionItem}
                     onClick={() => {
                       setSearchQuery('Clients');
@@ -351,7 +363,7 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
                   >
                     Clients
                   </button>
-                  <button 
+                  <button
                     className={styles.suggestionItem}
                     onClick={() => {
                       setSearchQuery('Paniers');
@@ -369,7 +381,7 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
           </div>
 
           {/* Cart - Redirige vers Paniers.jsx */}
-          <button 
+          <button
             className={`${styles.cartBtn} ${isActive('paniers') ? styles.active : ''}`}
             onClick={goToCarts}
             aria-label="Shopping cart"
@@ -382,7 +394,7 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
 
           {/* Profile */}
           <div className={styles.profileWrapper} ref={profileRef}>
-            <button 
+            <button
               className={styles.profileBtn}
               onClick={() => setIsProfileOpen(!isProfileOpen)}
               aria-label="Profile menu"
@@ -392,7 +404,7 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
               </div>
               <ChevronDown size={16} className={styles.profileArrow} />
             </button>
-            
+
             {/* Profile Dropdown */}
             {isProfileOpen && (
               <div className={styles.profileDropdown}>
@@ -405,9 +417,9 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
                     <p className={styles.profileEmail}>wallefred@example.com</p>
                   </div>
                 </div>
-                
+
                 <div className={styles.profileMenu}>
-                  <button 
+                  <button
                     className={styles.profileMenuItem}
                     onClick={() => {
                       navigate('/profile');
@@ -417,7 +429,7 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
                     <UserCircle size={18} />
                     <span>Mon Compte</span>
                   </button>
-                  <button 
+                  <button
                     className={styles.profileMenuItem}
                     onClick={() => {
                       navigate('/settings');
@@ -428,7 +440,7 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
                     <span>Paramètres</span>
                   </button>
                   <div className={styles.profileDivider}></div>
-                  <button 
+                  <button
                     className={styles.profileMenuItemLogout}
                     onClick={() => {
                       console.log('Déconnexion');
@@ -445,7 +457,7 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
           </div>
 
           {/* Menu Toggle Mobile */}
-          <button 
+          <button
             className={styles.menuToggle}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
@@ -458,7 +470,7 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
         <div className={`${styles.menuMobile} ${isMenuOpen ? styles.active : ''}`}>
           {/* Header avec bouton retour */}
           <div className={styles.mobileHeader}>
-            <button 
+            <button
               className={styles.mobileBackBtn}
               onClick={() => setIsMenuOpen(false)}
               aria-label="Fermer le menu"
@@ -466,7 +478,7 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
               <ChevronLeft size={24} />
               <span>Retour</span>
             </button>
-            
+
             <div className={styles.mobileProfile}>
               <div>
                 <UserCircle size={40} />
@@ -480,8 +492,8 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
 
           <ul className={styles.navLinksMobile}>
             <li>
-              <button 
-                onClick={() => handleNavigation('dashboard', '/dashboardVendeur')} 
+              <button
+                onClick={() => handleNavigation('dashboard', '/dashboardVendeur')}
                 className={`${styles.navLinkMobile} ${isActive('dashboard') ? styles.active : ''}`}
               >
                 Dashboard Vendeur
@@ -489,8 +501,8 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
               </button>
             </li>
             <li>
-              <button 
-                onClick={() => handleNavigation('vente', '/nouvelleVentesVendeur')} 
+              <button
+                onClick={() => handleNavigation('vente', '/nouvelleVentesVendeur')}
                 className={`${styles.navLinkMobile} ${isActive('vente') ? styles.active : ''}`}
               >
                 Nouvelle vente
@@ -498,8 +510,8 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
               </button>
             </li>
             <li>
-              <button 
-                onClick={() => handleNavigation('produits', '/produitVendeur')} 
+              <button
+                onClick={() => handleNavigation('produits', '/produitVendeur')}
                 className={`${styles.navLinkMobile} ${isActive('produits') ? styles.active : ''}`}
               >
                 Produits
@@ -507,8 +519,17 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
               </button>
             </li>
             <li>
-              <button 
-                onClick={() => handleNavigation('ventes', '/ventes')} 
+              <button
+                onClick={() => handleNavigation('stock', '/stockVendeur')}
+                className={`${styles.navLinkMobile} ${isActive('stock') ? styles.active : ''}`}
+              >
+                Stock
+                {isActive('stock') && <div className={styles.mobileActiveIndicator} />}
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => handleNavigation('ventes', '/ventes')}
                 className={`${styles.navLinkMobile} ${isActive('ventes') ? styles.active : ''}`}
               >
                 Ventes
@@ -516,8 +537,8 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
               </button>
             </li>
             <li>
-              <button 
-                onClick={() => handleNavigation('clients', '/clients')} 
+              <button
+                onClick={() => handleNavigation('clients', '/clients')}
                 className={`${styles.navLinkMobile} ${isActive('clients') ? styles.active : ''}`}
               >
                 Clients
@@ -525,8 +546,8 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
               </button>
             </li>
             <li>
-              <button 
-                onClick={() => handleNavigation('paniers', '/paniersVendeurs')} 
+              <button
+                onClick={() => handleNavigation('paniers', '/paniersVendeurs')}
                 className={`${styles.navLinkMobile} ${isActive('paniers') ? styles.active : ''}`}
               >
                 Paniers
@@ -539,8 +560,8 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
           </ul>
 
           {/* Mobile Actions */}
-          <div className={styles.mobileActions}>            
-            <button 
+          <div className={styles.mobileActions}>
+            <button
               className={styles.mobileActionBtnLogout}
               onClick={() => {
                 console.log('Déconnexion mobile');
@@ -556,7 +577,7 @@ const Navbar = ({ onNavigate, activeSection = 'dashboard' }) => {
 
         {/* Overlay */}
         {isMenuOpen && (
-          <div 
+          <div
             className={styles.overlay}
             onClick={() => setIsMenuOpen(false)}
           />

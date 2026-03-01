@@ -1,48 +1,34 @@
-import React, { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useMemo, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import styles from './Clients.module.css';
 import Button from '../../../components/Button/Button';
 import Input from '../../../components/Input/Input';
 import InputSelect from '../../../components/Input/InputSelect';
-import { 
-  IoPersonOutline,
+import ClientModal from './ClientModal';
+import {
   IoSearchOutline,
-  IoAddOutline,
   IoCallOutline,
   IoMailOutline,
   IoLocationOutline,
-  IoFilterOutline,
-  IoPrintOutline,
-  IoDownloadOutline,
-  IoEyeOutline,
-  IoTrashOutline,
-  IoPencilOutline,
-  IoWalletOutline,
-  IoReceiptOutline,
-  IoCalendarOutline,
   IoCheckmarkCircleOutline,
-  IoAlertCircleOutline,
-  IoTimeOutline,
-  IoCloseOutline,
-  IoGridOutline,
-  IoListOutline
+  IoAlertCircleOutline
 } from "react-icons/io5";
-import { 
+import {
   FaUserTie,
   FaBuilding,
-  FaChartLine,
-  FaTags,
-  FaCheckCircle
+  FaTags
 } from "react-icons/fa";
-import { 
+import {
+  TbCategory,
+  TbArrowsSort,
   TbCurrencyDollar
 } from "react-icons/tb";
-import { 
+import {
   MdOutlineGroup
 } from "react-icons/md";
 
 // Données mock pour les clients
-const mockClients = [
+const initialClients = [
   {
     id: 1,
     nom: 'SARL Batiment Plus',
@@ -132,129 +118,49 @@ const mockClients = [
     total_achats: 750000,
     dernier_achat: '2024-02-28',
     statut: 'actif'
-  },
-  {
-    id: 7,
-    nom: 'Société Travaux Public',
-    type: 'Entreprise',
-    contact: 'Mr. Ravalison',
-    telephone: '+261 34 22 556 67',
-    email: 'travauxpublic@stp.mg',
-    adresse: 'Ambodivona, Antananarivo',
-    categorie: 'Client Gold',
-    credit_autorise: 8000000,
-    credit_utilise: 4200000,
-    total_achats: 9500000,
-    dernier_achat: '2024-03-13',
-    statut: 'actif'
-  },
-  {
-    id: 8,
-    nom: 'Mme. Rakotomalala',
-    type: 'Particulier',
-    contact: 'Mme. Rakotomalala',
-    telephone: '+261 32 33 667 78',
-    email: 'rakotomalala@outlook.com',
-    adresse: 'Mahamasina, Antananarivo',
-    categorie: 'Client Standard',
-    credit_autorise: 300000,
-    credit_utilise: 0,
-    total_achats: 450000,
-    dernier_achat: '2024-03-05',
-    statut: 'actif'
   }
 ];
 
-// Historique des paiements mock
-const mockHistoriquePaiements = [
-  {
-    id: 1,
-    client: 'SARL Batiment Plus',
-    date: '2024-03-15',
-    montant: 500000,
-    mode: 'Virement',
-    facture: 'FAC-2024-00158',
-    statut: 'payé'
-  },
-  {
-    id: 2,
-    client: 'Entreprise Construction Pro',
-    date: '2024-03-14',
-    montant: 300000,
-    mode: 'Espèces',
-    facture: 'FAC-2024-00157',
-    statut: 'payé'
-  },
-  {
-    id: 3,
-    client: 'Mr. Randria Jean-Pierre',
-    date: '2024-03-10',
-    montant: 150000,
-    mode: 'MVola',
-    facture: 'FAC-2024-00152',
-    statut: 'payé'
-  },
-  {
-    id: 4,
-    client: 'Groupe Immobilier Pro',
-    date: '2024-03-12',
-    montant: 750000,
-    mode: 'Virement',
-    facture: 'FAC-2024-00155',
-    statut: 'payé'
-  },
-  {
-    id: 5,
-    client: 'SARL Materiaux Pro',
-    date: '2024-03-08',
-    montant: 200000,
-    mode: 'Crédit',
-    facture: 'FAC-2024-00150',
-    statut: 'en attente'
-  }
-];
-
-// Composant de carte client
+// Composant carte client
 const ClientCard = ({ client, onView, onEdit, onDelete }) => {
-  const formatCurrency = (amount) => {
+  const formatCurrency = useCallback((amount) => {
     return new Intl.NumberFormat('fr-FR', {
       style: 'currency',
       currency: 'MGA',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
     }).format(amount);
-  };
+  }, []);
 
-  const formatDate = (dateString) => {
+  const formatDate = useCallback((dateString) => {
+    if (!dateString) return 'Aucun achat';
     return new Date(dateString).toLocaleDateString('fr-FR');
-  };
+  }, []);
+
+  const creditPercent = client.credit_autorise > 0
+    ? Math.min((client.credit_utilise / client.credit_autorise) * 100, 100)
+    : 0;
 
   return (
     <div className={styles.clientCard}>
-      <div className={styles.cardHeader}>
+      <div className={styles.clientHeader}>
         <div className={styles.clientType}>
-          {client.type === 'Entreprise' ? <FaBuilding /> : <IoPersonOutline />}
+          {client.type === 'Entreprise' ? <FaBuilding /> : <FaUserTie />}
           <span>{client.type}</span>
         </div>
         <div className={`${styles.statusBadge} ${styles[client.statut]}`}>
-          {client.statut === 'actif' && <IoCheckmarkCircleOutline />}
-          {client.statut === 'inactif' && <IoAlertCircleOutline />}
+          {client.statut === 'actif' ? <IoCheckmarkCircleOutline /> : <IoAlertCircleOutline />}
           <span>{client.statut}</span>
         </div>
       </div>
 
-      <div className={styles.cardContent}>
+      <div className={styles.clientContent}>
         <div className={styles.clientMainInfo}>
-          <div className={styles.clientAvatar}>
-            {client.type === 'Entreprise' ? <FaBuilding /> : <FaUserTie />}
-          </div>
-          <div className={styles.clientInfo}>
-            <h4 className={styles.clientName}>{client.nom}</h4>
-            <p className={styles.clientContact}>{client.contact}</p>
-            <div className={styles.clientCategory}>
-              <FaTags />
-              <span>{client.categorie}</span>
-            </div>
+          <h4 className={styles.clientName}>{client.nom}</h4>
+          <p className={styles.clientContact}>{client.contact}</p>
+          <div className={styles.clientCategory}>
+            <FaTags />
+            <span>{client.categorie}</span>
           </div>
         </div>
 
@@ -263,16 +169,18 @@ const ClientCard = ({ client, onView, onEdit, onDelete }) => {
             <IoCallOutline />
             <span>{client.telephone}</span>
           </div>
-          {client.email && (
+          {client.email ? (
             <div className={styles.detailItem}>
               <IoMailOutline />
               <span className={styles.truncate}>{client.email}</span>
             </div>
-          )}
-          <div className={styles.detailItem}>
-            <IoLocationOutline />
-            <span className={styles.truncate}>{client.adresse}</span>
-          </div>
+          ) : null}
+          {client.adresse ? (
+            <div className={styles.detailItem}>
+              <IoLocationOutline />
+              <span className={styles.truncate}>{client.adresse}</span>
+            </div>
+          ) : null}
         </div>
 
         <div className={styles.clientStats}>
@@ -286,7 +194,7 @@ const ClientCard = ({ client, onView, onEdit, onDelete }) => {
           </div>
         </div>
 
-        {client.credit_autorise > 0 && (
+        {client.credit_autorise > 0 ? (
           <div className={styles.creditInfo}>
             <div className={styles.creditProgress}>
               <div className={styles.progressLabel}>
@@ -294,31 +202,27 @@ const ClientCard = ({ client, onView, onEdit, onDelete }) => {
                 <span>{formatCurrency(client.credit_utilise)} / {formatCurrency(client.credit_autorise)}</span>
               </div>
               <div className={styles.progressBar}>
-                <div 
-                  className={styles.progressFill} 
-                  style={{ 
-                    width: `${Math.min((client.credit_utilise / client.credit_autorise) * 100, 100)}%` 
-                  }}
+                <div
+                  className={styles.progressFill}
+                  style={{ width: `${creditPercent}%` }}
                 />
               </div>
             </div>
           </div>
-        )}
+        ) : null}
       </div>
 
-      <div className={styles.cardActions}>
+      <div className={styles.clientActions}>
         <Button
-          variant="outline"
-          size="small"
+          variant="ghost"
           icon="eye"
           onClick={() => onView(client)}
           className={styles.actionBtn}
         >
-          Voir
+          Voir détails
         </Button>
         <Button
-          variant="outline"
-          size="small"
+          variant="ghost"
           icon="edit"
           onClick={() => onEdit(client)}
           className={styles.actionBtn}
@@ -326,8 +230,7 @@ const ClientCard = ({ client, onView, onEdit, onDelete }) => {
           Modifier
         </Button>
         <Button
-          variant="outline"
-          size="small"
+          variant="ghost"
           icon="trash"
           onClick={() => onDelete(client)}
           className={`${styles.actionBtn} ${styles.deleteBtn}`}
@@ -339,26 +242,47 @@ const ClientCard = ({ client, onView, onEdit, onDelete }) => {
   );
 };
 
+ClientCard.propTypes = {
+  client: PropTypes.object.isRequired,
+  onView: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired
+};
+
 const Clients = () => {
-  const navigate = useNavigate();
-  const [clients, setClients] = useState(mockClients);
-  const [viewMode, setViewMode] = useState('grid'); // 'juste grid seulement'
+  const [clients, setClients] = useState(initialClients);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedStatus, setSelectedStatus] = useState('all');
-  const [showFilters, setShowFilters] = useState(false);
-  const [activeTab, setActiveTab] = useState('clients'); // 'clients', 'payments', 'reports'
+  const [selectedType, setSelectedType] = useState('all');
+  const [sortBy, setSortBy] = useState('nom');
+  const [showClientModal, setShowClientModal] = useState(false);
+  const [editingClient, setEditingClient] = useState(null);
 
-  // Filtrer les clients
+  const formatCurrency = useCallback((amount) => {
+    return new Intl.NumberFormat('fr-FR', {
+      style: 'currency',
+      currency: 'MGA',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(amount);
+  }, []);
+
+  const categories = useMemo(() => {
+    const unique = [...new Set(clients.map(c => c.categorie))];
+    return unique.sort((a, b) => a.localeCompare(b));
+  }, [clients]);
+
   const filteredClients = useMemo(() => {
     let filtered = [...clients];
 
     if (searchTerm) {
+      const q = searchTerm.toLowerCase();
       filtered = filtered.filter(client =>
-        client.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        client.contact.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        client.telephone.includes(searchTerm) ||
-        (client.email && client.email.toLowerCase().includes(searchTerm.toLowerCase()))
+        client.nom.toLowerCase().includes(q) ||
+        client.contact.toLowerCase().includes(q) ||
+        client.telephone.includes(q) ||
+        (client.email && client.email.toLowerCase().includes(q))
       );
     }
 
@@ -370,10 +294,29 @@ const Clients = () => {
       filtered = filtered.filter(client => client.statut === selectedStatus);
     }
 
-    return filtered;
-  }, [clients, searchTerm, selectedCategory, selectedStatus]);
+    if (selectedType !== 'all') {
+      filtered = filtered.filter(client => client.type === selectedType);
+    }
 
-  // Calculer les statistiques
+    filtered.sort((a, b) => {
+      if (sortBy === 'nom') {
+        return a.nom.localeCompare(b.nom);
+      }
+      if (sortBy === 'total_achats') {
+        return b.total_achats - a.total_achats;
+      }
+      if (sortBy === 'dernier_achat') {
+        if (!a.dernier_achat && !b.dernier_achat) return 0;
+        if (!a.dernier_achat) return 1;
+        if (!b.dernier_achat) return -1;
+        return new Date(b.dernier_achat) - new Date(a.dernier_achat);
+      }
+      return 0;
+    });
+
+    return filtered;
+  }, [clients, searchTerm, selectedCategory, selectedStatus, selectedType, sortBy]);
+
   const stats = useMemo(() => {
     const totalClients = clients.length;
     const activeClients = clients.filter(c => c.statut === 'actif').length;
@@ -390,223 +333,153 @@ const Clients = () => {
     };
   }, [clients]);
 
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('fr-FR', {
-      style: 'currency',
-      currency: 'MGA',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(amount);
-  };
-
   const handleAddClient = () => {
-    navigate('/frmClients');
+    setEditingClient(null);
+    setShowClientModal(true);
   };
 
   const handleEditClient = (client) => {
-    navigate(`/frmClients/${client.id}`, { state: { clientData: client } });
+    setEditingClient(client);
+    setShowClientModal(true);
+  };
+
+  const handleSaveClient = (clientData) => {
+    if (editingClient) {
+      setClients(clients.map(c => c.id === clientData.id ? clientData : c));
+    } else {
+      const newClient = {
+        ...clientData,
+        id: Date.now(),
+        credit_utilise: 0,
+        total_achats: 0,
+        dernier_achat: null
+      };
+      setClients([...clients, newClient]);
+    }
+    setShowClientModal(false);
+    setEditingClient(null);
   };
 
   const handleDeleteClient = (client) => {
-    if (window.confirm(`Êtes-vous sûr de vouloir supprimer le client "${client.nom}" ?`)) {
-      setClients(prev => prev.filter(c => c.id !== client.id));
+    if (globalThis.confirm && globalThis.confirm(`Êtes-vous sûr de vouloir supprimer le client "${client.nom}" ?`)) {
+      setClients(clients.filter(c => c.id !== client.id));
     }
   };
 
   const handleViewClient = (client) => {
-    navigate(`/detailClients/${client.id}`, { state: { clientData: client } });
+    console.log('Voir client:', client);
+    // Navigation vers la page de détail si nécessaire
   };
 
   const handleResetFilters = () => {
     setSearchTerm('');
     setSelectedCategory('all');
     setSelectedStatus('all');
+    setSelectedType('all');
+    setSortBy('nom');
   };
-
-  // Catégories uniques pour le filtre
-  const categories = ['all', ...new Set(clients.map(c => c.categorie))];
 
   return (
     <div className={styles.dashboardModern}>
-      {/* En-tête avec titre et actions principales */}
-      <div className={styles.headerSection}>
-        <div className={styles.headerLeft}>
-          <div className={styles.pageIcon}>
-            <MdOutlineGroup />
-          </div>
-          <div className={styles.pageTitle}>
-            <h1>Gestion des Clients</h1>
-            <p className={styles.pageSubtitle}>
-              <span>{stats.totalClients} clients</span>
-              <span className={styles.subtitleDot}>•</span>
-              <span className={styles.activeCount}>{stats.activeClients} actifs</span>
-              <span className={styles.subtitleDot}>•</span>
-              <span>{formatCurrency(stats.totalSales)} CA total</span>
-            </p>
-          </div>
-        </div>
-        
-        <div className={styles.headerActions}>
-          <Button 
-            variant="outline"
-            size="medium"
-            icon="print"
-            onClick={() => window.print()}
-          >
-            Imprimer
-          </Button>
-          <Button 
-            variant="primary"
-            size="medium"
-            icon="add"
-            onClick={handleAddClient}
-          >
-            Nouveau Client
-          </Button>
-        </div>
-      </div>
+      <div className={styles.splitScreenContainer}>
+        {/* Colonne gauche - Liste des clients */}
+        <div className={styles.clientsListColumn}>
+          <div className={styles.clientsListHeader}>
+            <div className={styles.navigationTabsInline}>
+              <h2 className={styles.pageTitle}>Gestion des Clients</h2>
+              <p className={styles.pageSubtitle}>
+                Gérez vos clients, leurs informations et leur historique d'achats.
+              </p>
+            </div>
 
-      <div className={styles.flex}>
-        {/* Navigation tabs */}
-        <div className={styles.navigationTabs}>
-          <button 
-            className={`${styles.tabBtn} ${activeTab === 'clients' ? styles.active : ''}`}
-            onClick={() => setActiveTab('clients')}
-          >
-            <IoPersonOutline />
-            <span>Liste des Clients</span>
-          </button>
-          <button 
-            className={`${styles.tabBtn} ${activeTab === 'payments' ? styles.active : ''}`}
-            onClick={() => setActiveTab('payments')}
-          >
-            <IoReceiptOutline />
-            <span>Historique Paiements</span>
-          </button>
-          <button 
-            className={`${styles.tabBtn} ${activeTab === 'reports' ? styles.active : ''}`}
-            onClick={() => setActiveTab('reports')}
-          >
-            <FaChartLine />
-            <span>Rapports</span>
-          </button>
-        </div>
-
-        {/* Barre de recherche et contrôles */}
-        <div className={styles.controlsBar}>
-          <div className={styles.searchSection}>
-            <div className={styles.searchWrapper}>
+            {/* Filtres */}
+            <div className={styles.venteFilters}>
               <Input
                 type="text"
                 placeholder="Rechercher par nom, contact, téléphone..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 name="clientSearch"
+                className={styles.searchInput}
                 icon={<IoSearchOutline />}
+              />
+              <InputSelect
+                value={selectedType}
+                onChange={setSelectedType}
+                options={[
+                  { value: 'all', label: 'Tous types' },
+                  { value: 'Particulier', label: 'Particulier' },
+                  { value: 'Entreprise', label: 'Entreprise' }
+                ]}
+                placeholder="Type"
+                variant="outline"
+                icon={<FaUserTie />}
                 fullWidth
               />
-              {searchTerm && (
-                <button 
-                  className={styles.clearSearch}
-                  onClick={() => setSearchTerm('')}
-                >
-                  <IoCloseOutline />
-                </button>
-              )}
-            </div>
-
-            <div className={styles.viewControls}>
-              <button 
-                className={`${styles.viewModeBtn} ${viewMode === 'grid' ? styles.active : ''}`}
-                onClick={() => setViewMode('grid')}
-                title="Vue grille"
-              >
-                <IoGridOutline />
-              </button>
-            </div>
-
-            <button 
-              className={`${styles.filterBtn} ${showFilters ? styles.active : ''}`}
-              onClick={() => setShowFilters(!showFilters)}
-            >
-              <IoFilterOutline />
-              <span>Filtres</span>
-              {(selectedCategory !== 'all' || selectedStatus !== 'all') && (
-                <span className={styles.filterBadge}>
-                  {selectedCategory !== 'all' && selectedStatus !== 'all' ? 2 : 1}
-                </span>
-              )}
-            </button>
-          </div>
-
-        </div>
-      </div>
-      
-      {/* Filtres avancés */}
-      {showFilters && (
-        <div className={styles.filtersPanel}>
-          <div className={styles.filtersRow}>
-            <div className={styles.filterGroup}>
-              <label className={styles.filterLabel}>
-                <FaTags />
-                Catégorie
-              </label>
               <InputSelect
                 value={selectedCategory}
-                onChange={(value) => setSelectedCategory(value)}
-                options={categories.map(cat => ({
-                  value: cat,
-                  label: cat === 'all' ? 'Toutes catégories' : cat
-                }))}
+                onChange={setSelectedCategory}
+                options={[
+                  { value: 'all', label: 'Toutes catégories' },
+                  ...categories.map(cat => ({
+                    value: cat,
+                    label: cat
+                  }))
+                ]}
                 placeholder="Catégorie"
-                size="small"
                 variant="outline"
+                icon={<TbCategory />}
                 fullWidth
-                clearable
               />
-            </div>
-
-            <div className={styles.filterGroup}>
-              <label className={styles.filterLabel}>
-                <IoCheckmarkCircleOutline />
-                Statut
-              </label>
               <InputSelect
                 value={selectedStatus}
-                onChange={(value) => setSelectedStatus(value)}
+                onChange={setSelectedStatus}
                 options={[
                   { value: 'all', label: 'Tous statuts' },
                   { value: 'actif', label: 'Actifs' },
                   { value: 'inactif', label: 'Inactifs' }
                 ]}
                 placeholder="Statut"
-                size="small"
                 variant="outline"
+                icon={<IoCheckmarkCircleOutline />}
                 fullWidth
-                clearable
               />
-            </div>
-
-            <div className={styles.filterActions}>
-              <Button 
+              <InputSelect
+                value={sortBy}
+                onChange={setSortBy}
+                options={[
+                  { value: 'nom', label: 'Nom' },
+                  { value: 'total_achats', label: 'Total achats' },
+                  { value: 'dernier_achat', label: 'Dernier achat' }
+                ]}
+                placeholder="Trier par"
                 variant="outline"
-                size="small"
+                icon={<TbArrowsSort />}
+                fullWidth
+              />
+              <Button
+                variant="outline"
+                size="medium"
+                icon="refresh"
                 onClick={handleResetFilters}
+                className={styles.resetBtn}
+              />
+              <Button
+                variant="primary"
+                size="medium"
+                icon="plus"
+                onClick={handleAddClient}
+                className={styles.addBtn}
               >
-                Réinitialiser
+                Ajouter
               </Button>
             </div>
           </div>
-        </div>
-      )}
 
-      {/* Contenu principal */}
-      <div className={styles.mainContent}>
-        {/* Vue Liste des Clients */}
-        {activeTab === 'clients' && (
-          <div className={styles.clientsContainer}>
-            {filteredClients.length > 0 ? (
-              viewMode === 'grid' ? (
+          {/* Liste des clients */}
+          <div className={styles.clientsListContainer}>
+            <div className={styles.clientsListScroll}>
+              {filteredClients.length > 0 ? (
                 <div className={styles.clientsGrid}>
                   {filteredClients.map((client) => (
                     <ClientCard
@@ -619,166 +492,97 @@ const Clients = () => {
                   ))}
                 </div>
               ) : (
-                <div className={styles.tableContainer}>
-                  
+                <div className={styles.noClients}>
+                  <MdOutlineGroup className={styles.noClientsIcon} />
+                  <h3>Aucun client trouvé</h3>
+                  <p>Aucun client ne correspond à vos critères de recherche.</p>
+                  <Button
+                    variant="outline"
+                    size="medium"
+                    icon="refresh"
+                    onClick={handleResetFilters}
+                    className={styles.resetFiltersBtn}
+                  >
+                    Réinitialiser les filtres
+                  </Button>
                 </div>
-              )
-            ) : (
-              <div className={styles.noResults}>
-                <IoPersonOutline className={styles.noResultsIcon} />
-                <h3>Aucun client trouvé</h3>
-                <p>Aucun client ne correspond à vos critères de recherche.</p>
-                <Button 
-                  variant="primary"
-                  size="medium"
-                  onClick={handleAddClient}
-                >
-                  Ajouter un client
-                </Button>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Vue Historique des Paiements */}
-        {activeTab === 'payments' && (
-          <div className={styles.paymentsSection}>
-            <div className={styles.sectionHeader}>
-              <h2 className={styles.sectionTitle}>
-                <IoReceiptOutline /> Historique des Paiements
-              </h2>
-              <div className={styles.paymentStats}>
-                <div className={styles.paymentStat}>
-                  <span className={styles.paymentStatLabel}>Total ce mois:</span>
-                  <span className={styles.paymentStatValue}>1 850 000 MGA</span>
-                </div>
-                <div className={styles.paymentStat}>
-                  <span className={styles.paymentStatLabel}>En attente:</span>
-                  <span className={styles.paymentStatValue}>200 000 MGA</span>
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.tableContainer}>
-              <table className={styles.paymentsTable}>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Client</th>
-                    <th>Montant</th>
-                    <th>Mode</th>
-                    <th>Facture</th>
-                    <th>Statut</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {mockHistoriquePaiements.map((payment) => (
-                    <tr key={payment.id}>
-                      <td>{new Date(payment.date).toLocaleDateString('fr-FR')}</td>
-                      <td>{payment.client}</td>
-                      <td className={styles.paymentAmount}>{formatCurrency(payment.montant)}</td>
-                      <td>{payment.mode}</td>
-                      <td>{payment.facture}</td>
-                      <td>
-                        <span className={`${styles.paymentStatus} ${styles[payment.statut.replace(' ', '_')]}`}>
-                          {payment.statut === 'payé' ? <IoCheckmarkCircleOutline /> : <IoTimeOutline />}
-                          {payment.statut}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              )}
             </div>
           </div>
-        )}
+        </div>
 
-        {/* Vue Rapports */}
-        {activeTab === 'reports' && (
-          <div className={styles.reportsSection}>
-            <div className={styles.sectionHeader}>
-              <h2 className={styles.sectionTitle}>
-                <FaChartLine /> Rapports Clients
-              </h2>
-              <div className={styles.reportActions}>
-                <Button
-                  variant="outline"
-                  size="medium"
-                  icon="download"
-                  onClick={() => {
-                    const content = `Rapport Clients ${new Date().toLocaleDateString()}\n\n` +
-                      `Total Clients: ${stats.totalClients}\n` +
-                      `Clients Actifs: ${stats.activeClients}\n` +
-                      `Clients Premium: ${stats.premiumClients}\n` +
-                      `Crédit Total Utilisé: ${formatCurrency(stats.totalCredit)}\n` +
-                      `Chiffre d'Affaires Total: ${formatCurrency(stats.totalSales)}`;
-                    
-                    const blob = new Blob([content], { type: 'text/plain' });
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `rapport-clients-${new Date().toISOString().split('T')[0]}.txt`;
-                    a.click();
-                  }}
-                >
-                  Exporter
-                </Button>
+        {/* Colonne droite - Statistiques */}
+        <div className={styles.statsColumn}>
+          <div className={styles.statsHeader}>
+            <h2>Vue d'ensemble</h2>
+          </div>
+
+          <div className={styles.statsContainer}>
+            <div className={styles.statCard}>
+              <div className={`${styles.statIcon} ${styles.primary}`}>
+                <MdOutlineGroup />
+              </div>
+              <div className={styles.statContent}>
+                <span className={styles.statValue}>{stats.totalClients}</span>
+                <span className={styles.statLabel}>Clients total</span>
               </div>
             </div>
 
-            <div className={styles.reportsGrid}>
-              <div className={styles.reportCard}>
-                <div className={styles.reportHeader}>
-                  <h4>Répartition par catégorie</h4>
-                </div>
-                <div className={styles.reportContent}>
-                  <div className={styles.chartStats}>
-                    {['Client Premium', 'Client Gold', 'Client Silver', 'Client Standard'].map(cat => {
-                      const count = clients.filter(c => c.categorie === cat).length;
-                      const percent = count > 0 ? (count / clients.length) * 100 : 0;
-                      return (
-                        <div key={cat} className={styles.chartStat}>
-                          <div className={styles.chartStatLabel}>{cat}</div>
-                          <div className={styles.chartStatBar}>
-                            <div 
-                              className={styles.chartStatFill}
-                              style={{ width: `${percent}%` }}
-                            />
-                          </div>
-                          <div className={styles.chartStatValue}>
-                            {count} ({percent.toFixed(1)}%)
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
+            <div className={styles.statCard}>
+              <div className={`${styles.statIcon} ${styles.success}`}>
+                <IoCheckmarkCircleOutline />
               </div>
+              <div className={styles.statContent}>
+                <span className={styles.statValue}>{stats.activeClients}</span>
+                <span className={styles.statLabel}>Clients actifs</span>
+              </div>
+            </div>
 
-              <div className={styles.reportCard}>
-                <div className={styles.reportHeader}>
-                  <h4>Top 5 clients</h4>
-                </div>
-                <div className={styles.reportContent}>
-                  <ul className={styles.topClientsList}>
-                    {clients
-                      .sort((a, b) => b.total_achats - a.total_achats)
-                      .slice(0, 5)
-                      .map((client, index) => (
-                        <li key={client.id} className={styles.topClientItem}>
-                          <span className={styles.rank}>{index + 1}</span>
-                          <span className={styles.clientName}>{client.nom}</span>
-                          <span className={styles.clientAmount}>{formatCurrency(client.total_achats)}</span>
-                        </li>
-                      ))
-                    }
-                  </ul>
-                </div>
+            <div className={styles.statCard}>
+              <div className={`${styles.statIcon} ${styles.warning}`}>
+                <FaTags />
+              </div>
+              <div className={styles.statContent}>
+                <span className={styles.statValue}>{stats.premiumClients}</span>
+                <span className={styles.statLabel}>Clients Premium</span>
+              </div>
+            </div>
+
+            <div className={styles.statCard}>
+              <div className={`${styles.statIcon} ${styles.info}`}>
+                <TbCurrencyDollar />
+              </div>
+              <div className={styles.statContent}>
+                <span className={styles.statValue}>{formatCurrency(stats.totalSales)}</span>
+                <span className={styles.statLabel}>CA total</span>
+              </div>
+            </div>
+
+            <div className={styles.statCard}>
+              <div className={`${styles.statIcon} ${styles.danger}`}>
+                <IoAlertCircleOutline />
+              </div>
+              <div className={styles.statContent}>
+                <span className={styles.statValue}>{formatCurrency(stats.totalCredit)}</span>
+                <span className={styles.statLabel}>Crédit utilisé</span>
               </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
+
+      {/* Modal d'ajout/modification client */}
+      {showClientModal && (
+        <ClientModal
+          isOpen={showClientModal}
+          onClose={() => {
+            setShowClientModal(false);
+            setEditingClient(null);
+          }}
+          onSave={handleSaveClient}
+          client={editingClient}
+        />
+      )}
     </div>
   );
 };

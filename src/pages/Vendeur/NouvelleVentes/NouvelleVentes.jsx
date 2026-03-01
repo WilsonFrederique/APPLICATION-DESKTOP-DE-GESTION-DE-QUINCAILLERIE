@@ -561,26 +561,26 @@ const VenteHistoryItem = ({ vente }) => {
               variant="outline"
               size="small"
               icon="eye"
-              className={`${styles.historyActionBtn} ${styles.viewBtn}`}
+              className={`${styles.historyActionBtn}`}
             >
-              <span className={styles.actionText}>Voir</span>
+              <span>Voir détails</span>
             </Button>
             <Button
               variant="outline"
               size="small"
               icon="print"
-              className={`${styles.historyActionBtn} ${styles.printBtn}`}
+              className={`${styles.historyActionBtn}`}
             >
-              <span className={styles.actionText}>Imprimer</span>
+              <span>Imprimer</span>
             </Button>
             {vente.statut === 'credit' && (
               <Button
                 variant="outline"
                 size="small"
                 icon="wallet"
-                className={`${styles.historyActionBtn} ${styles.creditBtn}`}
+                className={`${styles.historyActionBtn}`}
               >
-                <span className={styles.actionText}>Payer</span>
+                <span>Payer</span>
               </Button>
             )}
           </div>

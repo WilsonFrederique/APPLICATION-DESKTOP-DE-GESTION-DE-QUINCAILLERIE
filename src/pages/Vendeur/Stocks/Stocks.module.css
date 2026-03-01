@@ -1,0 +1,549 @@
+/* ============================================
+   STRUCTURE PRINCIPALE - Vue Stock Vendeur
+============================================ */
+.dashboardModern {
+  height: calc(100vh - 60px);
+  max-height: calc(100vh - 60px);
+  margin-top: 3em !important;
+  padding: 0;
+  background: transparent;
+  color: #1a1d23;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.splitScreenContainer {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 1rem;
+  height: calc(100vh - 60px - 2rem);
+  padding: 1.5rem 1rem 0;
+  overflow: hidden;
+  flex: 1;
+}
+
+/* ============================================
+   COLONNE GAUCHE - LISTE DES STOCKS
+============================================ */
+.stocksListColumn {
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+}
+
+.stocksListHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.pageTitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.pageSubtitle {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0.1rem 0 0 0;
+}
+
+.filtersRow {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr 1.2fr 1.2fr auto;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.searchInput {
+  background: #ffffff;
+  border-radius: 8px;
+}
+
+.resetBtn {
+  align-self: stretch;
+}
+
+.stocksListContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.stocksListScroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.75rem 0.75rem 1.25rem 0.75rem;
+  will-change: scroll-position;
+}
+
+/* ============================================
+   TABLEAU DE STOCK
+============================================ */
+.stocksTable {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 2.2fr 1.3fr 1.2fr 1.2fr 1.1fr 1.4fr 1.4fr;
+  gap: 0.75rem;
+  padding: 0.75rem 0.9rem;
+  background: #f1f5f9;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #475569;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 2.2fr 1.3fr 1.2fr 1.2fr 1.1fr 1.4fr 1.4fr;
+  gap: 0.75rem;
+  padding: 0.75rem 0.9rem;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  font-size: 0.82rem;
+  align-items: flex-start;
+}
+
+.tableRow + .tableRow {
+  margin-top: 0.25rem;
+}
+
+.tableRow.critical {
+  border-left: 3px solid #ef4444;
+}
+
+.tableRow.low {
+  border-left: 3px solid #f97316;
+}
+
+.tableRow.ok {
+  border-left: 3px solid #22c55e;
+}
+
+.tableRow.out {
+  border-left: 3px solid #64748b;
+}
+
+.colProduit {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.productName {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.productRef {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.colCategorie {
+  display: flex;
+  align-items: center;
+}
+
+.categoryBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.08);
+  color: #1d4ed8;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.colStock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.stockValue {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.stockSeuil {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.colValeur {
+  display: flex;
+  align-items: center;
+}
+
+.valeurValue {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.colStatus {
+  display: flex;
+  align-items: center;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.statusBadge.critical {
+  background: rgba(248, 113, 113, 0.12);
+  color: #b91c1c;
+}
+
+.statusBadge.low {
+  background: rgba(251, 146, 60, 0.12);
+  color: #c2410c;
+}
+
+.statusBadge.ok {
+  background: rgba(34, 197, 94, 0.12);
+  color: #166534;
+}
+
+.statusBadge.out {
+  background: rgba(148, 163, 184, 0.18);
+  color: #0f172a;
+}
+
+.colEmplacement {
+  display: flex;
+  align-items: center;
+}
+
+.emplacementValue {
+  font-size: 0.82rem;
+  color: #0f172a;
+}
+
+.colMouvement {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.mouvementType {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #0f172a;
+}
+
+.mouvementDate {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.colActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+}
+
+.actionBtn {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+/* AUCUN STOCK */
+.noStocks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  color: #64748b;
+}
+
+.noStocksIcon {
+  font-size: 3rem;
+  color: #cbd5e1;
+  margin-bottom: 1rem;
+}
+
+.noStocks h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+  color: #0f172a;
+}
+
+.noStocks p {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.resetFiltersBtn {
+  margin-top: 1rem;
+}
+
+/* ============================================
+   COLONNE DROITE - STATISTIQUES
+============================================ */
+.statsColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.statsHeader {
+  padding: 1rem 1rem 0 1rem;
+}
+
+.statsHeader h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.statsContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  padding: 0 1rem;
+}
+
+.statCard {
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  padding: 0.9rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.statIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.statIcon.primary {
+  background: rgba(59, 130, 246, 0.1);
+  color: #1d4ed8;
+}
+
+.statIcon.info {
+  background: rgba(56, 189, 248, 0.12);
+  color: #0e7490;
+}
+
+.statIcon.success {
+  background: rgba(22, 163, 74, 0.12);
+  color: #15803d;
+}
+
+.statIcon.warning {
+  background: rgba(245, 158, 11, 0.12);
+  color: #b45309;
+}
+
+.statContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.statValue {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.statLabel {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.alertBox {
+  margin: 0.5rem 1rem 0 1rem;
+  padding: 0.9rem 1rem;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 1px solid #fbbf24;
+  border-left: 3px solid #f59e0b;
+  border-radius: 8px;
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.alertBox svg {
+  font-size: 1.4rem;
+  color: #f59e0b;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.alertBox strong {
+  display: block;
+  font-size: 0.9rem;
+  color: #92400e;
+  margin-bottom: 0.25rem;
+}
+
+.alertBox p {
+  font-size: 0.8rem;
+  color: #78350f;
+  margin: 0;
+}
+
+.trendsCard {
+  margin: 0.5rem 1rem 0 1rem;
+  padding: 0.9rem 1rem 1rem 1rem;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.trendsHeader h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: #0f172a;
+}
+
+.trendsContent {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+.trendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.trendIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.trendIcon.up {
+  background: rgba(22, 163, 74, 0.12);
+  color: #15803d;
+}
+
+.trendIcon.down {
+  background: rgba(248, 113, 113, 0.12);
+  color: #b91c1c;
+}
+
+.trendLabel {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.trendValue {
+  font-size: 0.9rem;
+  color: #0f172a;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* ============================================
+   RESPONSIVE
+============================================ */
+@media (max-width: 1024px) {
+  .splitScreenContainer {
+    grid-template-columns: 1fr;
+    height: auto;
+    max-height: none;
+  }
+
+  .statsColumn {
+    order: -1;
+  }
+
+  .stocksListColumn {
+    max-height: calc(100vh - 60px - 16rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboardModern {
+    height: auto;
+    max-height: none;
+    margin-top: 4rem !important;
+  }
+
+  .splitScreenContainer {
+    padding: 1rem 0.75rem 1rem 0.75rem;
+  }
+
+  .filtersRow {
+    grid-template-columns: 1fr;
+  }
+
+  .tableHeader {
+    display: none;
+  }
+
+  .tableRow,
+  .stocksTable {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tableRow {
+    padding: 0.9rem;
+  }
+
+  .colProduit,
+  .colCategorie,
+  .colStock,
+  .colValeur,
+  .colStatus,
+  .colEmplacement,
+  .colMouvement {
+    margin-bottom: 0.4rem;
+  }
+}
+

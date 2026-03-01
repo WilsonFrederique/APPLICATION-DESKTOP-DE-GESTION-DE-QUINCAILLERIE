@@ -366,13 +366,6 @@
   flex-shrink: 0;
 }
 
-.text {
-  line-height: inherit;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 /* Focus and active states */
 .button:focus-visible {
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
