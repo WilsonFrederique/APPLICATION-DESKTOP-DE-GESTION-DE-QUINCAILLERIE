@@ -37,25 +37,15 @@ const ClientModal = ({ isOpen, onClose, onSave, client = null }) => {
         if (client) {
             setFormData({
                 nom: client.nom || '',
-                type: client.type || 'Particulier',
-                contact: client.contact || '',
                 telephone: client.telephone || '',
-                email: client.email || '',
                 adresse: client.adresse || '',
-                categorie: client.categorie || 'Client Standard',
-                credit_autorise: client.credit_autorise || 0,
                 statut: client.statut || 'actif'
             });
         } else {
             setFormData({
                 nom: '',
-                type: 'Particulier',
-                contact: '',
                 telephone: '',
-                email: '',
                 adresse: '',
-                categorie: 'Client Standard',
-                credit_autorise: 0,
                 statut: 'actif'
             });
         }
@@ -159,22 +149,6 @@ const ClientModal = ({ isOpen, onClose, onSave, client = null }) => {
                             </div>
 
                             <div className={styles.formRow}>
-                                <InputSelect
-                                    label="Type de client"
-                                    value={formData.type}
-                                    onChange={(value) => handleChange('type', value)}
-                                    options={[
-                                        { value: 'Particulier', label: 'Particulier' },
-                                        { value: 'Entreprise', label: 'Entreprise' }
-                                    ]}
-                                    placeholder="Type de client"
-                                    fullWidth
-                                    required
-                                    icon={formData.type === 'Entreprise' ? <FaBuilding /> : <FaUserTie />}
-                                />
-                            </div>
-
-                            <div className={styles.formRow}>
                                 <Input
                                     type="text"
                                     label="Nom"
@@ -190,19 +164,6 @@ const ClientModal = ({ isOpen, onClose, onSave, client = null }) => {
 
                             <div className={styles.formRow}>
                                 <Input
-                                    type="text"
-                                    label="Contact"
-                                    placeholder="Nom de la personne de contact"
-                                    value={formData.contact}
-                                    onChange={(e) => handleChange('contact', e.target.value)}
-                                    error={errors.contact}
-                                    fullWidth
-                                    required
-                                />
-                            </div>
-
-                            <div className={styles.formRowTwo}>
-                                <Input
                                     type="tel"
                                     label="Téléphone"
                                     placeholder="+261 34 00 123 45"
@@ -211,15 +172,6 @@ const ClientModal = ({ isOpen, onClose, onSave, client = null }) => {
                                     error={errors.telephone}
                                     fullWidth
                                     required
-                                />
-                                <Input
-                                    type="email"
-                                    label="Email (optionnel)"
-                                    placeholder="email@example.com"
-                                    value={formData.email}
-                                    onChange={(e) => handleChange('email', e.target.value)}
-                                    error={errors.email}
-                                    fullWidth
                                 />
                             </div>
 
@@ -235,91 +187,27 @@ const ClientModal = ({ isOpen, onClose, onSave, client = null }) => {
                             </div>
                         </div>
 
-                        <div className={styles.formSection}>
-                            <div className={styles.sectionHeader}>
-                                <IoInformationCircleOutline className={styles.sectionIcon} />
-                                <h3 className={styles.sectionTitle}>Classification et crédit</h3>
-                            </div>
-
-                            <div className={styles.formRowTwo}>
-                                <InputSelect
-                                    label="Catégorie"
-                                    value={formData.categorie}
-                                    onChange={(value) => handleChange('categorie', value)}
-                                    options={[
-                                        { value: 'Client Standard', label: 'Client Standard' },
-                                        { value: 'Client Silver', label: 'Client Silver' },
-                                        { value: 'Client Gold', label: 'Client Gold' },
-                                        { value: 'Client Premium', label: 'Client Premium' }
-                                    ]}
-                                    placeholder="Catégorie"
-                                    fullWidth
-                                    required
-                                />
-                                <InputSelect
-                                    label="Statut"
-                                    value={formData.statut}
-                                    onChange={(value) => handleChange('statut', value)}
-                                    options={[
-                                        { value: 'actif', label: 'Actif' },
-                                        { value: 'inactif', label: 'Inactif' }
-                                    ]}
-                                    placeholder="Statut"
-                                    fullWidth
-                                    required
-                                />
-                            </div>
-
-                            <div className={styles.formRow}>
-                                <Input
-                                    type="number"
-                                    label="Crédit autorisé (MGA)"
-                                    placeholder="0"
-                                    value={formData.credit_autorise}
-                                    onChange={(e) => handleChange('credit_autorise', Number.parseInt(e.target.value, 10) || 0)}
-                                    error={errors.credit_autorise}
-                                    min="0"
-                                    fullWidth
-                                />
-                            </div>
-
-                            {formData.credit_autorise > 0 && (
-                                <div className={styles.margeInfo}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                        <span>Crédit disponible:</span>
-                                        <span style={{ fontWeight: 'bold', fontSize: '1rem', color: '#059669' }}>
-                                            {new Intl.NumberFormat('fr-FR', {
-                                                style: 'currency',
-                                                currency: 'MGA',
-                                                minimumFractionDigits: 0,
-                                                maximumFractionDigits: 0
-                                            }).format(formData.credit_autorise)}
-                                        </span>
-                                    </div>
-                                </div>
-                            )}
+                        <div className={styles.modalFooter}>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                size="large"
+                                onClick={onClose}
+                                className={styles.cancelBtn}
+                            >
+                                Annuler
+                            </Button>
+                            <Button
+                                type="submit"
+                                variant="primary"
+                                size="large"
+                                className={styles.submitBtn}
+                            >
+                                {isEditMode ? 'Enregistrer les modifications' : 'Créer le client'}
+                            </Button>
                         </div>
                     </div>
 
-                    <div className={styles.modalFooter}>
-                        <Button
-                            type="button"
-                            variant="outline"
-                            size="large"
-                            onClick={onClose}
-                            className={styles.cancelBtn}
-                        >
-                            Annuler
-                        </Button>
-                        <Button
-                            type="submit"
-                            variant="primary"
-                            size="large"
-                            className={styles.submitBtn}
-                        >
-                            {isEditMode ? 'Enregistrer les modifications' : 'Créer le client'}
-                        </Button>
-                    </div>
                 </form>
             </div>
         </div>

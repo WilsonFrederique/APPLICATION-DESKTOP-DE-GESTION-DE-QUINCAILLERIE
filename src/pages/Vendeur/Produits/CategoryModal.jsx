@@ -139,26 +139,26 @@ const CategoryModal = ({ isOpen, onClose, onSave, category = null }) => {
                                 />
                             </div>
                         </div>
-                    </div>
-
-                    <div className={styles.modalFooter}>
-                        <Button
-                            type="button"
-                            variant="outline"
-                            size="large"
-                            onClick={onClose}
-                            className={styles.cancelBtn}
-                        >
-                            Annuler
-                        </Button>
-                        <Button
-                            type="submit"
-                            variant="primary"
-                            size="large"
-                            className={styles.submitBtn}
-                        >
-                            {isEditMode ? 'Enregistrer les modifications' : 'Créer la catégorie'}
-                        </Button>
+                        
+                        <div className={styles.modalFooter}>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                size="large"
+                                onClick={onClose}
+                                className={styles.cancelBtn}
+                            >
+                                Annuler
+                            </Button>
+                            <Button
+                                type="submit"
+                                variant="primary"
+                                size="large"
+                                className={styles.submitBtn}
+                            >
+                                {isEditMode ? 'Enregistrer les modifications' : 'Créer la catégorie'}
+                            </Button>
+                        </div>
                     </div>
                 </form>
             </div>

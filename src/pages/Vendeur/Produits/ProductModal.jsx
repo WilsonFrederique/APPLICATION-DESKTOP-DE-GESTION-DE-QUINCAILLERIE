@@ -405,26 +405,26 @@ const ProductModal = ({ isOpen, onClose, onSave, product = null, categories = []
                                 />
                             </div>
                         </div>
-                    </div>
-
-                    <div className={styles.modalFooter}>
-                        <Button
-                            type="button"
-                            variant="outline"
-                            size="large"
-                            onClick={onClose}
-                            className={styles.cancelBtn}
-                        >
-                            Annuler
-                        </Button>
-                        <Button
-                            type="submit"
-                            variant="primary"
-                            size="large"
-                            className={styles.submitBtn}
-                        >
-                            {isEditMode ? 'Enregistrer les modifications' : 'Créer le produit'}
-                        </Button>
+                        
+                        <div className={styles.modalFooter}>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                size="large"
+                                onClick={onClose}
+                                className={styles.cancelBtn}
+                            >
+                                Annuler
+                            </Button>
+                            <Button
+                                type="submit"
+                                variant="primary"
+                                size="large"
+                                className={styles.submitBtn}
+                            >
+                                {isEditMode ? 'Enregistrer les modifications' : 'Créer le produit'}
+                            </Button>
+                        </div>
                     </div>
                 </form>
             </div>

@@ -270,26 +270,26 @@ const StockModal = ({ isOpen, onClose, onSave, products = [], stockItem = null }
                                 />
                             </div>
                         </div>
-                    </div>
-
-                    <div className={styles.modalFooter}>
-                        <Button
-                            type="button"
-                            variant="outline"
-                            size="large"
-                            onClick={onClose}
-                            className={styles.cancelBtn}
-                        >
-                            Annuler
-                        </Button>
-                        <Button
-                            type="submit"
-                            variant="primary"
-                            size="large"
-                            className={styles.submitBtn}
-                        >
-                            {isEditMode ? 'Enregistrer l\'ajustement' : `Enregistrer ${typeMouvementLabels[formData.typeMouvement]}`}
-                        </Button>
+                        
+                        <div className={styles.modalFooter}>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                size="large"
+                                onClick={onClose}
+                                className={styles.cancelBtn}
+                            >
+                                Annuler
+                            </Button>
+                            <Button
+                                type="submit"
+                                variant="primary"
+                                size="large"
+                                className={styles.submitBtn}
+                            >
+                                {isEditMode ? 'Enregistrer l\'ajustement' : `Enregistrer ${typeMouvementLabels[formData.typeMouvement]}`}
+                            </Button>
+                        </div>
                     </div>
                 </form>
             </div>
