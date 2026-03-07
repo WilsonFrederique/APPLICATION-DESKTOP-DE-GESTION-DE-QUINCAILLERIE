@@ -1,8 +1,12 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    tailwindcss(),
+  ],
   base: './',
   build: {
     outDir: 'dist',
@@ -16,11 +20,10 @@ export default defineConfig({
   },
   server: {
     port: 5173,
-    host: '127.0.0.1', // OBLIGATOIRE
+    host: '127.0.0.1',
     strictPort: true,
     cors: true,
-    // SUPPRIMER COMPLÈTEMENT les headers CSP
-    headers: {}, // Laisser vide!
+    headers: {},
     fs: {
       strict: false,
       allow: ['..']

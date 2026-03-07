@@ -25,14 +25,14 @@ import {
 
 // Images d'exemple pour les produits
 const productImages = [
-  'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop',
-  'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop',
-  'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&h=300&fit=crop',
-  'https://images.unsplash.com/photo-1567721913486-6585f069b332?w=400&h=300&fit=crop',
-  'https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?w=400&h=300&fit=crop',
-  'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=400&h=300&fit=crop',
-  'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=400&h=300&fit=crop',
-  'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&h=300&fit=crop',
+  '/gilet-securite-jaune-taille-l-ref-vtrgilp002.jpg.jpeg',
+  '/0009_PLAFOND-PVC-200X7X4000MM-10PCS-PQTS-REF-J33-300x300.png',
+  '/istockphoto-1200539331-1024x1024.jpg.jpeg',
+  '/produits-quincaillerie-1.jpg.jpeg',
+  '/grillage-avertisseur-vert-300mm-ref-8630v.jpg.jpeg',
+  '/B-025-6x70-1-300x300.png',
+  '/0018_PLAFOND-PVC-200X7X4000MM-10PCS-PQTS-REF-J2801-300x300.png',
+  '/0017_PLAFOND-PVC-200X7X4000MM-10PCS-PQTS-REF-JX303-300x300.png',
 ];
 
 // Données mock
