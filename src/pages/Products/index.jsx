@@ -1,8 +1,10 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import Input from '../../components/Input/Input';
-import ProductModal from '../Vendeur/Produits/ProductModal';
-import CategoryModal from '../Vendeur/Produits/CategoryModal';
+import ProductModal from '../../components/Product/ProductModal';
+import CategoryModal from '../../components/Product/CategoryModal';
 import CategoryCarousel from '../../components/Sales/CategoryCarousel';
+import CategoryCard from '../../components/Product/CategoryCard';
+import ProductCard from '../../components/Product/ProductCard';
 import Bx from '../../components/UI/Boxicon';
 import { formatAr } from '../../utils/function/format';
 
@@ -28,118 +30,9 @@ const initialProducts = [
 ];
 
 /* ══════════════════════════════════════════════
-   CATEGORY CARD
-══════════════════════════════════════════════ */
-const CategoryCard = ({ category, onEdit, onDelete }) => (
-    <div className="bg-white border border-slate-200 rounded p-5 flex gap-4 hover:shadow-lg hover:shadow-slate-100 hover:border-slate-300 transition-all">
-        {/* Icône */}
-        <div className="w-16 h-16 bg-sky-50 rounded-xl flex items-center justify-center text-sky-500 shrink-0">
-            <Bx icon="category" className="text-4xl" />
-        </div>
-
-        {/* Contenu */}
-        <div className="flex-1 flex flex-col gap-2.5 min-w-0">
-            <div className="flex items-start justify-between gap-3">
-                <h3 className="text-lg font-bold text-slate-800 m-0 flex-1 leading-snug">{category.nom}</h3>
-                <span className="bg-sky-50 text-sky-600 px-3 py-0.5 rounded text-sm font-semibold whitespace-nowrap shrink-0">
-                    {category.produitsCount} produit{category.produitsCount > 1 ? 's' : ''}
-                </span>
-            </div>
-
-            {category.description && (
-                <p className="text-base text-slate-500 m-0 leading-relaxed line-clamp-2">{category.description}</p>
-            )}
-
-            <p className="text-sm text-slate-400 m-0">
-                Créée le {new Date(category.dateCreation).toLocaleDateString('fr-FR')}
-            </p>
-
-            <div className="flex justify-end gap-1.5 pt-2 border-t border-slate-100">
-                <button
-                    onClick={() => onEdit(category)}
-                    className="flex items-center gap-1.5 px-3 py-2 text-sm font-semibold text-slate-600 rounded hover:bg-slate-100 transition-all"
-                >
-                    <Bx icon="edit" className="text-base" /> Modifier
-                </button>
-                <button
-                    onClick={() => onDelete(category)}
-                    className="flex items-center gap-1.5 px-3 py-2 text-sm font-semibold text-slate-500 rounded hover:bg-red-50 hover:text-red-500 transition-all"
-                >
-                    <Bx icon="trash" className="text-base" /> Supprimer
-                </button>
-            </div>
-        </div>
-    </div>
-);
-
-/* ══════════════════════════════════════════════
-   PRODUCT CARD
-══════════════════════════════════════════════ */
-const ProductCard = ({ product, onView, onEdit, onDelete }) => {
-    const getStockStatus = () => {
-        if (product.stock === 0) return { label: 'Rupture', color: 'bg-gray-500/90' };
-        if (product.stock <= product.seuilMin) return { label: 'Critique', color: 'bg-red-500/90' };
-        if (product.stock <= product.seuilMin * 1.5) return { label: 'Faible', color: 'bg-amber-500/90' };
-        return { label: 'Bon', color: 'bg-emerald-500/90' };
-    };
-
-    const { label, color } = getStockStatus();
-    const isCritical = product.stock <= product.seuilMin;
-
-    return (
-        <div className="bg-white border border-slate-200 rounded overflow-hidden flex flex-col hover:shadow-lg hover:shadow-slate-100 hover:border-slate-300 transition-all">
-            {/* Image */}
-            <div className="relative h-44 overflow-hidden bg-slate-100">
-                <img
-                    src={product.image || productImages[0]}
-                    alt={product.nom}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <span className={`absolute top-2 right-2 ${color} text-white text-xs font-semibold px-2.5 py-1 rounded`}>
-                    {label}
-                </span>
-                {isCritical && (
-                    <div className="absolute top-2 left-2 w-8 h-8 bg-red-500/95 text-white rounded-full flex items-center justify-center z-10">
-                        <Bx icon="error" className="text-base" />
-                    </div>
-                )}
-            </div>
-
-            {/* Contenu */}
-            <div className="p-4 flex-1 flex flex-col gap-3">
-                <div className="flex flex-col gap-0.5">
-                    <h4 className="text-lg font-bold text-slate-800 m-0 leading-snug line-clamp-2">{product.nom}</h4>
-                </div>
-
-                <span className="inline-flex items-center gap-1.5 text-sm text-slate-500 bg-slate-100 px-2.5 py-1 rounded w-fit">
-                    <Bx icon="purchase-tag" className="text-base" /> {product.categorie}
-                </span>
-
-                <div className="flex flex-col gap-1.5 text-base">
-                    <div className="flex items-center gap-2 text-slate-600">
-                        <Bx icon="package" className="text-lg text-slate-400" />
-                        <span>Stock : <strong className="text-slate-800 font-semibold">{product.stock}</strong> {product.unite}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-slate-600">
-                        <Bx icon="dollar-circle" className="text-lg text-slate-400" />
-                        <span>Prix : <strong className="text-slate-800 font-semibold">{formatAr(product.prixVente)}</strong></span>
-                    </div>
-                </div>
-
-                <div className="flex justify-end gap-1 pt-2.5 border-t border-slate-100">
-                    <button onClick={() => onView(product)} className="flex items-center gap-1.5 px-3 py-2 text-sm font-semibold text-slate-500 rounded hover:bg-slate-100 transition-all"><Bx icon="show" className="text-base" /> Voir</button>
-                    <button onClick={() => onEdit(product)} className="flex items-center gap-1.5 px-3 py-2 text-sm font-semibold text-slate-600 rounded hover:bg-sky-50 hover:text-sky-600 transition-all"><Bx icon="edit" className="text-base" /> Modifier</button>
-                    <button onClick={() => onDelete(product)} className="flex items-center gap-1.5 px-3 py-2 text-sm font-semibold text-slate-500 rounded hover:bg-red-50 hover:text-red-500 transition-all"><Bx icon="trash" className="text-base" /> Supprimer</button>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-/* ══════════════════════════════════════════════
    PRODUITS (main component)
 ══════════════════════════════════════════════ */
-const Produits = () => {
+const Products = () => {
     const [products, setProducts] = useState(initialProducts);
     const [viewMode, setViewMode] = useState('products');
     const [searchTerm, setSearchTerm] = useState('');
@@ -180,7 +73,7 @@ const Produits = () => {
         return counts;
     }, [products, categories]);
 
-    /* ── Produits filtrés ── */
+    /* ── Products filtrés ── */
     const filteredProducts = useMemo(() => {
         let list = [...products];
         if (searchTerm) list = list.filter(p => p.nom.toLowerCase().includes(searchTerm.toLowerCase()) || p.reference.toLowerCase().includes(searchTerm.toLowerCase()) || p.categorie.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -240,10 +133,10 @@ const Produits = () => {
             <div className="grid grid-cols-[1fr_380px] gap-3 h-full p-3 overflow-hidden">
 
                 {/* ── Colonne gauche ── */}
-                <div className="bg-white rounded border border-slate-200 shadow-sm flex flex-col overflow-hidden">
+                <div className="bg-white rounded border border-slate-200 shadow-lg shadow-slate-100 flex flex-col overflow-hidden">
 
                     {/* Header */}
-                    <div className="flex flex-col gap-2 px-4 pt-3 border-b border-slate-200">
+                    <div className="flex flex-col gap-2 px-4 pt-3 border-b border-slate-100">
 
                         {/* Tabs */}
                         <div className="flex gap-2 pb-1 border-slate-200">
@@ -304,7 +197,7 @@ const Produits = () => {
 
                         {/* Filtres catégories */}
                         {viewMode === 'categories' && (
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 pb-3">
                                 <div className="flex-1">
                                     <Input
                                         type="text"
@@ -381,8 +274,8 @@ const Produits = () => {
                 </div>
 
                 {/* ── Colonne droite — Statistiques ── */}
-                <div className="bg-white rounded border border-slate-200 shadow-sm flex flex-col overflow-hidden">
-                    <div className="px-5 py-4 border-b border-slate-200 bg-slate-50 shrink-0">
+                <div className="bg-white rounded border border-slate-200 shadow-lg shadow-slate-100 flex flex-col overflow-hidden">
+                    <div className="px-5 py-4 border-b border-slate-200 shrink-0">
                         <h2 className="text-xl font-bold text-slate-800 m-0">Statistiques</h2>
                     </div>
 
@@ -456,4 +349,4 @@ const Produits = () => {
     );
 };
 
-export default Produits;
+export default Products;

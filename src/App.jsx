@@ -2,12 +2,14 @@ import React, { createContext } from "react";
 import { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation } from "react-router-dom";
 
 import Header from "./components/Layout/Header";
+import Commands from "./pages/Commands";
+import Customers from "./pages/Customers";
+import Dashboard from "./pages/Dashboard";
 import Login from "./auth/Login";
-import Dashboard from "./components/Dashboard/Vendeur/Dashboard";
-import Sales from "./pages/Sales";
 import Products from "./pages/Products";
-import Customers from "./pages/Vendeur/Clients/Clients";
-import Stocks from "./pages/Vendeur/Stocks/Stocks";
+import Providers from "./pages/Providers";
+import Sales from "./pages/Sales";
+import Stocks from "./pages/Stocks";
 
 // Contexte global
 const MyContext = createContext();
@@ -58,7 +60,7 @@ const MainLayout = () => {
 };
 
 export default function App() {
-  const contextValue = {}; // Ajoute ici tes valeurs à partager via MyContext
+  const contextValue = {};
 
   return (
     <BrowserRouter>
@@ -71,11 +73,13 @@ export default function App() {
           {/* Routes protégées */}
           <Route element={<ProtectedRoute requiredRole="vendeur" />}>
             <Route element={<MainLayout />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/sales" element={<Sales />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/stocks" element={<Stocks />} />
+              <Route path="/commands" element={<Commands />} />
               <Route path="/customers" element={<Customers />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/providers" element={<Providers />} />
+              <Route path="/sales" element={<Sales />} />
+              <Route path="/stocks" element={<Stocks />} />
               
               {/* Redirection routes inconnues */}
               <Route path="*" element={<Navigate to="/dashboard" replace />} />

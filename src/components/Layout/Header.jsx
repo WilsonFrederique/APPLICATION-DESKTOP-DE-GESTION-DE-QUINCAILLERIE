@@ -5,8 +5,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 const NAV_ITEMS = [
   { key: 'dashboard', label: 'Accueil', route: '/dashboard' },
   { key: 'sales', label: 'Vente', route: '/sales' },
-  { key: 'products', label: 'Produits', route: '/products' },
+  { key: 'commands', label: 'Commandes', route: '/commands' },
   { key: 'stocks', label: 'Stock', route: '/stocks' },
+  { key: 'products', label: 'Produits', route: '/products' },
+  { key: 'providers', label: 'Fournisseurs', route: '/providers' },
   { key: 'customers', label: 'Clients', route: '/customers' },
 ];
 
@@ -29,6 +31,8 @@ const Header = ({ onNavigate, activeSection = 'dashboard' }) => {
     if (pathname.includes('/products')) return 'products';
     if (pathname.includes('/stocks')) return 'stocks';
     if (pathname.includes('/customers')) return 'customers';
+    if (pathname.includes('/providers')) return 'providers';
+    if (pathname.includes('/commands')) return 'commands';
     return 'dashboard';
   };
 

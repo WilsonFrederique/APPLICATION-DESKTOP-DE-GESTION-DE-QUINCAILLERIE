@@ -142,7 +142,7 @@ const Sales = () => {
         <div className="flex flex-col overflow-hidden bg-slate-50 h-full">
             <div className="grid grid-cols-[1fr_400px] gap-3 h-full p-3 overflow-hidden">
                 {/* ── Left Column ── */}
-                <div className="bg-white rounded border border-slate-200 shadow-sm flex flex-col overflow-hidden">
+                <div className="bg-white rounded border border-slate-200 shadow-lg shadow-slate-100 flex flex-col overflow-hidden">
                     {/* Header */}
                     <div className="px-4 pt-3 pb-0 border-b border-slate-100 bg-white shrink-0">
                         {/* Tabs */}
@@ -257,7 +257,7 @@ const Sales = () => {
                 </div>
 
                 {/* ── Right Column — Cart ── */}
-                <div className="bg-white rounded border border-slate-200 shadow-sm flex flex-col overflow-hidden">
+                <div className="bg-white rounded border border-slate-200 shadow-lg shadow-slate-100 flex flex-col overflow-hidden">
 
                     {/* Cart header */}
                     <div className="px-4 py-3 border-b border-slate-100 bg-white shrink-0">

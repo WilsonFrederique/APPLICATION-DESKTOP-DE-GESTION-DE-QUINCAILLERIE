@@ -207,7 +207,7 @@ const InvoiceModal = ({ cart, onClose, onCompleteSale }) => {
           <div className="w-[45%] min-w-[320px] border-r border-slate-200 bg-white overflow-y-auto p-5 flex flex-col gap-4">
 
             {/* Client */}
-            <div className="bg-white rounded border border-slate-200 shadow-sm p-4">
+            <div className="bg-white rounded border border-slate-200 shadow-lg shadow-slate-100 p-4">
               <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100">
                 <div className="w-8 h-8 bg-sky-50 rounded flex items-center justify-center text-sky-500">
                   <Bx icon="user" className="text-lg" />
@@ -271,7 +271,7 @@ const InvoiceModal = ({ cart, onClose, onCompleteSale }) => {
             </div>
 
             {/* Paiement */}
-            <div className="bg-white rounded border border-slate-200 shadow-sm p-4">
+            <div className="bg-white rounded border border-slate-200 shadow-lg shadow-slate-100 p-4">
               <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100">
                 <div className="w-8 h-8 bg-emerald-50 rounded flex items-center justify-center text-emerald-600">
                   <Bx icon="credit-card" className="text-lg" />
@@ -341,7 +341,7 @@ const InvoiceModal = ({ cart, onClose, onCompleteSale }) => {
             </div>
 
             {/* Notes */}
-            <div className="bg-white rounded border border-slate-200 shadow-sm p-4">
+            <div className="bg-white rounded border border-slate-200 shadow-lg shadow-slate-100 p-4">
               <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100">
                 <div className="w-8 h-8 bg-slate-100 rounded flex items-center justify-center text-slate-500">
                   <Bx icon="note" className="text-lg" />
