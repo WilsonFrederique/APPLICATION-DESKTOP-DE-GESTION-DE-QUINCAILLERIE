@@ -187,7 +187,7 @@ const BarChartCSS = ({ data, mode }) => {
 
 /* ─── KPI Card ─── */
 const KpiCard = ({ title, value, subtitle, icon, trend, iconBg }) => (
-    <div className="bg-white border border-slate-200 rounded p-5 flex flex-col gap-3 hover:border-slate-300 hover:shadow-md transition-all">
+    <div className="bg-white border border-slate-200 rounded p-5 flex flex-col gap-3 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-100 transition-all">
         <div className="flex items-start justify-between">
             <div className={`w-12 h-12 rounded flex items-center justify-center shrink-0 ${iconBg}`}>
                 <Bx icon={icon} className="text-2xl" />
@@ -299,7 +299,7 @@ const Dashboard = () => {
             <div className="grid grid-cols-[1fr_300px] gap-3 min-h-0">
 
                 {/* ── Histogramme ── */}
-                <div className="bg-white border border-slate-200 rounded shadow-sm flex flex-col overflow-hidden">
+                <div className="bg-white border border-slate-200 rounded hover:shadow-lg hover:shadow-slate-100 flex flex-col overflow-hidden">
 
                     {/* Header */}
                     <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 shrink-0">
@@ -363,7 +363,7 @@ const Dashboard = () => {
                 <div className="flex flex-col gap-3">
 
                     {/* Stock critique */}
-                    <div className="bg-white border border-slate-200 rounded shadow-sm flex flex-col overflow-hidden">
+                    <div className="bg-white border border-slate-200 rounded hover:shadow-lg hover:shadow-slate-100 flex flex-col overflow-hidden">
                         <div className="flex items-center justify-between px-4 py-3.5 border-b border-slate-100 shrink-0">
                             <div className="flex items-center gap-2">
                                 <div className="w-8 h-8 bg-red-50 rounded flex items-center justify-center text-red-500">
