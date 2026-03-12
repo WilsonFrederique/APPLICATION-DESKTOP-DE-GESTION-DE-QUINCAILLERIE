@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import Input from '../../components/Input/Input';
-import InputSelect from '../../components/Input/InputSelect';
-import InputTextarea from '../../components/Input/InputTextarea';
+import Input from '../UI/Input/Input';
+import InputSelect from '../UI/Input/InputSelect';
+import InputTextarea from '../UI/Input/InputTextarea';
 import Bx from '../UI/Boxicon';
 
 /* ─── Types suggérés ─── */

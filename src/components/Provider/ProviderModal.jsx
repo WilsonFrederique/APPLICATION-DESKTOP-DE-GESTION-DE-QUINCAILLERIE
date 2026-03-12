@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Input from '../Input/Input';
-import InputTextarea from '../Input/InputTextarea';
+import Input from '../UI/Input/Input';
+import InputTextarea from '../UI/Input/InputTextarea';
 import Bx from '../UI/Boxicon';
 
 const CustomerModal = ({ isOpen, onClose, onSave, fournisseur = null }) => {

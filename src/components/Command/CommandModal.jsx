@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import Input from '../Input/Input';
-import InputSelect from '../Input/InputSelect';
-import InputTextarea from '../Input/InputTextarea';
+import Input from '../UI/Input/Input';
+import InputSelect from '../UI/Input/InputSelect';
+import InputTextarea from '../UI/Input/InputTextarea';
 import Bx from '../UI/Boxicon';
 import { formatAr } from '../../utils/function/format';
 
@@ -256,8 +256,8 @@ const CommandeModal = ({ isOpen, onClose, onSave, commande = null, fournisseurs 
                                                 type="button"
                                                 onClick={() => handleChange('statut', key)}
                                                 className={`flex flex-col items-center gap-1.5 py-2.5 px-2 rounded border-2 text-xs font-bold transition-all ${formData.statut === key
-                                                        ? `border-sky-500 bg-sky-50 text-sky-700`
-                                                        : 'border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:bg-slate-50'
+                                                    ? `border-sky-500 bg-sky-50 text-sky-700`
+                                                    : 'border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:bg-slate-50'
                                                     }`}
                                             >
                                                 <Bx icon={cfg.icon} className={`text-xl ${formData.statut === key ? cfg.color.split(' ')[1] : 'text-slate-400'}`} />

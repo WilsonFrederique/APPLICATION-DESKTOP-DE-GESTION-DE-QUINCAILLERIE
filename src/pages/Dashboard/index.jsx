@@ -1,9 +1,11 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react';
-import Input from '../../components/Input/Input';
+import React, { useState, useMemo } from 'react';
+import Input from '../../components/UI/Input/Input';
 import Bx from '../../components/UI/Boxicon';
+import BarChartCSS from '../../components/Dashboard/BarChartCSS';
+import KpiCard from '../../components/Dashboard/KpiCard';
+import StockRow from '../../components/Dashboard/StockRow';
 import { formatAr } from '../../utils/function/format';
 
-/* ─── Mock data ─── */
 const TODAY = new Date().toLocaleDateString('fr-FR', {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
 });
@@ -39,209 +41,6 @@ const STOCK_CRITIQUE = [
     { nom: 'Sable fin (sac 25kg)', ref: 'SAB-FIN-25KG', stock: 12, seuilMin: 25 },
 ];
 
-/* ══════════════════════════════════════════════
-   HISTOGRAMME CSS PUR
-══════════════════════════════════════════════ */
-const BarChartCSS = ({ data, mode }) => {
-    // tooltip stocke { item, mouseX, mouseY } en coordonnées page
-    const [tooltip, setTooltip] = useState(null);
-    const containerRef = useRef(null);
-
-    const maxVal = useMemo(() =>
-        Math.max(...data.map(d => mode === 'ventes' ? d.ventes : d.ca)),
-        [data, mode]);
-
-    const yTicks = useMemo(() => {
-        const steps = 5;
-        return Array.from({ length: steps + 1 }, (_, i) =>
-            Math.round((maxVal / steps) * (steps - i))
-        );
-    }, [maxVal]);
-
-    const formatY = (v) => {
-        if (mode !== 'ca') return v;
-        if (v >= 1000000) return `${(v / 1000000).toFixed(1)}M`;
-        if (v >= 1000) return `${(v / 1000).toFixed(0)}K`;
-        return v;
-    };
-
-    const CHART_H = 260;
-    const Y_LABEL_W = mode === 'ca' ? 44 : 32;
-
-    const handleMouseMove = (e, item) => {
-        setTooltip({ item, mouseX: e.clientX, mouseY: e.clientY });
-    };
-    const handleMouseLeave = () => setTooltip(null);
-
-    return (
-        <div ref={containerRef} className="w-full relative select-none">
-
-            {/* Zone graphique */}
-            <div className="flex gap-0" style={{ paddingLeft: Y_LABEL_W }}>
-
-                {/* Axe Y */}
-                <div
-                    className="absolute left-0 top-0 flex flex-col justify-between pr-2 text-right"
-                    style={{ width: Y_LABEL_W, height: CHART_H }}
-                >
-                    {yTicks.map(t => (
-                        <span key={t} className="text-[10px] font-semibold text-slate-400 leading-none">
-                            {formatY(t)}
-                        </span>
-                    ))}
-                </div>
-
-                {/* Barres + grille */}
-                <div
-                    className="relative flex-1 flex items-end gap-[3px]"
-                    style={{ height: CHART_H }}
-                >
-                    {/* Lignes de grille */}
-                    {yTicks.map(t => (
-                        <div
-                            key={t}
-                            className="absolute left-0 right-0 border-t border-slate-100"
-                            style={{ bottom: `${(t / maxVal) * 100}%` }}
-                        />
-                    ))}
-
-                    {/* Barres */}
-                    {data.map((item, index) => {
-                        const val = mode === 'ventes' ? item.ventes : item.ca;
-                        const pct = maxVal > 0 ? (val / maxVal) * 100 : 0;
-                        const ratio = maxVal > 0 ? val / maxVal : 0;
-                        const opacity = 0.45 + ratio * 0.55;
-                        const isHovered = tooltip?.item?.ref === item.ref;
-
-                        return (
-                            <div
-                                key={item.ref}
-                                className="relative flex-1 flex flex-col items-center justify-end"
-                                style={{ height: '100%', cursor: 'pointer' }}
-                                onMouseMove={(e) => handleMouseMove(e, item)}
-                                onMouseLeave={handleMouseLeave}
-                            >
-                                {/* Zone hover invisible toute hauteur */}
-                                <div className="absolute inset-0" />
-
-                                {/* Barre */}
-                                <div
-                                    className="w-full rounded-t-[3px] transition-all duration-200"
-                                    style={{
-                                        height: `${pct}%`,
-                                        minHeight: pct > 0 ? 2 : 0,
-                                        backgroundColor: `rgba(2,132,199,${opacity})`,
-                                        filter: isHovered ? 'brightness(1.15)' : 'none',
-                                        transform: isHovered ? 'scaleY(1.02)' : 'scaleY(1)',
-                                        transformOrigin: 'bottom',
-                                    }}
-                                />
-
-                                {/* Label X */}
-                                <div
-                                    className="absolute w-full text-center"
-                                    style={{ top: CHART_H + 6 }}
-                                >
-                                    <span
-                                        className="text-[9px] font-semibold text-slate-400 block"
-                                        style={{
-                                            writingMode: data.length > 10 ? 'vertical-rl' : 'horizontal-tb',
-                                            transform: data.length > 10 ? 'rotate(180deg)' : 'none',
-                                            whiteSpace: 'nowrap',
-                                            overflow: 'hidden',
-                                            maxHeight: data.length > 10 ? 72 : 'none',
-                                            textAlign: 'center',
-                                        }}
-                                    >
-                                        {item.nom.length > 10 ? item.nom.slice(0, 9) + '…' : item.nom}
-                                    </span>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
-            </div>
-
-            {/* Tooltip — positionné en fixed sur les coordonnées souris */}
-            {tooltip && (
-                <div
-                    className="fixed z-[9999] bg-slate-800 text-white px-4 py-3 rounded-lg shadow-2xl border border-white/10 pointer-events-none"
-                    style={{
-                        left: tooltip.mouseX + 14,
-                        top: tooltip.mouseY - 70,
-                        minWidth: 170,
-                    }}
-                >
-                    <p className="text-sm font-bold text-white mb-1.5 whitespace-nowrap">
-                        {tooltip.item.nom}
-                    </p>
-                    <p className="text-xs text-slate-300">
-                        <span className="text-white font-bold">{tooltip.item.ventes}</span> ventes
-                    </p>
-                    <p className="text-xs text-sky-300 mt-0.5">{formatAr(tooltip.item.ca)}</p>
-                </div>
-            )}
-        </div>
-    );
-};
-
-/* ─── KPI Card ─── */
-const KpiCard = ({ title, value, subtitle, icon, trend, iconBg }) => (
-    <div className="bg-white border border-slate-200 rounded p-5 flex flex-col gap-3 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-100 transition-all">
-        <div className="flex items-start justify-between">
-            <div className={`w-12 h-12 rounded flex items-center justify-center shrink-0 ${iconBg}`}>
-                <Bx icon={icon} className="text-2xl" />
-            </div>
-            {trend !== undefined && (
-                <span className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-bold ${trend >= 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-600'}`}>
-                    <Bx icon={trend >= 0 ? 'up-arrow-alt' : 'down-arrow-alt'} className="text-sm" />
-                    {Math.abs(trend)}%
-                </span>
-            )}
-        </div>
-        <div>
-            <p className="text-3xl font-black text-slate-800 leading-none">{value}</p>
-            <p className="text-base font-semibold text-slate-500 mt-1">{title}</p>
-            {subtitle && <p className="text-sm text-slate-400 mt-0.5">{subtitle}</p>}
-        </div>
-    </div>
-);
-
-/* ─── Stock row ─── */
-const StockRow = ({ produit, index }) => {
-    const pct = Math.min(100, Math.round((produit.stock / produit.seuilMin) * 100));
-    const isDanger = produit.stock <= 5;
-    const isLow = produit.stock <= produit.seuilMin * 0.5;
-
-    return (
-        <div className="flex items-center gap-3 py-3 border-b border-slate-50 last:border-0">
-            <div className={`w-8 h-8 rounded flex items-center justify-center shrink-0 text-xs font-black ${isDanger ? 'bg-red-100 text-red-600' : isLow ? 'bg-amber-100 text-amber-600' : 'bg-slate-100 text-slate-500'}`}>
-                {index + 1}
-            </div>
-            <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold text-slate-800 truncate">{produit.nom}</p>
-                <div className="flex items-center gap-2 mt-1">
-                    <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                        <div
-                            className={`h-full rounded-full ${isDanger ? 'bg-red-500' : isLow ? 'bg-amber-400' : 'bg-emerald-500'}`}
-                            style={{ width: `${pct}%` }}
-                        />
-                    </div>
-                    <span className={`text-xs font-bold shrink-0 ${isDanger ? 'text-red-600' : isLow ? 'text-amber-600' : 'text-slate-500'}`}>
-                        {produit.stock} / {produit.seuilMin}
-                    </span>
-                </div>
-            </div>
-            <span className={`px-2 py-1 rounded text-xs font-bold shrink-0 ${isDanger ? 'bg-red-100 text-red-700' : isLow ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-600'}`}>
-                {isDanger ? 'Critique' : isLow ? 'Faible' : 'Bas'}
-            </span>
-        </div>
-    );
-};
-
-/* ══════════════════════════════════════════════
-   DASHBOARD
-══════════════════════════════════════════════ */
 const Dashboard = () => {
     const [search, setSearch] = useState('');
     const [barMode, setBarMode] = useState('ventes');
@@ -379,7 +178,7 @@ const Dashboard = () => {
                             </span>
                         </div>
                         <div className="px-4 py-1">
-                            {STOCK_CRITIQUE.map((p, i) => <StockRow key={p.ref} produit={p} index={i} />)}
+                            {STOCK_CRITIQUE.map((p, i) => <StockRow key={p.ref} product={p} index={i} />)}
                         </div>
                         <div className="px-4 py-2.5 border-t border-slate-100 bg-slate-50 shrink-0">
                             <button className="text-sm font-bold text-sky-600 hover:text-sky-700 transition-colors flex items-center gap-1">

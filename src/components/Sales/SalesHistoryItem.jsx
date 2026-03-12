@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Bx from '../UI/Boxicon';
-import Button from '../Button/Button';
+import Button from '../UI/Button/Button';
 import { formatAr, formatDate } from '../../utils/function/format';
 
 const SalesHistoryItem = ({ sale }) => {

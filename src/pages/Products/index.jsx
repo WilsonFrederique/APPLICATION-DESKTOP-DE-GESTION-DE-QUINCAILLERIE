@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import Input from '../../components/Input/Input';
+import Input from '../../components/UI/Input/Input';
 import ProductModal from '../../components/Product/ProductModal';
 import CategoryModal from '../../components/Product/CategoryModal';
 import CategoryCarousel from '../../components/Sales/CategoryCarousel';
@@ -8,7 +8,6 @@ import ProductCard from '../../components/Product/ProductCard';
 import Bx from '../../components/UI/Boxicon';
 import { formatAr } from '../../utils/function/format';
 
-/* ─── Images mock ─── */
 const productImages = [
     '/gilet-securite-jaune-taille-l-ref-vtrgilp002.jpg.jpeg',
     '/0009_PLAFOND-PVC-200X7X4000MM-10PCS-PQTS-REF-J33-300x300.png',
@@ -20,7 +19,6 @@ const productImages = [
     '/0017_PLAFOND-PVC-200X7X4000MM-10PCS-PQTS-REF-JX303-300x300.png',
 ];
 
-/* ─── Données mock ─── */
 const initialProducts = [
     { id: 1, nom: 'Ciment 50kg', reference: 'CIM-50KG', categorie: 'Matériaux Construction', description: 'Ciment Portland de haute qualité.', stock: 15, seuilMin: 20, prixAchat: 35000, prixVente: 50000, unite: 'sac', image: productImages[0], dateAjout: '2024-01-15' },
     { id: 2, nom: 'Tôle Galvanisée 3m', reference: 'TOL-GALV-3M', categorie: 'Ferronnerie', description: 'Tôle galvanisée 3m, 0.5mm.', stock: 8, seuilMin: 10, prixAchat: 250000, prixVente: 300000, unite: 'feuille', image: productImages[1], dateAjout: '2024-02-10' },
@@ -29,9 +27,6 @@ const initialProducts = [
     { id: 5, nom: 'Clou 10cm', reference: 'CLOU-10CM', categorie: 'Quincaillerie', description: 'Clou à béton 10cm.', stock: 2000, seuilMin: 500, prixAchat: 50, prixVente: 100, unite: 'kg', image: productImages[4], dateAjout: '2024-02-15' },
 ];
 
-/* ══════════════════════════════════════════════
-   PRODUITS (main component)
-══════════════════════════════════════════════ */
 const Products = () => {
     const [products, setProducts] = useState(initialProducts);
     const [viewMode, setViewMode] = useState('products');

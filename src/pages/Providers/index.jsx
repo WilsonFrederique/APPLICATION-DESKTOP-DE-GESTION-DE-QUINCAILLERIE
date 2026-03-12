@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import Input from '../../components/Input/Input';
+import Input from '../../components/UI/Input/Input';
 import FournisseurModal from '../../components/Provider/ProviderModal';
+import ContactPanel from '../../components/Provider/ContactPanel';
+import ProviderRow from '../../components/Provider/ProviderRow';
 import Bx from '../../components/UI/Boxicon';
 
 /* ─── Helpers avatar ─── */
@@ -22,184 +24,6 @@ const initialProviders = [
     { id: 5, nom: 'Bois & Matériaux Réunion', telephone: '+261 32 55 000 05', whatsapp: '', facebook: '', email: 'bois@reunion.re', adresse: 'Toamasina', note: 'Importation — délai 2 semaines' },
 ];
 
-/* ─── Panel contact ─── */
-const ContactPanel = ({ fournisseur, onClose }) => {
-    const contacts = [
-        { icon: 'phone', color: 'bg-sky-50 text-sky-600', label: 'Téléphone', value: fournisseur.telephone, href: `tel:${fournisseur.telephone}` },
-        { icon: 'logo-whatsapp', color: 'bg-emerald-50 text-emerald-600', label: 'WhatsApp', value: fournisseur.whatsapp, href: fournisseur.whatsapp ? `https://wa.me/${fournisseur.whatsapp.replace(/\s/g, '')}` : null },
-        { icon: 'envelope', color: 'bg-violet-50 text-violet-600', label: 'Email', value: fournisseur.email, href: fournisseur.email ? `mailto:${fournisseur.email}` : null },
-        { icon: 'logo-facebook', color: 'bg-blue-50 text-blue-600', label: 'Facebook', value: fournisseur.facebook, href: fournisseur.facebook ? `https://${fournisseur.facebook}` : null },
-    ].filter(c => c.value);
-
-    return (
-        <div className="fixed inset-0 bg-slate-900/60 z-[10000] flex items-center justify-center p-4" onClick={onClose}>
-            <div className="w-full max-w-sm bg-white rounded shadow-2xl overflow-hidden" onClick={e => e.stopPropagation()}>
-
-                {/* Header */}
-                <div className="bg-slate-800 px-5 py-4 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div
-                            className="w-9 h-9 rounded flex items-center justify-center text-sm font-bold text-white shrink-0"
-                            style={{ background: getAvatarColor(fournisseur.id) }}
-                        >
-                            {getInitials(fournisseur.nom)}
-                        </div>
-                        <div>
-                            <h3 className="text-base font-bold text-white leading-tight truncate max-w-[180px]">{fournisseur.nom}</h3>
-                            <p className="text-xs text-white/60 mt-0.5 truncate max-w-[180px]">{fournisseur.adresse || 'Adresse non renseignée'}</p>
-                        </div>
-                    </div>
-                    <button
-                        onClick={onClose}
-                        className="w-8 h-8 flex items-center justify-center rounded bg-white/10 text-white/70 hover:bg-red-500/30 hover:text-white border border-white/10 transition-all"
-                    >
-                        <Bx icon="x" className="text-base" />
-                    </button>
-                </div>
-
-                {/* Contacts */}
-                <div className="p-5 flex flex-col gap-3">
-                    {contacts.length > 0 ? contacts.map(({ icon, color, label, value, href }) => (
-                        <div key={label} className="flex items-center gap-3 p-3 bg-slate-50 border border-slate-200 rounded">
-                            <div className={`w-9 h-9 rounded flex items-center justify-center shrink-0 ${color}`}>
-                                <Bx icon={icon} className="text-lg" />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                                <p className="text-xs text-slate-400 font-medium">{label}</p>
-                                <p className="text-sm font-semibold text-slate-700 truncate">{value}</p>
-                            </div>
-                            {href && (
-                                <a
-                                    href={href}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="w-8 h-8 flex items-center justify-center rounded border border-slate-200 text-slate-400 hover:bg-sky-50 hover:text-sky-600 hover:border-sky-200 transition-all shrink-0"
-                                >
-                                    <Bx icon="link-external" className="text-sm" />
-                                </a>
-                            )}
-                        </div>
-                    )) : (
-                        <p className="text-sm text-slate-400 text-center py-4">Aucun contact renseigné</p>
-                    )}
-
-                    {/* Note */}
-                    {fournisseur.note && (
-                        <div className="mt-1 p-3 bg-amber-50 border border-amber-200 rounded flex items-start gap-2.5">
-                            <Bx icon="note" className="text-base text-amber-500 shrink-0 mt-0.5" />
-                            <p className="text-sm text-amber-800 leading-relaxed">{fournisseur.note}</p>
-                        </div>
-                    )}
-                </div>
-            </div>
-        </div>
-    );
-};
-
-/* ─── Ligne fournisseur ─── */
-const FournisseurRow = ({ fournisseur, onEdit, onDelete, onViewContact }) => {
-    const hasWhatsapp = !!fournisseur.whatsapp;
-    const hasFacebook = !!fournisseur.facebook;
-    const hasEmail = !!fournisseur.email;
-
-    return (
-        <tr className="border-b border-slate-100 last:border-0 hover:bg-slate-50/60 transition-colors">
-
-            {/* Avatar */}
-            <td className="px-4 py-3.5 w-12">
-                <div
-                    className="w-9 h-9 rounded flex items-center justify-center text-sm font-bold text-white shrink-0 select-none"
-                    style={{ background: getAvatarColor(fournisseur.id) }}
-                >
-                    {getInitials(fournisseur.nom)}
-                </div>
-            </td>
-
-            {/* Nom */}
-            <td className="px-3 py-3.5">
-                <span className="text-base font-bold text-slate-800">{fournisseur.nom}</span>
-                {fournisseur.adresse && (
-                    <div className="flex items-center gap-1.5 mt-0.5">
-                        <Bx icon="map-pin" className="text-xs text-slate-300 shrink-0" />
-                        <span className="text-xs text-slate-400 truncate max-w-[200px]">{fournisseur.adresse}</span>
-                    </div>
-                )}
-            </td>
-
-            {/* Téléphone */}
-            <td className="px-3 py-3.5">
-                <div className="flex items-center gap-2 text-slate-600">
-                    <Bx icon="phone" className="text-base text-slate-400 shrink-0" />
-                    <span className="text-sm">{fournisseur.telephone}</span>
-                </div>
-            </td>
-
-            {/* Canaux de contact */}
-            <td className="px-3 py-3.5">
-                <div className="flex items-center gap-2">
-                    {hasWhatsapp && (
-                        <span className="w-7 h-7 flex items-center justify-center rounded bg-emerald-50 text-emerald-600 border border-emerald-100" title="WhatsApp disponible">
-                            <Bx icon="logo-whatsapp" className="text-base" />
-                        </span>
-                    )}
-                    {hasEmail && (
-                        <span className="w-7 h-7 flex items-center justify-center rounded bg-violet-50 text-violet-600 border border-violet-100" title="Email disponible">
-                            <Bx icon="envelope" className="text-base" />
-                        </span>
-                    )}
-                    {hasFacebook && (
-                        <span className="w-7 h-7 flex items-center justify-center rounded bg-blue-50 text-blue-600 border border-blue-100" title="Facebook disponible">
-                            <Bx icon="logo-facebook" className="text-base" />
-                        </span>
-                    )}
-                    {!hasWhatsapp && !hasEmail && !hasFacebook && (
-                        <span className="text-sm text-slate-300 italic">—</span>
-                    )}
-                    <button
-                        onClick={() => onViewContact(fournisseur)}
-                        className="flex items-center gap-1 px-2 py-1 text-xs font-semibold text-slate-500 border border-slate-200 rounded hover:bg-sky-50 hover:text-sky-600 hover:border-sky-200 transition-all ml-1"
-                        title="Voir tous les contacts"
-                    >
-                        <Bx icon="show" className="text-sm" /> Voir
-                    </button>
-                </div>
-            </td>
-
-            {/* Note */}
-            <td className="px-3 py-3.5 max-w-[180px]">
-                {fournisseur.note ? (
-                    <span className="text-sm text-slate-500 truncate block" title={fournisseur.note}>{fournisseur.note}</span>
-                ) : (
-                    <span className="text-sm text-slate-300 italic">—</span>
-                )}
-            </td>
-
-            {/* Actions */}
-            <td className="px-3 py-3.5 text-center">
-                <div className="flex items-center justify-center gap-1.5">
-                    <button
-                        onClick={() => onEdit(fournisseur)}
-                        title="Modifier"
-                        className="w-8 h-8 flex items-center justify-center rounded border border-slate-200 text-slate-500 hover:bg-sky-50 hover:text-sky-600 hover:border-sky-200 transition-all"
-                    >
-                        <Bx icon="edit" className="text-base" />
-                    </button>
-                    <button
-                        onClick={() => onDelete(fournisseur)}
-                        title="Supprimer"
-                        className="w-8 h-8 flex items-center justify-center rounded border border-slate-200 text-slate-500 hover:bg-red-50 hover:text-red-500 hover:border-red-200 transition-all"
-                    >
-                        <Bx icon="trash" className="text-base" />
-                    </button>
-                </div>
-            </td>
-        </tr>
-    );
-};
-
-/* ══════════════════════════════════════════════
-   FOURNISSEURS
-══════════════════════════════════════════════ */
 const Providers = () => {
     const [fournisseurs, setFournisseurs] = useState(initialProviders);
     const [searchTerm, setSearchTerm] = useState('');
@@ -289,9 +113,11 @@ const Providers = () => {
                             </thead>
                             <tbody>
                                 {filtered.map(f => (
-                                    <FournisseurRow
+                                    <ProviderRow
                                         key={f.id}
-                                        fournisseur={f}
+                                        provider={f}
+                                        getInitials={getInitials}
+                                        getAvatarColor={getAvatarColor}
                                         onEdit={handleEdit}
                                         onDelete={handleDelete}
                                         onViewContact={setContactFournisseur}
@@ -334,7 +160,9 @@ const Providers = () => {
 
             {contactFournisseur && (
                 <ContactPanel
-                    fournisseur={contactFournisseur}
+                    provider={contactFournisseur}
+                    getInitials={getInitials}
+                    getAvatarColor={getAvatarColor}
                     onClose={() => setContactFournisseur(null)}
                 />
             )}

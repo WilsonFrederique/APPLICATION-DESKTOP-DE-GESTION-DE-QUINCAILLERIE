@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState, useMemo, useCallback } from 'react';
-import Input from '../../components/Input/Input';
-import InputTextarea from '../../components/Input/InputTextarea';
+import Input from '../UI/Input/Input';
+import InputTextarea from '../UI/Input/InputTextarea';
 import Bx from '../UI/Boxicon';
 import { formatAr } from '../../utils/function/format';
 
@@ -292,8 +292,8 @@ const InvoiceModal = ({ cart, onClose, onCompleteSale }) => {
                     key={value}
                     onClick={() => { setPaymentMethod(value); if (value !== 'credit') setAmountPaid(''); }}
                     className={`flex flex-col items-center gap-1.5 py-3 px-2 rounded border text-xs font-semibold transition-all cursor-pointer ${paymentMethod === value
-                        ? 'bg-sky-600 border-sky-600 text-white shadow-sm'
-                        : 'bg-white border-slate-200 text-slate-600 hover:border-sky-300 hover:text-sky-600 hover:bg-sky-50'
+                      ? 'bg-sky-600 border-sky-600 text-white shadow-sm'
+                      : 'bg-white border-slate-200 text-slate-600 hover:border-sky-300 hover:text-sky-600 hover:bg-sky-50'
                       }`}
                   >
                     <Bx icon={icon} className="text-xl" />
@@ -489,8 +489,8 @@ const InvoiceModal = ({ cart, onClose, onCompleteSale }) => {
             <div className="flex items-center gap-2">
               <span className="text-sm text-slate-500 font-medium">Statut :</span>
               <span className={`text-xs font-bold px-2.5 py-1 rounded uppercase tracking-wide ${paymentMethod === 'credit'
-                  ? 'bg-amber-100 text-amber-700 border border-amber-200'
-                  : 'bg-emerald-100 text-emerald-700 border border-emerald-200'
+                ? 'bg-amber-100 text-amber-700 border border-amber-200'
+                : 'bg-emerald-100 text-emerald-700 border border-emerald-200'
                 }`}>
                 {paymentMethod === 'credit' ? 'CRÉDIT' : 'PAYÉ'}
               </span>

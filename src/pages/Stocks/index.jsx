@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import Input from '../../components/Input/Input';
-import InputSelect from '../../components/Input/InputSelect';
+import Input from '../../components/UI/Input/Input';
+import InputSelect from '../../components/UI/Input/InputSelect';
 import CategoryCarousel from '../../components/Sales/CategoryCarousel';
 import StockModal from '../../components/Stock/StockModal';
 import Bx from '../../components/UI/Boxicon';

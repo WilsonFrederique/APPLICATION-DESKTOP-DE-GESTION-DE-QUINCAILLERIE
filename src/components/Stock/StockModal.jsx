@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Input from '../Input/Input';
-import InputSelect from '../Input/InputSelect';
-import InputTextarea from '../Input/InputTextarea';
+import Input from '../UI/Input/Input';
+import InputSelect from '../UI/Input/InputSelect';
+import InputTextarea from '../UI/Input/InputTextarea';
 import Bx from '../UI/Boxicon';
 
 const StockModal = ({ isOpen, onClose, onSave, products = [], stockItem = null }) => {
