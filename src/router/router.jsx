@@ -3,14 +3,14 @@ import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom
 
 import MainLayout from "../layouts/MainLayout";
 
-import Commands from "../pages/Commands";
-import Customers from "../pages/Customers";
-import Dashboard from "../pages/Dashboard";
+import Commands from "../pages/commands";
+import Customers from "../pages/customers";
+import Dashboard from "../pages/dashboard";
 import Login from "../auth/Login";
-import Products from "../pages/Products";
-import Providers from "../pages/Providers";
-import Sales from "../pages/Sales";
-import Stocks from "../pages/Stocks";
+import Products from "../pages/products";
+import Providers from "../pages/providers";
+import Sales from "../pages/sales";
+import Stocks from "../pages/stocks";
 
 const getUserFromStorage = () => {
     try {

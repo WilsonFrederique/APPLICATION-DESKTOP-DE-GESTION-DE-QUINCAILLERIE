@@ -44,7 +44,7 @@ const ProviderRow = ({ provider, getInitials, getAvatarColor, onEdit, onDelete, 
                 <div className="flex items-center gap-2">
                     {hasWhatsapp && (
                         <span className="w-7 h-7 flex items-center justify-center rounded bg-emerald-50 text-emerald-600 border border-emerald-100" title="WhatsApp disponible">
-                            <Bx icon="logo-whatsapp" className="text-base" />
+                            <Bx icon="whatsapp bxl-whatsapp" className="text-base" />
                         </span>
                     )}
                     {hasEmail && (
@@ -54,7 +54,7 @@ const ProviderRow = ({ provider, getInitials, getAvatarColor, onEdit, onDelete, 
                     )}
                     {hasFacebook && (
                         <span className="w-7 h-7 flex items-center justify-center rounded bg-blue-50 text-blue-600 border border-blue-100" title="Facebook disponible">
-                            <Bx icon="logo-facebook" className="text-base" />
+                            <Bx icon="facebook bxl-facebook" className="text-base" />
                         </span>
                     )}
                     {!hasWhatsapp && !hasEmail && !hasFacebook && (

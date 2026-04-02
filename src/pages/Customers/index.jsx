@@ -154,7 +154,7 @@ const Customers = () => {
 
             {creditClient && (
                 <CreditPanel
-                    client={creditClient}
+                    customer={creditClient}
                     onClose={() => setCreditClient(null)}
                 />
             )}

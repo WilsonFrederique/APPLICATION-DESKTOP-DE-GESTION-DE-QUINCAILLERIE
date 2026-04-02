@@ -155,7 +155,7 @@ const CustomerModal = ({ isOpen, onClose, onSave, fournisseur = null }) => {
                                         placeholder="+261 34 00 123 45"
                                         value={formData.whatsapp}
                                         onChange={e => handleChange('whatsapp', e.target.value)}
-                                        icon={<Bx icon="logo-whatsapp" className="text-lg" />}
+                                        icon={<Bx icon="whatsapp bxl-whatsapp" className="text-lg" />}
                                         fullWidth
                                     />
                                 </div>
@@ -176,7 +176,7 @@ const CustomerModal = ({ isOpen, onClose, onSave, fournisseur = null }) => {
                                         placeholder="facebook.com/fournisseur"
                                         value={formData.facebook}
                                         onChange={e => handleChange('facebook', e.target.value)}
-                                        icon={<Bx icon="logo-facebook" className="text-lg" />}
+                                        icon={<Bx icon="facebook bxl-facebook" className="text-lg" />}
                                         fullWidth
                                     />
                                 </div>

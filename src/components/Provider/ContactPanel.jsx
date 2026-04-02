@@ -5,9 +5,9 @@ import Bx from '../UI/Boxicon';
 const ContactPanel = ({ provider, getInitials, getAvatarColor, onClose }) => {
     const contacts = [
         { icon: 'phone', color: 'bg-sky-50 text-sky-600', label: 'Téléphone', value: provider.telephone, href: `tel:${provider.telephone}` },
-        { icon: 'logo-whatsapp', color: 'bg-emerald-50 text-emerald-600', label: 'WhatsApp', value: provider.whatsapp, href: provider.whatsapp ? `https://wa.me/${provider.whatsapp.replace(/\s/g, '')}` : null },
+        { icon: 'whatsapp bxl-whatsapp', color: 'bg-emerald-50 text-emerald-600', label: 'WhatsApp', value: provider.whatsapp, href: provider.whatsapp ? `https://wa.me/${provider.whatsapp.replace(/\s/g, '')}` : null },
         { icon: 'envelope', color: 'bg-violet-50 text-violet-600', label: 'Email', value: provider.email, href: provider.email ? `mailto:${provider.email}` : null },
-        { icon: 'logo-facebook', color: 'bg-blue-50 text-blue-600', label: 'Facebook', value: provider.facebook, href: provider.facebook ? `https://${provider.facebook}` : null },
+        { icon: 'facebook bxl-facebook', color: 'bg-blue-50 text-blue-600', label: 'Facebook', value: provider.facebook, href: provider.facebook ? `https://${provider.facebook}` : null },
     ].filter(c => c.value);
 
     return (
